@@ -1,0 +1,15 @@
+<level>
+  <resources></resources>
+  <head>
+    <camera width="1280" height="720">
+      <keyframe x="0" y="0" zoom="1" /> <!-- 0, 0 will always be center,,, so cool!!! -->
+    </camera>
+    <title>Testing Room</title>
+    <desc>hi guys</desc>
+  </head>
+  <scene>
+    <layer id="LOGO" x="0" y="0" />
+
+    <!-- too lazy to make it all but here also goes gooballs, gravity, collision, pipe etc etc you know -->
+  </scene>
+</level>
