@@ -7,7 +7,7 @@
   },
   "keywords": [],
   "author": "jwklong",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "devDependencies": {
     "electron": "^31.2.1"
   },
