@@ -1,3 +1,5 @@
 <resources>
-    <image id="LOGO" src="images/logo.png" />
+    <font id="FONT_COOKIES" src="fonts/cookies.otf" />
+
+    <image id="IMAGE_LOGO" src="images/logo.png" />
 </resources>
