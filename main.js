@@ -5,10 +5,13 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 1280,
         height: 720,
+        resizable: false,
+        frame: false,
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true
+            enableRemoteModule: true,
+            enablePreferredSizeMode: false
         }
     })
 
