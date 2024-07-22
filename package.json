@@ -12,6 +12,7 @@
     "electron": "^31.2.1"
   },
   "dependencies": {
+    "bezier-easing": "^2.1.0",
     "fast-xml-parser": "^4.4.0"
   }
 }

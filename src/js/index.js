@@ -1,8 +1,10 @@
 import ResourceManager from "./resourceManager.js";
+import Easing from "./easing.js";
 const path = require("path")
 
 let game = {
-    ResourceManager: new ResourceManager()
+    ResourceManager: new ResourceManager(),
+    Easing: Easing
 }
 window.game = game
 
