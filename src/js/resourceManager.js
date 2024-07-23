@@ -29,11 +29,12 @@ export default class ResourceManager {
             allowBooleanAttributes: true,
             parseAttributeValue: true,
             alwaysCreateTextNode: true,
-            textNodeName: "value"
+            textNodeName: "value",
+            isArray: (_, jPath) => /^resources\.[^\.]+$/.test(jPath)
         })
         const xml = parser.parse(output)
         
-        for (const [key, value] of Object.entries(xml.resources)) { //ALWAYS HAVE MORE THAN TWO OF EACH RESOURCE TYPE i know it sounds stupid BUT ITS NOT MY FAULT
+        for (const [key, value] of Object.entries(xml.resources)) {
             for (const resource of value) {
                 this.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
             }
