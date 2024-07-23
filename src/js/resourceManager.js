@@ -6,6 +6,11 @@ export default class ResourceManager {
     /** @type {{[key: string]: GenericResource}} */
     resources = {}
 
+    /**
+     * @param {string} type 
+     * @param {string} id 
+     * @param {string} src 
+     */
     addResource(type, id, src) {
         switch (type) {
             case "image":
@@ -19,6 +24,10 @@ export default class ResourceManager {
         }
     }
 
+    /**
+     * Extracts resource information from a file (specifically resources.xml)
+     * @param {string} src Path to file
+     */
     async addXMLFile(src) {
         const output = (await fs.readFile(src)).toString()
 
@@ -41,10 +50,16 @@ export default class ResourceManager {
         }
     }
 
+    /**
+     * @returns {number}
+     */
     get totalResources() {
         return Object.keys(this.resources).length
     }
 
+    /**
+     * @returns {number}
+     */
     get loadedResources() {
         return Object.values(this.resources).filter(resource => resource.loaded).length
     }

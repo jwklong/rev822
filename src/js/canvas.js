@@ -1,5 +1,6 @@
 export default class Canvas {
     /**
+     * @type {number}
      * -1 = loading
      * 0 = playing
      * 1 = level transition
@@ -8,8 +9,14 @@ export default class Canvas {
      */
     mode = -1
 
+    /**
+     * @type {HTMLCanvasElement}
+     */
     element = document.querySelector('canvas')
 
+    /**
+     * @param {number} dt 
+     */
     tick(dt) {
         const ctx = this.element.getContext('2d')
         ctx.clearRect(0, 0, 1280, 720)
