@@ -8,7 +8,7 @@
     <desc>hi guys</desc>
   </head>
   <scene>
-    <layer id="LOGO" x="0" y="0" />
+    <layer id="IMAGE_LOGO" x="0" y="0" />
 
     <!-- too lazy to make it all but here also goes gooballs, gravity, collision, pipe etc etc you know -->
   </scene>

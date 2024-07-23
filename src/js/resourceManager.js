@@ -50,16 +50,12 @@ export default class ResourceManager {
         }
     }
 
-    /**
-     * @returns {number}
-     */
+    /** @returns {number} */
     get totalResources() {
         return Object.keys(this.resources).length
     }
 
-    /**
-     * @returns {number}
-     */
+    /** @returns {number} */
     get loadedResources() {
         return Object.values(this.resources).filter(resource => resource.loaded).length
     }

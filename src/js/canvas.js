@@ -14,9 +14,7 @@ export default class Canvas {
      */
     element = document.querySelector('canvas')
 
-    /**
-     * @param {number} dt 
-     */
+    /** @param {number} dt */
     tick(dt) {
         const ctx = this.element.getContext('2d')
         ctx.clearRect(0, 0, 1280, 720)
