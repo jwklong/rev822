@@ -18,7 +18,7 @@ window.game = game;
     })
 
     function tick(dt) {
-        game.Canvas.tick(dt, game)
+        game.Canvas.tick(dt)
 
         requestAnimationFrame(tick)
     }
