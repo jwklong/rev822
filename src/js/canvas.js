@@ -16,8 +16,15 @@ export default class Canvas {
 
         switch(this.mode) {
             case -1:
+                var fillAmount = game.ResourceManager.loadedResources / game.ResourceManager.totalResources
+
+                ctx.beginPath()
                 ctx.arc(640, 360, 100, 0, 2 * Math.PI)
                 ctx.stroke()
+
+                ctx.beginPath()
+                ctx.arc(640, 360, 100, (.5 - fillAmount) * Math.PI, (.5 + fillAmount) * Math.PI)
+                ctx.fill()
 
                 break
         }

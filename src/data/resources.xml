@@ -1,5 +1,8 @@
 <resources>
     <font id="FONT_COOKIES" src="fonts/cookies.otf" />
+    <font id="FONT_EMB" src="fonts/emb.otf" />
+    <font id="FONT_TCCEB" src="fonts/tcceb.otf" />
 
     <image id="IMAGE_LOGO" src="images/logo.png" />
+    <image id="IMAGE_TEMP_BACKGROUND" src="images/backdrop.jpg" />
 </resources>

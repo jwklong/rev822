@@ -32,12 +32,20 @@ export default class ResourceManager {
             textNodeName: "value"
         })
         const xml = parser.parse(output)
-        console.log(xml)
         
-        for (const [key, value] of Object.entries(xml.resources)) {
-            console.log(key, value)
-            this.addResource(key, value.attributes.id, path.join(__dirname, "../data", value.attributes.src))
+        for (const [key, value] of Object.entries(xml.resources)) { //ALWAYS HAVE MORE THAN TWO OF EACH RESOURCE TYPE i know it sounds stupid BUT ITS NOT MY FAULT
+            for (const resource of value) {
+                this.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
+            }
         }
+    }
+
+    get totalResources() {
+        return Object.keys(this.resources).length
+    }
+
+    get loadedResources() {
+        return Object.values(this.resources).filter(resource => resource.loaded).length
     }
 }
 

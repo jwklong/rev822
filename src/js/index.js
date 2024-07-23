@@ -8,19 +8,20 @@ let game = {
     Easing,
     Canvas: new Canvas()
 }
-window.game = game
+window.game = game;
 
-game.ResourceManager.addXMLFile(path.join(__dirname, "../data/resources.xml"))
+(async () => {
+    await game.ResourceManager.addXMLFile(path.join(__dirname, "../data/resources.xml"))
 
-/* Object.values(game.ResourceManager.resources).forEach(async resource => {
-    await resource.load()
-    console.log(resource.id, "loaded")
-}) */
+    Object.values(game.ResourceManager.resources).forEach(async resource => {
+        await resource.load()
+    })
 
-function tick(dt) {
-    game.Canvas.tick(dt, game)
+    function tick(dt) {
+        game.Canvas.tick(dt, game)
+
+        requestAnimationFrame(tick)
+    }
 
     requestAnimationFrame(tick)
-}
-
-requestAnimationFrame(tick)
+})()
