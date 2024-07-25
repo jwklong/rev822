@@ -52,7 +52,7 @@ class Level {
      */
     constructor(xml, id) {
         this.id = id
-        this.name = xml.head.name.value
+        this.title = xml.head.title.value
         this.desc = xml.head.desc.value
 
         //parse dem resources

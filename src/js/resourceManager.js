@@ -59,6 +59,14 @@ export default class ResourceManager {
     get loadedResources() {
         return Object.values(this.resources).filter(resource => resource.loaded).length
     }
+
+    /**
+     * @param {string} id
+     * @returns {GenericResource?}
+     */
+    getResource(id) {
+        return this.resources[id]
+    }
 }
 
 class GenericResource {
