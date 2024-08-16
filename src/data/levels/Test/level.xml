@@ -2,13 +2,15 @@
   <resources></resources>
   <head>
     <camera width="1280" height="720">
-      <keyframe x="0" y="0" zoom="1" /> <!-- 0, 0 will always be center,,, so cool!!! -->
+      <keyframe x="0" y="0" zoom="1" pause="2" /> <!-- 0, 0 will always be center,,, so cool!!! -->
+      <keyframe x="0" y="0" zoom="2" time="2" pause="1" />
     </camera>
     <title>Testing Room</title>
     <desc>hi guys</desc>
   </head>
   <scene>
-    <layer img="IMAGE_LOGO" x="0" y="0" />
+    <layer img="IMAGE_LOGO" x="0" y="0" size="0.5" />
+    <layer img="IMAGE_TEMP_BACKGROUND" x="0" y="0" size="2" z="-1" />
 
     <!-- too lazy to make it all but here also goes gooballs, gravity, collision, pipe etc etc you know -->
   </scene>

@@ -3,11 +3,20 @@ export default class Canvas {
      * @type {number}
      * -1 = loading
      * 0 = playing
-     * 1 = level transition
-     * 2 = paused
+     * 1 = paused
+     * 2 = level transition
      * 3 = cutscene?
      */
     mode = -1
+
+    /** @type {number} */
+    transition = false
+    /**
+     * 0 = in
+     * 1 = out
+     * @type {number}
+     */
+    transitionType = 0
 
     /**
      * @type {HTMLCanvasElement}
@@ -19,9 +28,10 @@ export default class Canvas {
         const ctx = this.element.getContext('2d')
         ctx.clearRect(0, 0, 1280, 720)
         ctx.globalAlpha = 1
+        ctx.resetTransform()
 
         switch(this.mode) {
-            case -1:
+            case -1: //begin
                 const fillAmount = window.game.ResourceManager.loadedResources / window.game.ResourceManager.totalResources
 
                 if (fillAmount == 1) {
@@ -49,9 +59,16 @@ export default class Canvas {
                     ctx.fillText('Click to continue', 640, 560)
 
                     ctx.globalAlpha = Math.max(1-window.game.TimeManager.getTimer('POSTLOADING').timePassed, 0)
-                    console.log(window.game.TimeManager.getTimer('POSTLOADING').timePassed)
                     ctx.fillStyle = 'white'
                     ctx.fillRect(0, 0, 1280, 720)
+
+                    if (
+                        window.game.TimeManager.getTimer('POSTLOADING').finished &&
+                        window.game.MouseTracker.left &&
+                        !this.transition
+                    ) {
+                        this.playLevel("Test")
+                    }
 
                     break
                 }
@@ -61,6 +78,107 @@ export default class Canvas {
                 ctx.fill()
 
                 break
+            case 0: //level
+            case 1: //pause
+                let level = window.game.LevelManager.currentLevel
+                ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
+
+                for (var layer of level.layers.sort((a, b) => a.z - b.z)) {
+                    var image = new Image()
+                    image.src = window.game.ResourceManager.getResource(layer.img).src
+                    var w = image.width * layer.size.x
+                    var h = image.height * layer.size.y
+                    var x = layer.x + 1280 / 2 / level.camera.props.zoom - w / 2 + level.camera.props.x
+                    var y = layer.y + 720 / 2 / level.camera.props.zoom - h / 2 + level.camera.props.y
+                    ctx.drawImage(image, x, y, w, h)
+                }
+
+                ctx.resetTransform()
+                
+                if (this.mode === 1) {
+
+                }
+
+                break
+            case 2: //level transition
+                ctx.fillStyle = "black"
+                ctx.fillRect(0, 0, 1280, 720)
+
+                if (window.game.TimeManager.getTimer('LEVELTRANSITION').timePassed < 1.5) {
+                    ctx.globalAlpha = window.game.TimeManager.getTimer('LEVELTRANSITION').timePassed / 1.5
+                } else if (window.game.TimeManager.getTimer('LEVELTRANSITION').timePassed > 6.5) {
+                    ctx.globalAlpha = (8-window.game.TimeManager.getTimer('LEVELTRANSITION').timePassed) / 1.5
+                }
+                
+                ctx.textAlign = "left"
+                ctx.textBaseline = "top"
+                ctx.font = "48px FONT_COOKIES"
+                ctx.fillStyle = "#fff"
+                ctx.fillText(window.game.LevelManager.currentLevel.title, 24, 24)
+                ctx.font = "24px FONT_COOKIES"
+                ctx.fillStyle = "#aaa"
+                ctx.fillText(window.game.LevelManager.currentLevel.desc, 24, 80)
+
+                let doubleease = x => Math.abs((x % 2) - 1)
+
+                for (let i = 0; i < 20; i++) {
+                    var x = (((window.game.timePassed * 1.3 / 2) % 2) + (i - 2)) * 72
+                    var y = 720 - (36 + window.game.Easing.easeOut.from(doubleease(window.game.timePassed * 1.3 + i % 2)) * 96)
+                    ctx.beginPath()
+                    ctx.arc(x, y, 12, 0, 2 * Math.PI)
+                    ctx.closePath()
+                    ctx.fillStyle = "#fff"
+                    ctx.fill()
+                }
+
+                break
         }
+        
+        if (this.transition) {
+            ctx.globalAlpha = 1
+            ctx.fillStyle = "#000"
+            ctx.fillRect(1 - (window.game.Easing.easeInOut.from(window.game.TimeManager.getTimer("TRANSITION").timePassed) + this.transitionType - 1) * 1300 - 10, 0, 1300, 720)
+        }
+    }
+
+    /**
+     * @param {() => any} callback 
+     * @param {boolean} inT
+     * @param {boolean} outT
+     */
+    async startTransition(callback, inT = false, outT = false) {
+        if (!inT && !outT) console.warn("excuse me your not even using any transitions what are you doing with your life")
+
+        if (inT) {
+            this.transition = true
+            this.transitionType = 0
+            var timer = window.game.TimeManager.createTimer("TRANSITION", 1)
+            await new Promise((resolve) => {
+                timer.onfinish = resolve
+            })
+        }
+        callback()
+        if (outT) {
+            this.transition = true
+            this.transitionType = 1
+            var timer = window.game.TimeManager.createTimer("TRANSITION", 1)
+            await new Promise((resolve) => {
+                timer.onfinish = resolve
+            })
+        }
+        this.transition = false
+    }
+
+    playLevel(id) {
+        this.startTransition(() => {
+            this.mode = 2
+            window.game.LevelManager.currentLevel = id
+            var timer = window.game.TimeManager.createTimer("LEVELTRANSITION", 8)
+            timer.onfinish = () => {
+                this.startTransition(() => {
+                    this.mode = 1
+                }, false, true)
+            }
+        }, true, false)
     }
 }

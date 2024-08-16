@@ -1,3 +1,4 @@
+import MouseTracker from "./mouseTracker.js";
 import TimeManager from "./timeManager.js";
 import ResourceManager from "./resourceManager.js";
 import LevelManager from "./levelManager.js";
@@ -7,11 +8,14 @@ const path = require("path")
 const fs = require("fs/promises")
 
 let game = {
+    MouseTracker: new MouseTracker,
     TimeManager: new TimeManager,
     ResourceManager: new ResourceManager,
     LevelManager: new LevelManager,
     Easing,
-    Canvas: new Canvas
+    Canvas: new Canvas,
+
+    timePassed: 0
 }
 window.game = game;
 
@@ -38,6 +42,7 @@ window.game = game;
         dt = totalDT - lastDT
         dt /= 1000
         dt = Math.min(0.2, dt)
+        game.timePassed = totalDT / 1000
 
         game.TimeManager.tick(dt)
         game.Canvas.tick(dt)

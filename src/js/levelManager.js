@@ -23,7 +23,7 @@ export default class LevelManager {
             parseAttributeValue: true,
             alwaysCreateTextNode: true,
             textNodeName: "value",
-            isArray: (_, jPath) => /^level.resources\.[^\.]+$/.test(jPath)
+            isArray: (_, jPath) => /^level.resources\.[^\.]+$/.test(jPath) || /^level.scene\.[^\.]+$/.test(jPath)
         })
 
         const xml = parser.parse((await fs.readFile(path.join(src, "level.xml"))).toString())
@@ -46,6 +46,9 @@ class Level {
     /** @type {Layer[]} */
     layers = []
 
+    /** @type {Camera} */
+    camera = new Camera
+
     /**
      * @param {Object} xml
      * @param {string} id 
@@ -66,11 +69,23 @@ class Level {
         for (const [key, value] of Object.entries(xml.scene)) {
             switch (key) {
                 case "layer":
-                    this.layers.push(new Layer(value))
+                    for (let v of value) {
+                        this.layers.push(new Layer(v))
+                    }
                     break
             }
         }
     }
+}
+
+class Camera {
+    props = {
+        x: 0,
+        y: 0,
+        zoom: 1
+    }
+
+    // TODO: animate camera
 }
 
 class Layer {
@@ -79,5 +94,14 @@ class Layer {
         this.img = xml.attributes.img
         this.x = xml.attributes.x
         this.y = xml.attributes.y
+        this.size = {x: 1, y: 1}
+        if (xml.attributes.size) {
+            if (typeof xml.attributes.size === "string") {
+                this.size = {x: Number(xml.attributes.size.split(",")[0]), y: Number(xml.attributes.size.split(",")[1])}
+            } else {
+                this.size = {x: xml.attributes.size, y: xml.attributes.size}
+            }
+        }
+        this.z = xml.attributes.z || 0
     }
 }

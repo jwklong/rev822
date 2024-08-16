@@ -24,8 +24,8 @@ export default class Easing {
     }
 
     static linear =     new Easing(0.0, 0.0, 1.0, 1.0)
-    static easeIn =     new Easing(0.4, 0.0, 1.0, 1.0)
-    static easeOut =    new Easing(0.0, 0.0, 0.6, 1.0)
-    static easeInOut =  new Easing(0.4, 0.0, 0.6, 1.0)
-    static easeOutIn =  new Easing(0.0, 0.4, 1.0, 0.6)
+    static easeIn =     new Easing(0.5, 0.0, 1.0, 1.0)
+    static easeOut =    new Easing(0.0, 0.0, 0.5, 1.0)
+    static easeInOut =  new Easing(0.5, 0.0, 0.5, 1.0)
+    static easeOutIn =  new Easing(0.0, 0.5, 1.0, 0.5)
 }
