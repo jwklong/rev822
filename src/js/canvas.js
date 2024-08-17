@@ -90,6 +90,10 @@ export default class Canvas {
                     var h = image.height * layer.size.y
                     var x = layer.x + 1280 / 2 / level.camera.props.zoom - w / 2 - level.camera.props.x
                     var y = layer.y + 720 / 2 / level.camera.props.zoom - h / 2 - level.camera.props.y
+                    var rotation = layer.rotation * Math.PI / 180
+                    ctx.translate(x + w / 2, y + h / 2)
+                    ctx.rotate(rotation)
+                    ctx.translate(-(x + w / 2), -(y + h / 2))
                     ctx.drawImage(image, x, y, w, h)
                 }
 

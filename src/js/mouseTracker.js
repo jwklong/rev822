@@ -5,6 +5,8 @@ export default class MouseTracker {
     left = false
     right = false
 
+    inWindow = true
+
     constructor() {
         let the = this
         function handler(event) {
@@ -14,11 +16,12 @@ export default class MouseTracker {
             the.left = event.buttons % 2 >= 1
             the.right = event.buttons % 4 >= 2
 
-            console.log(80-the.x, -1200+the.x)
+            the.inWindow = true
         }
 
         addEventListener("mousedown", ev => handler(ev))
         addEventListener("mouseup", ev => handler(ev))
         addEventListener("mousemove", ev => handler(ev))
+        addEventListener("mouseout", ev => the.inWindow = false)
     }
 }

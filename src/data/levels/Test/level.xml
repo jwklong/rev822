@@ -9,7 +9,7 @@
     <desc>hi guys</desc>
   </head>
   <scene>
-    <layer img="IMAGE_LOGO" x="0" y="0" size="0.5" />
+    <layer img="IMAGE_LOGO" x="0" y="0" size="0.5" rotation="0" rotspeed="45" />
     <layer img="IMAGE_TEMP_BACKGROUND" x="0" y="0" size="2" z="-1" />
 
     <!-- too lazy to make it all but here also goes gooballs, gravity, collision, pipe etc etc you know -->

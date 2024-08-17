@@ -78,7 +78,7 @@ class Level {
     }
 
     tick(dt) {
-        if (this.camera.props.fixed == false) {
+        if (this.camera.props.fixed == false && window.game.MouseTracker.inWindow) {
             if (100 - window.game.MouseTracker.x > 0) {
                 this.camera.props.x -= (100 - window.game.MouseTracker.x) * dt * 12 / this.camera.props.zoom
             } else if (-1180 + window.game.MouseTracker.x > 0) {
@@ -90,6 +90,10 @@ class Level {
             } else if (-620 + window.game.MouseTracker.y > 0) {
                 this.camera.props.y += (-620 + window.game.MouseTracker.y) * dt * 12 / this.camera.props.zoom
             }
+        }
+
+        for (const layer of this.layers) {
+            layer.tick(dt)
         }
     }
 }
@@ -120,5 +124,11 @@ class Layer {
             }
         }
         this.z = xml.attributes.z || 0
+        this.rotation = xml.attributes.rotation || 0
+        this.rotspeed = xml.attributes.rotspeed || 0
+    }
+
+    tick(dt) {
+        this.rotation += this.rotspeed * dt
     }
 }
