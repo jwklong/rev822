@@ -45,6 +45,11 @@ window.game = game;
         game.timePassed = totalDT / 1000
 
         game.TimeManager.tick(dt)
+
+        if (game.Canvas.mode == 0) {
+            game.LevelManager.currentLevel.tick(dt)
+        }
+
         game.Canvas.tick(dt)
 
         requestAnimationFrame(tick)

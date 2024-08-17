@@ -88,8 +88,8 @@ export default class Canvas {
                     image.src = window.game.ResourceManager.getResource(layer.img).src
                     var w = image.width * layer.size.x
                     var h = image.height * layer.size.y
-                    var x = layer.x + 1280 / 2 / level.camera.props.zoom - w / 2 + level.camera.props.x
-                    var y = layer.y + 720 / 2 / level.camera.props.zoom - h / 2 + level.camera.props.y
+                    var x = layer.x + 1280 / 2 / level.camera.props.zoom - w / 2 - level.camera.props.x
+                    var y = layer.y + 720 / 2 / level.camera.props.zoom - h / 2 - level.camera.props.y
                     ctx.drawImage(image, x, y, w, h)
                 }
 
@@ -176,7 +176,7 @@ export default class Canvas {
             var timer = window.game.TimeManager.createTimer("LEVELTRANSITION", 8)
             timer.onfinish = () => {
                 this.startTransition(() => {
-                    this.mode = 1
+                    this.mode = 0
                 }, false, true)
             }
         }, true, false)

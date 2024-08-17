@@ -76,13 +76,30 @@ class Level {
             }
         }
     }
+
+    tick(dt) {
+        if (this.camera.props.fixed == false) {
+            if (100 - window.game.MouseTracker.x > 0) {
+                this.camera.props.x -= (100 - window.game.MouseTracker.x) * dt * 12 / this.camera.props.zoom
+            } else if (-1180 + window.game.MouseTracker.x > 0) {
+                this.camera.props.x += (-1180 + window.game.MouseTracker.x) * dt * 12 / this.camera.props.zoom
+            }
+
+            if (100 - window.game.MouseTracker.y > 0) {
+                this.camera.props.y -= (100 - window.game.MouseTracker.y) * dt * 12 / this.camera.props.zoom
+            } else if (-620 + window.game.MouseTracker.y > 0) {
+                this.camera.props.y += (-620 + window.game.MouseTracker.y) * dt * 12 / this.camera.props.zoom
+            }
+        }
+    }
 }
 
 class Camera {
     props = {
         x: 0,
         y: 0,
-        zoom: 1
+        zoom: 1,
+        fixed: false
     }
 
     // TODO: animate camera
