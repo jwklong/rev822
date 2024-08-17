@@ -44,6 +44,9 @@ class Timer {
     /** @type {() => any} */
     onfinish = () => {}
 
+    /** @type {() => any} */
+    while = () => {}
+
     /** @param {number} length */
     constructor(length) {
         this.length = length
@@ -57,6 +60,8 @@ class Timer {
     /** @param {number} dt */
     tick(dt) {
         this.timePassed += dt
+
+        this.while()
 
         if (this.finished) this.onfinish()
     }
