@@ -2,6 +2,30 @@ const { XMLParser } = require("fast-xml-parser")
 const fs = require("fs/promises")
 const path = require("path")
 
+const cloneObj = x => {
+    let clone = {}
+    for (let attr of Object.keys(x)) {
+        if (x.hasOwnProperty(attr)) {
+            function processor(input) {
+                if (input instanceof Array) {
+                    let array = []
+                    for (let value in input) {
+                        array[value] = processor(input[value])
+                    }
+                    return array
+                }
+                if (input instanceof Object) {
+                    return cloneObj(input)
+                }
+                return input
+            }
+            clone[attr] = processor(x[attr])
+        }
+    }
+    clone = Object.assign(Object.create(Object.getPrototypeOf(x)), clone)
+    return clone
+}
+
 // TODO: support for level.js (custom code for levels)
 
 export default class LevelManager {
@@ -38,7 +62,7 @@ export default class LevelManager {
 
     /** @param {string} id */
     set currentLevel(id) {
-        this.#currentLevel = Object.assign(Level.prototype, this.levels[id])
+        this.#currentLevel = cloneObj(this.levels[id])//Object.assign(Level.prototype, this.levels[id])
     }
 }
 
