@@ -103,6 +103,15 @@ export default class Canvas {
 
                 }
 
+                ctx.beginPath()
+                ctx.arc(window.game.MouseTracker.x, window.game.MouseTracker.y, 16, 0, 2 * Math.PI)
+                ctx.closePath()
+                ctx.fillStyle = "#000"
+                ctx.fill()
+                ctx.strokeStyle = "#fff"
+                ctx.lineWidth = 4
+                ctx.stroke()
+
                 break
             case 2: //level transition
                 ctx.fillStyle = "black"
