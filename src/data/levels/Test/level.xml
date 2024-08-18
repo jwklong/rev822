@@ -1,4 +1,4 @@
-<level>
+<level debug>
   <resources></resources>
   <head>
     <camera width="1280" height="720">
@@ -11,6 +11,9 @@
   <scene>
     <layer img="IMAGE_LOGO" x="0" y="0" size="0.5" rotation="0" rotspeed="45" />
     <layer img="IMAGE_TEMP_BACKGROUND" x="0" y="0" size="2" z="-1" />
+
+    <rect static x="0" y="-200" width="200" height="50" />
+    <rect x="110" y="0" width="50" height="50" />
 
     <!-- too lazy to make it all but here also goes gooballs, gravity, collision, pipe etc etc you know -->
   </scene>

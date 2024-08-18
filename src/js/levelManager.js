@@ -1,25 +1,32 @@
 const { XMLParser } = require("fast-xml-parser")
 const fs = require("fs/promises")
 const path = require("path")
+const Matter = require("matter-js")
 
-const cloneObj = x => {
+const cloneObj = (x, loop1 = 0) => {
+    if (loop1 > 10) {
+        return
+    }
     let clone = {}
     for (let attr of Object.keys(x)) {
         if (x.hasOwnProperty(attr)) {
-            function processor(input) {
+            function processor(input, name, loop2 = 0) {
+                if (loop2 > 50) {
+                    return
+                }
                 if (input instanceof Array) {
                     let array = []
                     for (let value in input) {
-                        array[value] = processor(input[value])
+                        array[value] = processor(input[value], loop2+1)
                     }
                     return array
                 }
                 if (input instanceof Object) {
-                    return cloneObj(input)
+                    return cloneObj(input, loop1+1)
                 }
                 return input
             }
-            clone[attr] = processor(x[attr])
+            clone[attr] = processor(x[attr], attr, 0)
         }
     }
     clone = Object.assign(Object.create(Object.getPrototypeOf(x)), clone)
@@ -62,7 +69,13 @@ export default class LevelManager {
 
     /** @param {string} id */
     set currentLevel(id) {
-        this.#currentLevel = cloneObj(this.levels[id])//Object.assign(Level.prototype, this.levels[id])
+        this.#currentLevel = this.levels[id]
+        this.#currentLevel.engine = Matter.Engine.create()
+        this.#currentLevel.engine.gravity.y = -1
+        for (let body of this.#currentLevel.bodies) {
+            let currentComposite = Matter.Composite.add(this.#currentLevel.engine.world, body.body)
+            body.body = currentComposite.bodies[currentComposite.bodies.length-1]
+        }
     }
 }
 
@@ -73,6 +86,11 @@ class Level {
     /** @type {Camera} */
     camera = new Camera
 
+    engine
+
+    /** @type {GenericBody[]} */
+    bodies = []
+
     /**
      * @param {Object} xml
      * @param {string} id 
@@ -81,6 +99,7 @@ class Level {
         this.id = id
         this.title = xml.head.title.value
         this.desc = xml.head.desc.value
+        this.debug = xml.attributes.debug || false
 
         //parse dem resources
         for (const [key, value] of Object.entries(xml.resources)) {
@@ -97,6 +116,13 @@ class Level {
                         this.layers.push(new Layer(v))
                     }
                     break
+                case "rect":
+                    for (let v of value) {
+                        this.bodies.push(new RectBody(v.attributes))
+                    }
+                    break
+                default:
+                    console.warn(`unknown object '${key}' in level ${this.id}`)
             }
         }
     }
@@ -119,6 +145,8 @@ class Level {
         for (const layer of this.layers) {
             layer.tick(dt)
         }
+
+        Matter.Engine.update(this.engine, dt * 1000)
     }
 }
 
@@ -154,5 +182,58 @@ class Layer {
 
     tick(dt) {
         this.rotation += this.rotspeed * dt
+    }
+}
+
+class GenericBody {
+    /** @type {string} */
+    type = "generic"
+
+    /** @type {number} */
+    get x() { return this.body.position.x }
+    set x(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(val, this.y)) }
+
+    /** @type {number} */
+    get y() { return this.body.position.y }
+    set y(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(this.x, val)) }
+
+    /** @type {boolean} */
+    get static() { return this.body.isStatic }
+    set static(val) { Matter.Body.setStatic(this.body, val) }
+
+    /** @param {Object} attributes */
+    constructor(attributes, body) {
+        this.body = body || Matter.Body.Create()
+
+        this.x = attributes.x
+        this.y = attributes.y
+
+        this.startx = attributes.x
+        this.starty = attributes.y
+
+        this.static = attributes.static || false
+    }
+}
+
+class RectBody extends GenericBody {
+    type = "rect"
+
+    /**
+     * @type {number}
+     * @readonly
+     */
+    width
+
+    /**
+     * @type {number}
+     * @readonly
+     */
+    height
+
+    constructor(attributes) {
+        super(attributes, Matter.Bodies.rectangle(0, 0, attributes.width, attributes.height))
+
+        this.width = attributes.width
+        this.height = attributes.height
     }
 }

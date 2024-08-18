@@ -95,6 +95,41 @@ export default class Canvas {
                     ctx.rotate(rotation)
                     ctx.translate(-(x + w / 2), -(y + h / 2))
                     ctx.drawImage(image, x, y, w, h)
+                    ctx.translate(x + w / 2, y + h / 2)
+                    ctx.rotate(-rotation)
+                    ctx.translate(-(x + w / 2), -(y + h / 2))
+                }
+
+                if (level.debug) {
+                    for (var body of level.bodies) {
+                        switch (body.type) {
+                            case "rect": {
+                                ctx.beginPath()
+                                for (var vertex of body.body.vertices) {
+                                    if (vertex.index == 0) {
+                                        ctx.moveTo(
+                                            vertex.x - level.camera.props.x + 1280 / 2,
+                                            -vertex.y - level.camera.props.y + 720 / 2
+                                        )
+                                    }
+                                    ctx.lineTo(
+                                        vertex.x - level.camera.props.x + 1280 / 2,
+                                        -vertex.y - level.camera.props.y + 720 / 2
+                                    )
+                                }
+                                ctx.closePath()
+                                ctx.fillStyle = "#00f8"
+                                ctx.strokeStyle = "#00f"
+                                ctx.lineWidth = 4
+                                ctx.save()
+                                ctx.clip()
+                                ctx.lineWidth *= 2
+                                ctx.fill()
+                                ctx.stroke()
+                                ctx.restore()
+                            }
+                        }
+                    }
                 }
 
                 ctx.resetTransform()

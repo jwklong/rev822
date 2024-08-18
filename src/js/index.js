@@ -41,7 +41,7 @@ window.game = game;
         totalDT = dt
         dt = totalDT - lastDT
         dt /= 1000
-        dt = Math.min(0.2, dt)
+        dt = Math.min(0.1, dt)
         game.timePassed = totalDT / 1000
 
         game.TimeManager.tick(dt)
