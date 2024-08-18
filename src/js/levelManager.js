@@ -172,6 +172,10 @@ class GenericBody {
     get y() { return this.body.position.y }
     set y(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(this.x, val)) }
 
+    /** @type {number} */
+    get rotation() { return this.body.angle * 180 / Math.PI}
+    set rotation(val) { Matter.Body.rotate(this.body, val / 180 * Math.PI) }
+
     /** @type {boolean} */
     get static() { return this.body.isStatic }
     set static(val) { Matter.Body.setStatic(this.body, val) }
@@ -193,8 +197,7 @@ class GenericBody {
         this.x = attributes.x
         this.y = attributes.y
 
-        this.startx = attributes.x
-        this.starty = attributes.y
+        this.rotation = attributes.rotation || 0
 
         this.static = attributes.static || false
 
