@@ -1,0 +1,5 @@
+<materials>
+    <material name="default" friction="1" bounciness="0" />
+    <material name="grass" friction="0.95" bounciness="0.2" />
+    <material name="ice" friction="0" bounciness="0.05" />
+</materials>

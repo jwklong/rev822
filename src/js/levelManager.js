@@ -3,36 +3,6 @@ const fs = require("fs/promises")
 const path = require("path")
 const Matter = require("matter-js")
 
-const cloneObj = (x, loop1 = 0) => {
-    if (loop1 > 10) {
-        return
-    }
-    let clone = {}
-    for (let attr of Object.keys(x)) {
-        if (x.hasOwnProperty(attr)) {
-            function processor(input, name, loop2 = 0) {
-                if (loop2 > 50) {
-                    return
-                }
-                if (input instanceof Array) {
-                    let array = []
-                    for (let value in input) {
-                        array[value] = processor(input[value], loop2+1)
-                    }
-                    return array
-                }
-                if (input instanceof Object) {
-                    return cloneObj(input, loop1+1)
-                }
-                return input
-            }
-            clone[attr] = processor(x[attr], attr, 0)
-        }
-    }
-    clone = Object.assign(Object.create(Object.getPrototypeOf(x)), clone)
-    return clone
-}
-
 // TODO: support for level.js (custom code for levels)
 
 export default class LevelManager {
@@ -69,7 +39,7 @@ export default class LevelManager {
 
     /** @param {string} id */
     set currentLevel(id) {
-        this.#currentLevel = this.levels[id]
+        this.#currentLevel = this.levels[id].clone()
         this.#currentLevel.engine = Matter.Engine.create()
         this.#currentLevel.engine.gravity.y = -1
         for (let body of this.#currentLevel.bodies) {
@@ -97,6 +67,7 @@ class Level {
      */
     constructor(xml, id) {
         this.id = id
+        this.xml = xml
         this.title = xml.head.title.value
         this.desc = xml.head.desc.value
         this.debug = xml.attributes.debug || false
@@ -125,6 +96,10 @@ class Level {
                     console.warn(`unknown object '${key}' in level ${this.id}`)
             }
         }
+    }
+
+    clone() {
+        return new Level(this.xml, this.id)
     }
 
     tick(dt) {
@@ -201,6 +176,16 @@ class GenericBody {
     get static() { return this.body.isStatic }
     set static(val) { Matter.Body.setStatic(this.body, val) }
 
+    /** @type {string} */
+    #material
+    /** @type {string} */
+    get material() { return this.#material.name }
+    set material(val) {
+        this.#material = window.game.MaterialManager.getMaterial(val)
+        this.body.friction = this.#material.friction
+        this.body.restitution = this.#material.bounciness
+    }
+
     /** @param {Object} attributes */
     constructor(attributes, body) {
         this.body = body || Matter.Body.Create()
@@ -212,6 +197,8 @@ class GenericBody {
         this.starty = attributes.y
 
         this.static = attributes.static || false
+
+        this.material = attributes.material || "default"
     }
 }
 

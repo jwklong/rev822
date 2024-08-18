@@ -1,6 +1,7 @@
 import MouseTracker from "./mouseTracker.js";
 import TimeManager from "./timeManager.js";
 import ResourceManager from "./resourceManager.js";
+import MaterialManager from "./materialManager.js";
 import LevelManager from "./levelManager.js";
 import Easing from "./easing.js";
 import Canvas from "./canvas.js";
@@ -11,6 +12,7 @@ let game = {
     MouseTracker: new MouseTracker,
     TimeManager: new TimeManager,
     ResourceManager: new ResourceManager,
+    MaterialManager: new MaterialManager,
     LevelManager: new LevelManager,
     Easing,
     Canvas: new Canvas,
@@ -21,6 +23,7 @@ window.game = game;
 
 (async () => {
     await game.ResourceManager.addXMLFile(path.join(__dirname, "../data/resources.xml"))
+    await game.MaterialManager.addXMLFile(path.join(__dirname, "../data/materials.xml"))
 
     var levelsFolder = (await fs.readdir(path.join(__dirname, "../data/levels")))
         .filter(async (src) => (await fs.stat(path.join(__dirname, "../data/levels", src))).isDirectory())
