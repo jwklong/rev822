@@ -1,0 +1,8 @@
+.type-signature {
+    color: #999 !important;
+}
+
+.main-wrapper :any-link:not(.link-anchor) {
+    color: #3bf !important;
+    font-weight: bold;
+}

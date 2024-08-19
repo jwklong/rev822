@@ -1,11 +1,16 @@
 /** @class */
 export default class MouseTracker {
+    /** @type {Number} */
     x = 0
+    /** @type {Number} */
     y = 0
 
+    /** @type {Boolean} */
     left = false
+    /** @type {Boolean} */
     right = false
 
+    /** @type {Boolean} */
     inWindow = true
 
     constructor() {

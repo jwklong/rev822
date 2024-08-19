@@ -4,7 +4,7 @@ const path = require("path")
 
 /** @class */
 export default class MaterialManager {
-    /** @type {Materials[]} */
+    /** @type {Material[]} */
     materials = {}
 
     /** @param {string} src */
@@ -40,6 +40,7 @@ export default class MaterialManager {
     }
 }
 
+/** @class */
 class Material {
     /** @type {string} */
     name

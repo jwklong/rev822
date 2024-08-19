@@ -1,6 +1,6 @@
 /** @class */
 export default class TimeManager {
-    /** @type {Object.<string, Timer>} */
+    /** @type {Object<string, Timer>} */
     timers = {}
 
     /**

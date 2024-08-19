@@ -7,7 +7,7 @@ const Matter = require("matter-js")
 
 /** @class */
 export default class LevelManager {
-    /** @type {Object.<string, Level>} */
+    /** @type {Object<string, Level>} */
     levels = {}
 
     /** @type {string?} */
@@ -33,12 +33,15 @@ export default class LevelManager {
         this.levels[id] = new Level(xml.level, id)
     }
 
-    /** @returns {Level?} */
+    /**
+     * To set this value, you MUST use a string of the level ID
+     * @type {Level?}
+     * @returns {Level?}
+     * @param {string} id
+     */
     get currentLevel() {
         return this.#currentLevel
     }
-
-    /** @param {string} id */
     set currentLevel(id) {
         this.#currentLevel = this.levels[id].clone()
         this.#currentLevel.engine = Matter.Engine.create()
@@ -57,10 +60,30 @@ class Level {
     /** @type {Camera} */
     camera = new Camera
 
+    /**
+     * This is only available when the level is being played
+     * @type {Matter.Engine}
+     * @see {@link https://brm.io/matter-js/docs/classes/Engine.html|Matter.Engine}
+     */
     engine
 
     /** @type {GenericBody[]} */
     bodies = []
+
+    /** @type {string} */
+    id
+
+    /** @type {Object} */
+    xml
+
+    /** @type {string} */
+    title
+
+    /** @type {string} */
+    desc
+
+    /** @type {boolean} */
+    debug
 
     /**
      * @param {Object} xml
@@ -104,6 +127,10 @@ class Level {
         }
     }
 
+    /**
+     * Creates a exact clone of itself
+     * @returns {Level}
+     */
     clone() {
         return new Level(this.xml, this.id)
     }
@@ -131,7 +158,15 @@ class Level {
     }
 }
 
+/** @class */
 class Camera {
+    /**
+     * @type {Object}
+     * @property {number} x
+     * @property {number} y
+     * @property {number} zoom
+     * @property {boolean} fixed
+     */
     props = {
         x: 0,
         y: 0,
@@ -161,6 +196,7 @@ class Layer {
         this.rotspeed = xml.attributes.rotspeed || 0
     }
 
+    /** @param {number} dt */
     tick(dt) {
         this.rotation += this.rotspeed * dt
     }
@@ -172,6 +208,12 @@ class GenericBody {
      * @readonly\ 
      */
     type = "generic"
+
+    /**
+     * @type {Matter.Body}
+     * @see {@link https://brm.io/matter-js/docs/classes/Body.html|Matter.Body}
+     */
+    body
 
     /** @type {number} */
     get x() { return this.body.position.x }
@@ -189,7 +231,7 @@ class GenericBody {
     get static() { return this.body.isStatic }
     set static(val) { Matter.Body.setStatic(this.body, val) }
 
-    /** @type {string} */
+    /** @type {Material} */
     #material
     /** @type {string} */
     get material() { return this.#material.name }

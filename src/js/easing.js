@@ -1,4 +1,4 @@
-const bezierEasing = require("bezier-easing")
+const bezierEasing = require('bezier-easing')
 
 /** @class */
 export default class Easing {
@@ -24,9 +24,27 @@ export default class Easing {
         return bezierEasing(this.x1, this.y1, this.x2, this.y2)(x)
     }
 
+    /**
+     * Reverses the easing
+     * @param {Easing} ease
+     * @returns {Easing}
+     */
+    static reverse(ease) {
+        return new Easing(ease.y1, ease.x1, ease.y2, ease.x2)
+    }
+
+    /** @static */
     static linear =     new Easing(0.0, 0.0, 1.0, 1.0)
+
+    /** @static */
     static easeIn =     new Easing(0.5, 0.0, 1.0, 1.0)
+
+    /** @static */
     static easeOut =    new Easing(0.0, 0.0, 0.5, 1.0)
+
+    /** @static */
     static easeInOut =  new Easing(0.5, 0.0, 0.5, 1.0)
+
+    /** @static */
     static easeOutIn =  new Easing(0.0, 0.5, 1.0, 0.5)
 }

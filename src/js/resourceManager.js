@@ -4,7 +4,7 @@ const path = require("path")
 
 /** @class */
 export default class ResourceManager {
-    /** @type {Object.<string, GenericResource>} */
+    /** @type {Object<string, GenericResource>} */
     resources = {}
 
     /**
@@ -74,7 +74,10 @@ class GenericResource {
     /** @type {boolean} */
     loaded = false
 
-    /** @type {string} */
+    /**
+     * @type {string}
+     * @readonly
+     */
     type = "generic"
 
     /**
@@ -86,6 +89,9 @@ class GenericResource {
         this.src = src
     }
 
+    /**
+     * Loads the resource
+     */
     load() {
         return new Promise((resolve, reject) => {
             if (this.loaded) reject("Resource is already loaded")

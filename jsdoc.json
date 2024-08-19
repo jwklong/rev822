@@ -18,8 +18,10 @@
             "title": "rev822",
             "sections": [
                 "Global",
-                "Classes"
-            ]
+                "Classes",
+                "Modules"
+            ],
+            "include_css": ["./static-docs/custom.css"]
         }
     },
     "markdown": {
