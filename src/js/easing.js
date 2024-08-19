@@ -1,5 +1,6 @@
 const bezierEasing = require("bezier-easing")
 
+/** @class */
 export default class Easing {
     /**
      * @param {number} x1 

@@ -1,5 +1,6 @@
+/** @class */
 export default class TimeManager {
-    /** @type {{[key: string]: Timer}} */
+    /** @type {Object.<string, Timer>} */
     timers = {}
 
     /**
@@ -41,10 +42,10 @@ class Timer {
     /** @type {number} */
     timePassed = 0
 
-    /** @type {() => any} */
+    /** @type {function} */
     onfinish = () => {}
 
-    /** @type {() => any} */
+    /** @type {function} */
     while = () => {}
 
     /** @param {number} length */

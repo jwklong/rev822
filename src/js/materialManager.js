@@ -2,6 +2,7 @@ const { XMLParser } = require("fast-xml-parser")
 const fs = require("fs/promises")
 const path = require("path")
 
+/** @class */
 export default class MaterialManager {
     /** @type {Materials[]} */
     materials = {}

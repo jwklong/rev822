@@ -1,3 +1,4 @@
+/** @class */
 export default class MouseTracker {
     x = 0
     y = 0

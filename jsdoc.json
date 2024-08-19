@@ -1,0 +1,29 @@
+{
+    "plugins": [
+        "plugins/markdown",
+        "node_modules/@ckeditor/jsdoc-plugins/lib/export-fixer/export-fixer"
+    ],
+    "source": {
+        "include": ["src/js"],
+        "exclude": ["node_modules"]
+    },
+    "opts": {
+        "encoding": "utf8",
+        "readme": "./README.md",
+        "destination": "docs",
+        "template": "node_modules/clean-jsdoc-theme",
+        "theme_opts": {
+            "default_theme": "dark",
+            "homepageTitle": "rev822",
+            "title": "rev822",
+            "sections": [
+                "Global",
+                "Classes"
+            ]
+        }
+    },
+    "markdown": {
+        "hardwrap": false,
+        "idInHeadings": true
+    }
+}

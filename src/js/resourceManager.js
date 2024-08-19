@@ -2,8 +2,9 @@ const { XMLParser } = require("fast-xml-parser")
 const fs = require("fs/promises")
 const path = require("path")
 
+/** @class */
 export default class ResourceManager {
-    /** @type {{[key: string]: GenericResource}} */
+    /** @type {Object.<string, GenericResource>} */
     resources = {}
 
     /**
@@ -95,6 +96,7 @@ class GenericResource {
     }
 }
 
+/** @extends GenericResource */
 class ImageResource extends GenericResource {
     type = "image"
 
@@ -117,6 +119,7 @@ class ImageResource extends GenericResource {
     }
 }
 
+/** @extends GenericResource */
 class FontResource extends GenericResource {
     type = "font"
 

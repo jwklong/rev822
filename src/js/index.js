@@ -8,6 +8,16 @@ import Canvas from "./canvas.js";
 const path = require("path")
 const fs = require("fs/promises")
 
+/**
+ * @property {MouseTracker} MouseTracker - Tracks mouse movements.
+ * @property {TimeManager} TimeManager - Manages time and timers.
+ * @property {ResourceManager} ResourceManager - Handles resource loading and management.
+ * @property {MaterialManager} MaterialManager - Manages materials.
+ * @property {LevelManager} LevelManager - Handles level data, the core of the game
+ * @property {Easing} Easing - Provides easing functions.
+ * @property {Canvas} Canvas - Manages the drawing canvas.
+ * @property {number} timePassed - Tracks the time passed in the game.
+ */
 let game = {
     MouseTracker: new MouseTracker,
     TimeManager: new TimeManager,

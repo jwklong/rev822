@@ -1,11 +1,12 @@
+/** @class */
 export default class Canvas {
     /**
-     * @type {number}
      * -1 = loading
      * 0 = playing
      * 1 = paused
      * 2 = level transition
      * 3 = cutscene?
+     * @type {number}
      */
     mode = -1
 
@@ -197,7 +198,7 @@ export default class Canvas {
     }
 
     /**
-     * @param {() => any} callback 
+     * @param {function} callback 
      * @param {boolean} inT
      * @param {boolean} outT
      */

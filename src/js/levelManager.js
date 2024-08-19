@@ -5,8 +5,9 @@ const Matter = require("matter-js")
 
 // TODO: support for level.js (custom code for levels)
 
+/** @class */
 export default class LevelManager {
-    /** @type {{[key: string]: Level}} */
+    /** @type {Object.<string, Level>} */
     levels = {}
 
     /** @type {string?} */
@@ -213,6 +214,7 @@ class GenericBody {
     }
 }
 
+/** @extends GenericBody */
 class RectBody extends GenericBody {
     type = "rect"
 
@@ -236,6 +238,7 @@ class RectBody extends GenericBody {
     }
 }
 
+/** @extends GenericBody */
 class CircleBody extends GenericBody {
     type = "circle"
 
