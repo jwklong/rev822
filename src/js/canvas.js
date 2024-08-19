@@ -103,7 +103,7 @@ export default class Canvas {
                 if (level.debug) {
                     for (var body of level.bodies) {
                         switch (body.type) {
-                            case "rect": {
+                            case "rect":
                                 ctx.beginPath()
                                 for (var vertex of body.body.vertices) {
                                     if (vertex.index == 0) {
@@ -118,17 +118,24 @@ export default class Canvas {
                                     )
                                 }
                                 ctx.closePath()
-                                ctx.fillStyle = "#00f8"
-                                ctx.strokeStyle = "#00f"
-                                ctx.lineWidth = 4
-                                ctx.save()
-                                ctx.clip()
-                                ctx.lineWidth *= 2
-                                ctx.fill()
-                                ctx.stroke()
-                                ctx.restore()
-                            }
+                                break
+                            case "circle":
+                                ctx.beginPath()
+                                ctx.arc(
+                                    body.x - level.camera.props.x + 1280 / 2,
+                                    -body.y - level.camera.props.y + 720 / 2,
+                                    body.radius, 0, 2 * Math.PI
+                                )
                         }
+                        ctx.fillStyle = "#00f8"
+                        ctx.strokeStyle = "#00f"
+                        ctx.lineWidth = 4
+                        ctx.save()
+                        ctx.clip()
+                        ctx.lineWidth *= 2
+                        ctx.fill()
+                        ctx.stroke()
+                        ctx.restore()
                     }
                 }
 

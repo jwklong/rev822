@@ -92,6 +92,11 @@ class Level {
                         this.bodies.push(new RectBody(v.attributes))
                     }
                     break
+                case "circle":
+                    for (let v of value) {
+                        this.bodies.push(new CircleBody(v.attributes))
+                    }
+                    break
                 default:
                     console.warn(`unknown object '${key}' in level ${this.id}`)
             }
@@ -161,7 +166,10 @@ class Layer {
 }
 
 class GenericBody {
-    /** @type {string} */
+    /**
+     * @type {string}
+     * @readonly\ 
+     */
     type = "generic"
 
     /** @type {number} */
@@ -225,5 +233,21 @@ class RectBody extends GenericBody {
 
         this.width = attributes.width
         this.height = attributes.height
+    }
+}
+
+class CircleBody extends GenericBody {
+    type = "circle"
+
+    /**
+     * @type {number}
+     * @readonly
+     */
+    radius
+
+    constructor(attributes) {
+        super(attributes, Matter.Bodies.circle(0, 0, attributes.radius))
+
+        this.radius = attributes.radius
     }
 }
