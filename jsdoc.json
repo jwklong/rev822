@@ -1,7 +1,8 @@
 {
     "plugins": [
         "plugins/markdown",
-        "node_modules/@ckeditor/jsdoc-plugins/lib/export-fixer/export-fixer"
+        "node_modules/@ckeditor/jsdoc-plugins/lib/export-fixer/export-fixer",
+        "./static-docs/plugin.js"
     ],
     "source": {
         "include": ["src/js"],

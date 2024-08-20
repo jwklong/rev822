@@ -33,18 +33,38 @@ export default class Easing {
         return new Easing(ease.y1, ease.x1, ease.y2, ease.x2)
     }
 
-    /** @static */
+    /**
+     * @type {Easing}
+     * @memberof Easing
+     * @static
+     */
     static linear =     new Easing(0.0, 0.0, 1.0, 1.0)
 
-    /** @static */
+    /**
+     * @type {Easing}
+     * @memberof Easing
+     * @static
+     */
     static easeIn =     new Easing(0.5, 0.0, 1.0, 1.0)
 
-    /** @static */
+    /**
+     * @type {Easing}
+     * @memberof Easing
+     * @static
+     */
     static easeOut =    new Easing(0.0, 0.0, 0.5, 1.0)
 
-    /** @static */
+    /**
+     * @type {Easing}
+     * @memberof Easing
+     * @static
+     */
     static easeInOut =  new Easing(0.5, 0.0, 0.5, 1.0)
 
-    /** @static */
+    /**
+     * @type {Easing}
+     * @memberof Easing
+     * @static
+     */
     static easeOutIn =  new Easing(0.0, 0.5, 1.0, 0.5)
 }

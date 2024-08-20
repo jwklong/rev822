@@ -42,11 +42,24 @@ class Timer {
     /** @type {number} */
     timePassed = 0
 
-    /** @type {function} */
+    /**
+     * @function
+     * @description
+     * Runs when the timer is finished
+     * 
+     * Intended to be overriden
+     */
     onfinish = () => {}
 
-    /** @type {function} */
-    while = () => {}
+    /**
+     * @function
+     * @param {number} timePassed
+     * @description
+     * Runs every tick
+     * 
+     * Intended to be overriden
+     */
+    while = (timePassed) => {}
 
     /** @param {number} length */
     constructor(length) {

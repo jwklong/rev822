@@ -1,11 +1,11 @@
 /** @class */
 export default class Canvas {
     /**
-     * -1 = loading
-     * 0 = playing
-     * 1 = paused
-     * 2 = level transition
-     * 3 = cutscene?
+     * - -1 = loading
+     * - 0 = playing
+     * - 1 = paused
+     * - 2 = level transition
+     * - 3 = cutscene?
      * @type {number}
      */
     mode = -1
@@ -13,8 +13,8 @@ export default class Canvas {
     /** @type {number} */
     transition = false
     /**
-     * 0 = in
-     * 1 = out
+     * - 0 = in
+     * - 1 = out
      * @type {number}
      */
     transitionType = 0
@@ -225,7 +225,19 @@ export default class Canvas {
         this.transition = false
     }
 
-    playLevel(id) {
+    /**
+     * Plays the level, includes transitions
+     * @param {string} id - Level ID
+     * @param {boolean} skip - Skips the midway section
+     */
+    playLevel(id, skip = false) {
+        if (skip) {
+            this.startTransition(() => {
+                window.game.LevelManager.currentLevel = id
+                this.mode = 0
+            }, true, true)
+            return
+        }
         this.startTransition(() => {
             this.mode = 2
             window.game.LevelManager.currentLevel = id

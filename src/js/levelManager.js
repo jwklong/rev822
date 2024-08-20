@@ -37,7 +37,9 @@ export default class LevelManager {
      * To set this value, you MUST use a string of the level ID
      * @type {Level?}
      * @returns {Level?}
-     * @param {string} id
+     * @example
+     * game.LevelManager.currentLevel = "Test" // sets with a string
+     * game.LevelManager.currentLevel // returns a Level
      */
     get currentLevel() {
         return this.#currentLevel
@@ -135,6 +137,22 @@ class Level {
         return new Level(this.xml, this.id)
     }
 
+    /**
+     * @param {string} ref
+     * @returns {Layer?}
+     */
+    getLayerFromRef(ref) {
+        return this.layers.find(layer => layer.ref === ref)
+    }
+
+    /**
+     * @param {string} ref
+     * @returns {GenericBody?}
+     */
+    getBodyFromRef(ref) {
+        return this.bodies.find(body => body.ref === ref)
+    }
+
     tick(dt) {
         if (this.camera.props.fixed == false && window.game.MouseTracker.inWindow) {
             if (100 - window.game.MouseTracker.x > 0) {
@@ -178,12 +196,43 @@ class Camera {
 }
 
 class Layer {
+    /** @type {string} */
+    img
+
+    /** @type {string?} */
+    ref
+
+    /** @type {number} */
+    x
+
+    /** @type {number} */
+    y
+
+    /**
+     * @type {Object}
+     * @property {number} x
+     * @property {number} y
+     */
+    size = {
+        x: 1,
+        y: 1
+    }
+
+    /** @type {number} */
+    z
+
+    /** @type {number} */
+    rotation
+
+    /** @type {number} */
+    rotspeed
+
     /** @param {Object} xml */
     constructor(xml) {
         this.img = xml.attributes.img
+        this.ref = String(xml.attributes.ref) || null
         this.x = xml.attributes.x
         this.y = xml.attributes.y
-        this.size = {x: 1, y: 1}
         if (xml.attributes.size) {
             if (typeof xml.attributes.size === "string") {
                 this.size = {x: Number(xml.attributes.size.split(",")[0]), y: Number(xml.attributes.size.split(",")[1])}
@@ -215,6 +264,9 @@ class GenericBody {
      */
     body
 
+    /** @type {string?} */
+    ref
+
     /** @type {number} */
     get x() { return this.body.position.x }
     set x(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(val, this.y)) }
@@ -244,6 +296,8 @@ class GenericBody {
     /** @param {Object} attributes */
     constructor(attributes, body) {
         this.body = body || Matter.Body.Create()
+
+        this.ref = String(attributes.ref) || null
 
         this.x = attributes.x
         this.y = attributes.y
