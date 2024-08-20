@@ -1,0 +1,13 @@
+<level debug>
+  <resources></resources>
+  <head>
+    <camera width="1440" height="2160">
+      <keyframe x="0" y="-720" zoom="1" />
+    </camera>
+    <title>Going Up</title>
+    <desc>TBD</desc>
+  </head>
+  <scene>
+    <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+  </scene>
+</level>
