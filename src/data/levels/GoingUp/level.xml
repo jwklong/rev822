@@ -1,5 +1,7 @@
 <level debug>
-  <resources></resources>
+  <resources>
+    <image id="IMAGE_GOINGUP_HILL" src="levels/GoingUp/hill.svg" />
+  </resources>
   <head>
     <camera width="1440" height="2160">
       <keyframe x="0" y="-720" zoom="1" />
@@ -9,5 +11,7 @@
   </head>
   <scene>
     <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+    <layer img="IMAGE_GOINGUP_HILL" x="0" y="-800" size="1" z="0" />
+    <circle static x="0" y="-1595" radius="1100" />
   </scene>
 </level>

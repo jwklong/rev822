@@ -87,6 +87,12 @@ class Level {
     /** @type {boolean} */
     debug
 
+    /** @type {number} */
+    width
+
+    /** @type {number} */
+    height
+
     /**
      * @param {Object} xml
      * @param {string} id 
@@ -98,10 +104,13 @@ class Level {
         this.desc = xml.head.desc.value
         this.debug = xml.attributes.debug || false
 
+        this.width = xml.head.camera.attributes.width
+        this.height = xml.head.camera.attributes.height
+
         //parse dem resources
         for (const [key, value] of Object.entries(xml.resources)) {
             for (const resource of value) {
-                this.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
+                window.game.ResourceManager.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
             }
         }
 
@@ -162,11 +171,25 @@ class Level {
             }
 
             if (100 - window.game.MouseTracker.y > 0) {
-                this.camera.props.y -= (100 - window.game.MouseTracker.y) * dt * 12 / this.camera.props.zoom
+                this.camera.props.y += (100 - window.game.MouseTracker.y) * dt * 12 / this.camera.props.zoom
             } else if (-620 + window.game.MouseTracker.y > 0) {
-                this.camera.props.y += (-620 + window.game.MouseTracker.y) * dt * 12 / this.camera.props.zoom
+                this.camera.props.y -= (-620 + window.game.MouseTracker.y) * dt * 12 / this.camera.props.zoom
             }
         }
+
+        const clamp = (a, b, c) => Math.min(c, Math.max(b, a))
+
+        this.camera.props.x = clamp(
+            -((this.width - 1280 / this.camera.props.zoom) / 2),
+            this.camera.props.x,
+            (this.width - 1280 / this.camera.props.zoom) / 2
+        )
+
+        this.camera.props.y = clamp(
+            -((this.height - 720/ this.camera.props.zoom) / 2),
+            this.camera.props.y,
+            (this.height - 720 / this.camera.props.zoom) / 2
+        )
 
         for (const layer of this.layers) {
             layer.tick(dt)
