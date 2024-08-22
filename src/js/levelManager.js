@@ -97,7 +97,7 @@ class Level {
      * @param {Object} xml
      * @param {string} id 
      */
-    constructor(xml, id) {
+    constructor(xml, id, clone = false) {
         this.id = id
         this.xml = xml
         this.title = xml.head.title.value
@@ -108,9 +108,11 @@ class Level {
         this.height = xml.head.camera.attributes.height
 
         //parse dem resources
-        for (const [key, value] of Object.entries(xml.resources)) {
-            for (const resource of value) {
-                window.game.ResourceManager.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
+        if (!clone) {
+            for (const [key, value] of Object.entries(xml.resources)) {
+                for (const resource of value) {
+                    window.game.ResourceManager.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
+                }
             }
         }
 
@@ -143,7 +145,7 @@ class Level {
      * @returns {Level}
      */
     clone() {
-        return new Level(this.xml, this.id)
+        return new Level(this.xml, this.id, true)
     }
 
     /**

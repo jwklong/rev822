@@ -5,6 +5,7 @@ import MaterialManager from "./materialManager.js";
 import LevelManager from "./levelManager.js";
 import Easing from "./easing.js";
 import Canvas from "./canvas.js";
+import ProfileManager from "./profileManager.js";
 const path = require("path")
 const fs = require("fs/promises")
 
@@ -16,6 +17,7 @@ const fs = require("fs/promises")
  * @property {LevelManager} LevelManager - Handles level data, the core of the game
  * @property {Easing} Easing - Provides easing functions.
  * @property {Canvas} Canvas - Manages the drawing canvas.
+ * @property {ProfileManager} ProfileManager - Contains all the player data and settings
  * @property {number} timePassed - Tracks the time passed in the game.
  */
 let game = {
@@ -26,6 +28,7 @@ let game = {
     LevelManager: new LevelManager,
     Easing,
     Canvas: new Canvas,
+    ProfileManager: new ProfileManager,
 
     timePassed: 0
 }
