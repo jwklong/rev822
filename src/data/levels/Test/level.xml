@@ -1,26 +1,26 @@
 <level debug>
-  <resources></resources>
-  <head>
-    <camera width="1280" height="720">
-      <keyframe x="0" y="0" zoom="1" pause="2" /> <!-- 0, 0 will always be center,,, so cool!!! -->
-      <keyframe x="0" y="0" zoom="2" time="2" pause="1" />
-    </camera>
-    <title>Testing Room</title>
-    <desc>hi guys</desc>
-  </head>
-  <scene>
-    <layer img="IMAGE_LOGO" x="0" y="0" size="0.5" rotation="0" rotspeed="45" />
-    <layer img="IMAGE_TEMP_BACKGROUND" x="0" y="0" size="2" z="-1" />
+    <resources></resources>
+    <head>
+        <camera width="1280" height="720">
+            <keyframe x="0" y="0" zoom="1.5" pause="2" /> <!-- 0, 0 will always be center,,, so cool!!! -->
+            <keyframe x="0" y="0" zoom="1" time="2" pause="1" />
+        </camera>
+        <title>Testing Room</title>
+        <desc>hi guys</desc>
+    </head>
+    <scene>
+        <layer img="IMAGE_LOGO" x="0" y="0" size="0.5" rotation="0" rotspeed="45" />
+        <layer img="IMAGE_TEMP_BACKGROUND" x="0" y="0" size="2" z="-1" />
 
-    <rect static x="0" y="-200" width="200" height="50" material="grass" rotation="-15" ref="test" />
-    <circle x="0" y="0" radius="25" />
+        <rect static x="0" y="-200" width="200" height="50" material="grass" rotation="-15" ref="test" />
+        <circle x="0" y="0" radius="25" />
 
-    <rect static x="400" y="-200" width="200" height="50" material="ice" rotation="-15" />
-    <circle x="400" y="0" radius="25" />
+        <rect static x="400" y="-200" width="200" height="50" material="ice" rotation="-15" />
+        <circle x="400" y="0" radius="25" />
 
-    <rect static x="-400" y="-200" width="200" height="50" material="default" rotation="-15" />
-    <circle x="-400" y="0" radius="25" />
+        <rect static x="-400" y="-200" width="200" height="50" material="default" rotation="-15" />
+        <circle x="-400" y="0" radius="25" />
 
-    <!-- too lazy to make it all but here also goes gooballs, gravity, collision, pipe etc etc you know -->
-  </scene>
+        <!-- too lazy to make it all but here also goes gooballs, gravity, collision, pipe etc etc you know -->
+    </scene>
 </level>

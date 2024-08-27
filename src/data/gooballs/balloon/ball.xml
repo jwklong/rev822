@@ -1,0 +1,15 @@
+<ball mass="80" antigrav nobuild>
+    <resources>
+        <image id="IMAGE_BALL_BALLOON_BODY" src="gooballs/balloon/body.svg" />
+        <image id="IMAGE_BALL_BALLOON_STRAND" src="gooballs/balloon/strand.svg" />
+    </resources>
+    <head>
+        <shape type="circle" radius="30" />
+        <strand img="IMAGE_BALL_BALLOON_STRAND" length="200" range="50" amount="1" detachable />
+    </head>
+    <body>
+        <layer img="IMAGE_BALL_BALLOON_BODY" x="0" y="0" />
+
+        <eye x="0" y="0" radius="16" />
+    </body>
+</ball>

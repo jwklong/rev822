@@ -1,0 +1,16 @@
+<ball mass="30">
+    <resources>
+        <image id="IMAGE_BALL_ICE_BODY" src="gooballs/ice/body.svg" />
+        <image id="IMAGE_BALL_ICE_STRAND" src="gooballs/ice/strand.svg" />
+    </resources>
+    <head>
+        <shape type="circle" radius="20" />
+        <strand img="IMAGE_BALL_ICE_STRAND" length="160" range="50" amount="4" />
+    </head>
+    <body>
+        <layer img="IMAGE_BALL_ICE_BODY" x="0" y="0" />
+
+        <eye x="-10" y="7" radius="9" />
+        <eye x="10" y="7" radius="9" />
+    </body>
+</ball>

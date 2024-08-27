@@ -131,3 +131,6 @@ dist
 
 #jsdoc output
 docs
+
+#i dont like package-lock
+package-lock.json

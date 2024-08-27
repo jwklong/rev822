@@ -1,17 +1,32 @@
-<level debug>
-  <resources>
-    <image id="IMAGE_GOINGUP_HILL" src="levels/GoingUp/hill.svg" />
-  </resources>
-  <head>
-    <camera width="1440" height="2160">
-      <keyframe x="0" y="-720" zoom="1" />
-    </camera>
-    <title>Going Up</title>
-    <desc>TBD</desc>
-  </head>
-  <scene>
-    <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
-    <layer img="IMAGE_GOINGUP_HILL" x="0" y="-800" size="1" z="0" />
-    <circle static x="0" y="-1595" radius="1100" />
-  </scene>
+<level>
+    <resources>
+        <image id="IMAGE_GOINGUP_HILL" src="levels/GoingUp/hill.svg" />
+    </resources>
+    <head>
+        <camera width="1440" height="2160">
+            <keyframe x="0" y="-720" zoom="1" />
+        </camera>
+        <title>Going Up</title>
+        <desc>TBD</desc>
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+        <layer img="IMAGE_GOINGUP_HILL" x="0" y="-800" size="1" z="0" />
+        <circle static x="0" y="-1595" radius="1100" />
+        <ball type="common" x="60" y="0" ref="0" />
+        <ball type="common" x="-60" y="0" ref="1" />
+        <ball type="ivy" x="60" y="120" ref="2" />
+        <ball type="ivy" x="-60" y="120" ref="3" />
+        <ball type="ivy" x="0" y="220" ref="4" />
+        <ball type="balloon" x="0" y="400" ref="5" />
+        <strand type="common" from="0" to="1" />
+        <strand type="ivy" from="1" to="2" />
+        <strand type="ivy" from="2" to="3" />
+        <strand type="ivy" from="3" to="0" />
+        <strand type="ivy" from="3" to="1" />
+        <strand type="ivy" from="2" to="0" />
+        <strand type="ivy" from="2" to="4" />
+        <strand type="ivy" from="3" to="4" />
+        <strand type="balloon" from="5" to="4" />
+    </scene>
 </level>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 108 24" width="108px" height="24px" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="54" y1="8.536" x2="54" y2="15.464" id="gradient-0" gradientTransform="matrix(0, -19.00051, 19.00051, 0, -162.18939, 1038.109715)">
+      <stop offset="0" style="stop-color: rgb(189, 148, 111); stop-opacity: 0;"></stop>
+      <stop offset="0.114" style="stop-color: rgb(187, 146, 109);"></stop>
+      <stop offset="1" style="stop-color: rgb(103, 65, 29);"></stop>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="54" y1="8.536" x2="54" y2="15.464" id="gradient-1" gradientTransform="matrix(0, -22.826757, 22.826757, 0, -194.850361, 1244.727119)">
+      <stop offset="0" style="stop-opacity: 0;"></stop>
+      <stop offset="0.177" style="stop-opacity: 0.15;"></stop>
+    </linearGradient>
+  </defs>
+  <path style="fill: none; stroke-linecap: square; stroke: url(#gradient-0); stroke-width: 6px;" d="M 0 12 C 54 24 54 0 108 12"></path>
+  <path style="fill: none; stroke-linecap: square; stroke: url(#gradient-1); stroke-width: 6px; stroke-dasharray: 8, 20; stroke-dashoffset: 10.91px;" d="M 0 12 C 54 24 54 0 108 12"></path>
+</svg>

@@ -1,0 +1,16 @@
+<ball mass="30">
+    <resources>
+        <image id="IMAGE_BALL_COMMON_BODY" src="gooballs/common/body.svg" />
+        <image id="IMAGE_BALL_COMMON_STRAND" src="gooballs/common/strand.svg" />
+    </resources>
+    <head>
+        <shape type="circle" radius="20" />
+        <strand img="IMAGE_BALL_COMMON_STRAND" length="160" range="50" amount="2" />
+    </head>
+    <body>
+        <layer img="IMAGE_BALL_COMMON_BODY" x="0" y="0" />
+
+        <eye x="-10" y="7" radius="9" />
+        <eye x="10" y="7" radius="9" />
+    </body>
+</ball>

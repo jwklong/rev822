@@ -1,32 +1,37 @@
-import MouseTracker from "./mouseTracker.js";
+import Layer from "./layer.js";
+import Easing from "./easing.js";
+import InputTracker from "./inputTracker.js";
 import TimeManager from "./timeManager.js";
 import ResourceManager from "./resourceManager.js";
 import MaterialManager from "./materialManager.js";
+import GooballManager from "./gooballManager.js";
 import LevelManager from "./levelManager.js";
-import Easing from "./easing.js";
 import Canvas from "./canvas.js";
 import ProfileManager from "./profileManager.js";
 const path = require("path")
 const fs = require("fs/promises")
 
 /**
- * @property {MouseTracker} MouseTracker - Tracks mouse movements.
+ * @property {Layer} Layer - Custom image data for rendering
+ * @property {Easing} Easing - Provides easing functions.
+ * @property {InputTracker} InputTracker - Tracks mouse movements.
  * @property {TimeManager} TimeManager - Manages time and timers.
  * @property {ResourceManager} ResourceManager - Handles resource loading and management.
  * @property {MaterialManager} MaterialManager - Manages materials.
  * @property {LevelManager} LevelManager - Handles level data, the core of the game
- * @property {Easing} Easing - Provides easing functions.
  * @property {Canvas} Canvas - Manages the drawing canvas.
  * @property {ProfileManager} ProfileManager - Contains all the player data and settings
  * @property {number} timePassed - Tracks the time passed in the game.
  */
 let game = {
-    MouseTracker: new MouseTracker,
+    Layer,
+    Easing,
+    InputTracker: new InputTracker,
     TimeManager: new TimeManager,
     ResourceManager: new ResourceManager,
     MaterialManager: new MaterialManager,
+    GooballManager: new GooballManager,
     LevelManager: new LevelManager,
-    Easing,
     Canvas: new Canvas,
     ProfileManager: new ProfileManager,
 
@@ -38,6 +43,15 @@ window.game = game;
     await game.ResourceManager.addXMLFile(path.join(__dirname, "../data/resources.xml"))
     await game.MaterialManager.addXMLFile(path.join(__dirname, "../data/materials.xml"))
 
+    //balls
+    var ballsFolder = (await fs.readdir(path.join(__dirname, "../data/gooballs")))
+        .filter(async (src) => (await fs.stat(path.join(__dirname, "../data/gooballs", src))).isDirectory())
+
+    for (const ballFolder of ballsFolder) {
+        await game.GooballManager.addType(path.join(__dirname, "../data/gooballs", ballFolder))
+    }
+
+    //levels
     var levelsFolder = (await fs.readdir(path.join(__dirname, "../data/levels")))
         .filter(async (src) => (await fs.stat(path.join(__dirname, "../data/levels", src))).isDirectory())
 
@@ -57,7 +71,7 @@ window.game = game;
         totalDT = dt
         dt = totalDT - lastDT
         dt /= 1000
-        dt = Math.min(0.1, dt)
+        dt = Math.min(1/60, dt)
         game.timePassed = totalDT / 1000
 
         game.TimeManager.tick(dt)
