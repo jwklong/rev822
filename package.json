@@ -15,7 +15,8 @@
   "scripts": {
     "start": "electron .",
     "jsdoc": "npx jsdoc -c jsdoc.json",
-    "build": "npx electron-builder"
+    "build": "npx electron-builder",
+    "postinstall": "npm update matter-js"
   },
   "keywords": [],
   "author": "jwklong",
