@@ -136,13 +136,18 @@ export default class Canvas {
                 if (window.game.InputTracker.ball) {
                     window.game.LevelManager.currentLevel.balls.forEach(x => {
                         if (x === window.game.InputTracker.ball) return
-                        if (x.strand.nobuild) return
+                        if (x.nobuild) return
                         if (window.game.LevelManager.currentLevel.getStrandsOfBall(x).length === 0) return
                         if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
                         if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
                         applicableBalls.push(x)
                     })
                     
+                    applicableBalls.sort((a, b) => {
+                        let distanceA = Math.hypot(a.x - window.game.InputTracker.ball.x, a.y - window.game.InputTracker.ball.y)
+                        let distanceB = Math.hypot(b.x - window.game.InputTracker.ball.x, b.y - window.game.InputTracker.ball.y)
+                        return distanceA - distanceB
+                    })
                     applicableBalls = applicableBalls.slice(0, window.game.InputTracker.ball.strand.amount)
                     if (applicableBalls.length >= (window.game.InputTracker.ball.strand.single ? 1 : 2)) canBuild = true
 

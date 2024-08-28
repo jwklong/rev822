@@ -294,6 +294,13 @@ class Level {
 
         for (let ball of this.balls) {
             if (ball.antigrav) ball.body.gravityScale = this.getStrandsOfBall(ball).length >= 1 ? -1 : 1
+
+            for (let body of this.bodies) {
+                if (Matter.Query.collides(body.body, [ball.body]).length > 0) {
+                    if (body.sticky && this.getStrandsOfBall(ball).length > 0) ball.body.isStatic = true
+                    if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
+                }
+            }
         }
 
         Matter.Engine.update(this.engine, dt * 1000)
@@ -334,6 +341,18 @@ class GenericBody {
 
     /** @type {string?} */
     ref
+
+    /**
+     * Detaches gooballs from their strands on touch
+     * @type {boolean}
+     */
+    detaches = false
+
+    /**
+     * Makes gooballs stick to the body
+     * @type {boolean}
+     */
+    sticky = false
 
     /** @type {number} */
     get x() { return this.body.position.x }
@@ -381,6 +400,9 @@ class GenericBody {
         this.static = attributes.static || false
 
         this.material = attributes.material || "default"
+
+        this.sticky = attributes.sticky
+        this.detaches = attributes.detaches
     }
 }
 
