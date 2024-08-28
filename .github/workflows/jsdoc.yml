@@ -26,6 +26,8 @@ jobs:
       with:
         node-version: 22.x
         cache: 'npm'
+    - name: install or something i dont know
+      run: npm i
     - name: build jsdoc
       run: npm run jsdoc
     - name: Setup Pages
