@@ -15,7 +15,9 @@ function createWindow() {
         }
     })
 
-    win.webContents.openDevTools({ mode: "detach" })
+    if (!app.isPackaged) {
+        win.webContents.openDevTools({ mode: "detach" })
+    }
     win.setMenuBarVisibility(false)
     win.loadFile('src/pages/index.html')
 }
