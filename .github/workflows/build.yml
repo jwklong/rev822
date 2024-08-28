@@ -29,5 +29,5 @@ jobs:
       uses: actions/upload-artifact@v4.3.6
       with:
         name: rev822-${{ matrix.os }}-${{ matrix.arch }}.zip
-        path: out/rev822.zip
+        path: dist/rev822.zip
         retention-days: 90
