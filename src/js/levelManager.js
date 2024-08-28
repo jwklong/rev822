@@ -217,13 +217,29 @@ class Level {
     /**
      * @param {Gooball} a
      * @param {Gooball} b
+     * @returns {Strand?}
+     */
+    getStrandFromBalls(a, b) {
+        return this.strands.find(strand => (strand.ball1 === a && strand.ball2 === b) || (strand.ball1 === b && strand.ball2 === a))
+    }
+
+    /** @param {Gooball} gooball */
+    killGooball(gooball) {
+        this.deleteStrands(gooball)
+        this.balls = this.balls.filter(v => v !== gooball)
+        Matter.Composite.remove(this.engine.world, gooball.body)
+    }
+
+    /**
+     * @param {Gooball} a
+     * @param {Gooball} b
      */
     deleteStrand(a, b) {
+        //NOTE: i cant use getStrandFromBalls cus i need the index
         for (let i in this.strands) {
             let strand = this.strands[i]
             if ((strand.ball1 === a && strand.ball2 === b) || (strand.ball1 === b && strand.ball2 === a)) {
-                strand.constraint.bodyA = undefined
-                strand.constraint.bodyB = undefined
+                Matter.Composite.remove(this.engine.world, strand.constraint)
                 this.strands.splice(i,1)
                 return
             }
@@ -239,12 +255,10 @@ class Level {
      * @param {string} type
      * @param {Gooball} a
      * @param {Gooball} b
-     * @param {Matter.Engine?} engine
-     * @see {@link https://brm.io/matter-js/docs/classes/Engine.html|Matter.Engine}
      */
-    createStrand(type, a, b, engine) {
+    createStrand(type, a, b) {
         let strand = new Strand(type, a, b)
-        if (engine) Matter.Composite.add(engine.world, strand.constraint)
+        if (this.engine) Matter.Composite.add(this.engine.world, strand.constraint)
         this.strands.push(strand)
     }
 

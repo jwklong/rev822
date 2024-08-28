@@ -11,6 +11,9 @@ export default class InputTracker {
     right = false
 
     /** @type {Boolean} */
+    shift = false
+
+    /** @type {Boolean} */
     inWindow = true
 
     /** @type {Gooball?} */
@@ -18,7 +21,9 @@ export default class InputTracker {
 
     constructor() {
         let the = this
-        function handler(event) {
+
+        /** @param {MouseEvent} event */
+        function mouseHandler(event) {
             the.x = event.pageX
             the.y = event.pageY
     
@@ -28,10 +33,18 @@ export default class InputTracker {
             the.inWindow = true
         }
 
-        addEventListener("mousedown", ev => handler(ev))
-        addEventListener("mouseup", ev => handler(ev))
-        addEventListener("mousemove", ev => handler(ev))
+        /** @param {KeyboardEvent} event */
+        function keyHandler(event) {
+            the.shift = event.shiftKey
+        }
+
+        addEventListener("mousedown", ev => mouseHandler(ev))
+        addEventListener("mouseup", ev => mouseHandler(ev))
+        addEventListener("mousemove", ev => mouseHandler(ev))
         addEventListener("mouseout", ev => the.inWindow = false)
+
+        addEventListener("keydown", ev => keyHandler(ev))
+        addEventListener("keyup", ev => keyHandler(ev))
     }
 
     /**
