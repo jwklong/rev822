@@ -240,6 +240,8 @@ class Level {
             let strand = this.strands[i]
             if ((strand.ball1 === a && strand.ball2 === b) || (strand.ball1 === b && strand.ball2 === a)) {
                 Matter.Composite.remove(this.engine.world, strand.constraint)
+                if (this.getStrandsOfBall(a).length == 0) a.body.collisionFilter.mask = 0b11
+                if (this.getStrandsOfBall(b).length == 0) b.body.collisionFilter.mask = 0b11
                 this.strands.splice(i,1)
                 return
             }
@@ -259,6 +261,8 @@ class Level {
     createStrand(type, a, b) {
         let strand = new Strand(type, a, b)
         if (this.engine) Matter.Composite.add(this.engine.world, strand.constraint)
+        a.body.collisionFilter.mask = 0b10
+        b.body.collisionFilter.mask = 0b10
         this.strands.push(strand)
     }
 

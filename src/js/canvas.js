@@ -161,15 +161,10 @@ export default class Canvas {
                         let ball2 = applicableBalls[1]
 
                         if (ball1 == undefined || ball2 == undefined) return
-                        console.log(1)
                         if (window.game.InputTracker.ball.nobuild) return
-                        console.log(2)
                         if (window.game.LevelManager.currentLevel.getStrandFromBalls(ball1, ball2) !== undefined) return
-                        console.log(3)
                         if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
-                        console.log(4)
                         if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
-                        console.log(5)
 
                         canBuild = true
 
