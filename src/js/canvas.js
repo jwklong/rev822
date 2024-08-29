@@ -134,10 +134,10 @@ export default class Canvas {
                 let applicableBalls = []
                 let canBuild = false
                 if (window.game.InputTracker.ball) {(() => {
-                    window.game.LevelManager.currentLevel.balls.forEach(x => {
+                    level.balls.forEach(x => {
                         if (x === window.game.InputTracker.ball) return
                         if (x.nobuild) return
-                        if (window.game.LevelManager.currentLevel.getStrandsOfBall(x).length === 0) return
+                        if (level.getStrandsOfBall(x).length === 0) return
                         if (!window.game.InputTracker.shift) {
                             if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
                         }
@@ -162,7 +162,7 @@ export default class Canvas {
 
                         if (ball1 == undefined || ball2 == undefined) return
                         if (window.game.InputTracker.ball.nobuild) return
-                        if (window.game.LevelManager.currentLevel.getStrandFromBalls(ball1, ball2) !== undefined) return
+                        if (level.getStrandFromBalls(ball1, ball2) !== undefined) return
                         if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
                         if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
 
@@ -193,7 +193,7 @@ export default class Canvas {
                         ball.x + 1280 / 2 - level.camera.props.x,
                         -ball.y + 720 / 2 + level.camera.props.y,
                     ) < 320 && (
-                        window.game.LevelManager.currentLevel.getStrandsOfBall(ball).length == 0 ||
+                        level.getStrandsOfBall(ball).length == 0 ||
                         (ball.strand && ball.strand.detachable)
                     )) {
                         for (let eye of ball.eyes) {
@@ -230,7 +230,7 @@ export default class Canvas {
                         -ball.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom,
                         ball.shape.radius + 4
                     ) && (
-                        window.game.LevelManager.currentLevel.getStrandsOfBall(ball).length == 0 ||
+                        level.getStrandsOfBall(ball).length == 0 ||
                         ball.strand.detachable
                     )) {
                         if (ballToDrag == null) ballToDrag = ball 
@@ -327,7 +327,7 @@ export default class Canvas {
                     window.game.InputTracker.ball = ballToDrag
                     window.game.InputTracker.ball.body.isStatic = true
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
-                    window.game.LevelManager.currentLevel.deleteStrands(ballToDrag)
+                    level.deleteStrands(ballToDrag)
                     
                 } else if (window.game.InputTracker.ball !== undefined && !window.game.InputTracker.left) {
                     window.game.InputTracker.ball.body.isStatic = false
@@ -335,11 +335,11 @@ export default class Canvas {
 
                     if (canBuild) {
                         if (window.game.InputTracker.shift) {
-                            window.game.LevelManager.currentLevel.createStrand(window.game.InputTracker.ball.type, applicableBalls[0], applicableBalls[1])
-                            window.game.LevelManager.currentLevel.killGooball(window.game.InputTracker.ball)
+                            level.createStrand(window.game.InputTracker.ball.type, applicableBalls[0], applicableBalls[1])
+                            level.killGooball(window.game.InputTracker.ball)
                         } else {
                             for (let applicableBall of applicableBalls) {
-                                window.game.LevelManager.currentLevel.createStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall)
+                                level.createStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall)
                             }
                         }
                     }
