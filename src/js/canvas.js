@@ -27,7 +27,7 @@ export default class Canvas {
     /** @param {number} dt */
     tick(dt) {
         const ctx = this.element.getContext('2d')
-        ctx.clearRect(0, 0, 1280, 720)
+        // ctx.clearRect(0, 0, 1280, 720)
         ctx.globalAlpha = 1
         ctx.resetTransform()
 
