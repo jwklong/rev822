@@ -20,12 +20,14 @@ export default class InputTracker {
     ball
 
     constructor() {
+        const clamp = (a, b, c) => Math.min(c, Math.max(b, a))
+
         let the = this
 
         /** @param {MouseEvent} event */
         function mouseHandler(event) {
-            the.x = event.pageX
-            the.y = event.pageY
+            the.x = clamp(0, event.pageX, 1280)
+            the.y = clamp(0, event.pageY, 720)
     
             the.left = event.buttons % 2 >= 1
             the.right = event.buttons % 4 >= 2

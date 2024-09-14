@@ -266,6 +266,7 @@ class Level {
         this.strands.push(strand)
     }
 
+    /** @param {number} dt */
     tick(dt) {
         if (this.camera.props.fixed == false && window.game.InputTracker.inWindow) {
             if (100 - window.game.InputTracker.x > 0) {
