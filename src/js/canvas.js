@@ -293,17 +293,11 @@ export default class Canvas {
                                 )
                                 ctx.closePath()
 
-                                if (window.game.InputTracker.withinCircle(
-                                    ball.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
-                                    -ball.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom,
-                                    ball.shape.radius + 4
-                                )) selected = true
-
                                 break
                         }
                         ctx.fillStyle = "#3338"
                         ctx.strokeStyle = "#333"
-                        if (selected) {
+                        if (ball == window.game.InputTracker.ball || ball == ballToDrag) {
                             ctx.fillStyle = "#0f08"
                             ctx.strokeStyle = "#0f0"
                         }
