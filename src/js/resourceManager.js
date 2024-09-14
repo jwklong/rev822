@@ -106,15 +106,29 @@ class GenericResource {
 class ImageResource extends GenericResource {
     type = "image"
 
+    /**
+     * Empty until loaded
+     * @type {HTMLImageElement}
+     */
+    image
+
+    constructor(id, src) {
+        super(id, src)
+        this.image = new Image()
+        this.image.src = this.src
+    }
+
     load() {
+        let the = this
         return new Promise((resolve, reject) => {
-            if (this.loaded) reject("Resource is already loaded")
+            if (the.loaded) reject("Resource is already loaded")
             
             const img = new Image()
-            img.src = this.src
+            img.src = the.src
             img.onload = () => {
-                img.remove()
-                this.loaded = true
+                the.image = img
+                console.log(img)
+                the.loaded = true
                 resolve()
             }
             img.onerror = () => {

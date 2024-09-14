@@ -38,11 +38,9 @@ export default class Canvas {
                 if (fillAmount == 1) {
                     if (!window.game.TimeManager.timerExists('POSTLOADING')) {window.game.TimeManager.createTimer('POSTLOADING', 1)}
 
-                    const image1 = new Image()
-                    image1.src = window.game.ResourceManager.getResource('IMAGE_LOADFINISHED').src
+                    const image1 = window.game.ResourceManager.getResource('IMAGE_LOADFINISHED').image
                     
-                    const image2 = new Image()
-                    image2.src = window.game.ResourceManager.getResource('IMAGE_TEMP_BACKGROUND').src
+                    const image2 = window.game.ResourceManager.getResource('IMAGE_TEMP_BACKGROUND').image
 
                     ctx.drawImage(image2, 0, 0, 1280, 720)
                     ctx.drawImage(image1, 540, 260)
@@ -85,8 +83,7 @@ export default class Canvas {
                 ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
                 function renderImage(layer, ox = 0, oy = 0) {
-                    var image = new Image()
-                    image.src = window.game.ResourceManager.getResource(layer.img).src
+                    var image = window.game.ResourceManager.getResource(layer.img).image
                     var w = image.width * layer.size.x
                     var h = image.height * layer.size.y
                     var x = layer.x + ox + 1280 / 2 / level.camera.props.zoom - w / 2 - level.camera.props.x
@@ -110,8 +107,7 @@ export default class Canvas {
                 function drawStrand(type, ball1, ball2, ghost = false) {
                     let ball = window.game.GooballManager.types[type]
 
-                    var image = new Image()
-                    image.src = window.game.ResourceManager.getResource(ball.strand.img).src
+                    var image = window.game.ResourceManager.getResource(ball.strand.img).image
 
                     let x1 = ball1.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x
                     let y1 = -ball1.y + 720 / 2 / level.camera.props.zoom + level.camera.props.y

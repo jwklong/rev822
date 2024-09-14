@@ -60,7 +60,7 @@ window.game = game;
     }
 
     Object.values(game.ResourceManager.resources).forEach(async resource => {
-        await resource.load()
+        resource.load()
     })
 
     var totalDT = 0
