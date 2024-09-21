@@ -4,6 +4,7 @@ import InputTracker from "./inputTracker.js";
 import TimeManager from "./timeManager.js";
 import ResourceManager from "./resourceManager.js";
 import MaterialManager from "./materialManager.js";
+import AudioManager from "./audioManager.js";
 import GooballManager from "./gooballManager.js";
 import LevelManager from "./levelManager.js";
 import Canvas from "./canvas.js";
@@ -13,15 +14,18 @@ const fs = require("fs/promises")
 
 /**
  * @property {Layer} Layer - Custom image data for rendering
- * @property {Easing} Easing - Provides easing functions.
- * @property {InputTracker} InputTracker - Tracks mouse movements.
- * @property {TimeManager} TimeManager - Manages time and timers.
- * @property {ResourceManager} ResourceManager - Handles resource loading and management.
- * @property {MaterialManager} MaterialManager - Manages materials.
+ * @property {Easing} Easing - Provides easing functions
+ * @property {InputTracker} InputTracker - Tracks mouse movements
+ * @property {TimeManager} TimeManager - Manages time and timers
+ * @property {ResourceManager} ResourceManager - Handles resource loading and management
+ * @property {MaterialManager} MaterialManager - Manages materials for physics
+ * @property {AudioManager} AudioManager - Play music & SFX
+ * @property {AudioManager} GooballManager - Manages gooballs
  * @property {LevelManager} LevelManager - Handles level data, the core of the game
- * @property {Canvas} Canvas - Manages the drawing canvas.
+ * @property {Canvas} Canvas - Manages the drawing canvas
  * @property {ProfileManager} ProfileManager - Contains all the player data and settings
- * @property {number} timePassed - Tracks the time passed in the game.
+ * 
+ * @property {number} timePassed - Tracks the time passed in the game
  */
 let game = {
     Layer,
@@ -30,6 +34,7 @@ let game = {
     TimeManager: new TimeManager,
     ResourceManager: new ResourceManager,
     MaterialManager: new MaterialManager,
+    AudioManager: new AudioManager,
     GooballManager: new GooballManager,
     LevelManager: new LevelManager,
     Canvas: new Canvas,

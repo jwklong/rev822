@@ -83,6 +83,12 @@ class GenericResource {
      */
     type = "generic"
 
+    /** @type {string} */
+    id
+
+    /** @type {string} */
+    src
+
     /**
      * @param {string} id
      * @param {string} src
