@@ -2,6 +2,8 @@
     <font id="FONT_COOKIES" src="fonts/cookies.otf" />
     <font id="FONT_EMB" src="fonts/emb.otf" />
     <font id="FONT_TCCEB" src="fonts/tcceb.otf" />
+    
+    <audio id="MUSIC_FORGOTTEN_ADVENTURERS" src="audio/music/forgotten-adventurers.mp3" />
 
     <image id="IMAGE_LOADFINISHED" src="images/loadingFinished.png" />
 

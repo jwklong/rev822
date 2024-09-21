@@ -17,6 +17,9 @@ export default class ResourceManager {
             case "image":
                 this.resources[id] = new ImageResource(id, src)
                 break
+            case "audio":
+                this.resources[id] = new AudioResource(id, src)
+                break
             case "font":
                 this.resources[id] = new FontResource(id, src)
                 break
@@ -107,7 +110,6 @@ class ImageResource extends GenericResource {
     type = "image"
 
     /**
-     * Empty until loaded
      * @type {HTMLImageElement}
      */
     image
@@ -127,12 +129,44 @@ class ImageResource extends GenericResource {
             img.src = the.src
             img.onload = () => {
                 the.image = img
-                console.log(img)
                 the.loaded = true
                 resolve()
             }
             img.onerror = () => {
                 img.remove()
+                reject("Failed to load resource")
+            }
+        })
+    }
+}
+
+/** @extends GenericResource */
+class AudioResource extends GenericResource {
+    type = "audio"
+
+    /**
+     * @type {HTMLAudioElement}
+     */
+    audio
+
+    constructor(id, src) {
+        super(id, src)
+        this.audio = new Audio(this.src)
+    }
+
+    load() {
+        let the = this
+        return new Promise((resolve, reject) => {
+            if (the.loaded) reject("Resource is already loaded")
+            
+            const aud = new Audio(this.src)
+            aud.oncanplaythrough = () => {
+                the.audio = aud
+                the.loaded = true
+                resolve()
+            }
+            aud.onerror = () => {
+                aud.remove()
                 reject("Failed to load resource")
             }
         })
