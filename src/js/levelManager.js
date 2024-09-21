@@ -38,8 +38,8 @@ export default class LevelManager {
      * @type {Level?}
      * @returns {Level?}
      * @example
-     * game.LevelManager.currentLevel = "Test" // sets with a string
-     * game.LevelManager.currentLevel // returns a Level
+     * LevelManager.currentLevel = "Test" // sets with a string
+     * LevelManager.currentLevel // returns a Level
      */
     get currentLevel() {
         return this.#currentLevel
