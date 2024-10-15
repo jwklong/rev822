@@ -1,3 +1,5 @@
+const Matter = require("matter-js")
+
 /** @class */
 export default class Canvas {
     /**
@@ -121,61 +123,79 @@ export default class Canvas {
                     ctx.translate(x1, y1)
                     ctx.rotate(angle)
                     if (ghost) ctx.globalAlpha = 0.5
+                    if (applicableStrand == level.strands.find(v => v.ball1 == ball1 && v.ball2 == ball2)) ctx.filter = "brightness(1.5)"
 
                     ctx.drawImage(image, 0, -image.height / 2, distance, image.height)
                     
                     ctx.restore()
                     if (ghost) ctx.globalAlpha = 1
+                    if (applicableStrand == level.strands.find(v => v.ball1 == ball1 && v.ball2 == ball2)) ctx.filter = ""
                 }
                 let applicableBalls = []
+                let applicableStrand = null
                 let canBuild = false
-                if (window.game.InputTracker.ball) {(() => {
-                    level.balls.forEach(x => {
-                        if (x === window.game.InputTracker.ball) return
-                        if (x.nobuild) return
-                        if (level.getStrandsOfBall(x).length === 0) return
-                        if (!window.game.InputTracker.shift) {
-                            if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
-                        }
-                        if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
-                        applicableBalls.push(x)
-                    })
-                    
-                    applicableBalls = applicableBalls.sort((a, b) => { 
-                        let distanceA = Math.hypot(a.x - window.game.InputTracker.ball.x, a.y - window.game.InputTracker.ball.y)
-                        let distanceB = Math.hypot(b.x - window.game.InputTracker.ball.x, b.y - window.game.InputTracker.ball.y)
-                        return distanceA - distanceB
-                    })
-                    if (window.game.InputTracker.shift) {
-                        applicableBalls = applicableBalls.sort((a, b) => {
-                            let distanceA = Math.hypot(a.x - applicableBalls[0].x, a.y - applicableBalls[0].y)
-                            let distanceB = Math.hypot(b.x - applicableBalls[0].x, b.y - applicableBalls[0].y)
-                            return distanceA - distanceB
-                        })
-
-                        let ball1 = applicableBalls[0]
-                        let ball2 = applicableBalls[1]
-
-                        if (ball1 == undefined || ball2 == undefined) return
-                        if (window.game.InputTracker.ball.nobuild) return
-                        if (level.getStrandFromBalls(ball1, ball2) !== undefined) return
-                        if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
-                        if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
-
-                        canBuild = true
-
-                        drawStrand(window.game.InputTracker.ball.type, ball1, ball2, true)
-                    } else {
-                        applicableBalls = applicableBalls.slice(0, window.game.InputTracker.ball.strand.amount)
-                        if (applicableBalls.length < (window.game.InputTracker.ball.strand.single ? 1 : 2)) return
-
-                        canBuild = true
-
-                        for (let applicableBall of applicableBalls) {
-                            drawStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall, true)
+                if (window.game.InputTracker.ball) {
+                    for (let strand of level.strands) {
+                        if (window.game.InputTracker.cursorIntersectsLine(
+                            strand.ball1.x, strand.ball1.y,
+                            strand.ball2.x, strand.ball2.y,
+                            window.game.InputTracker.ball.shape.radius / 1.5,
+                            window.game.InputTracker.ball.x, window.game.InputTracker.ball.y
+                        )) {
+                            applicableStrand = strand
+                            break
                         }
                     }
-                })()}
+
+                    (() => {
+                        if (applicableStrand) return
+                        level.balls.forEach(x => {
+                            if (x === window.game.InputTracker.ball) return
+                            if (x.nobuild) return
+                            if (level.getStrandsOfBall(x).length === 0) return
+                            if (!window.game.InputTracker.shift) {
+                                if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
+                            }
+                            if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
+                            applicableBalls.push(x)
+                        })
+                        
+                        applicableBalls = applicableBalls.sort((a, b) => { 
+                            let distanceA = Math.hypot(a.x - window.game.InputTracker.ball.x, a.y - window.game.InputTracker.ball.y)
+                            let distanceB = Math.hypot(b.x - window.game.InputTracker.ball.x, b.y - window.game.InputTracker.ball.y)
+                            return distanceA - distanceB
+                        })
+                        if (window.game.InputTracker.shift) {
+                            applicableBalls = applicableBalls.sort((a, b) => {
+                                let distanceA = Math.hypot(a.x - applicableBalls[0].x, a.y - applicableBalls[0].y)
+                                let distanceB = Math.hypot(b.x - applicableBalls[0].x, b.y - applicableBalls[0].y)
+                                return distanceA - distanceB
+                            })
+
+                            let ball1 = applicableBalls[0]
+                            let ball2 = applicableBalls[1]
+
+                            if (ball1 == undefined || ball2 == undefined) return
+                            if (window.game.InputTracker.ball.nobuild) return
+                            if (level.getStrandFromBalls(ball1, ball2) !== undefined) return
+                            if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
+                            if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
+
+                            canBuild = true
+
+                            drawStrand(window.game.InputTracker.ball.type, ball1, ball2, true)
+                        } else {
+                            applicableBalls = applicableBalls.slice(0, window.game.InputTracker.ball.strand.amount)
+                            if (applicableBalls.length < (window.game.InputTracker.ball.strand.single ? 1 : 2)) return
+
+                            canBuild = true
+
+                            for (let applicableBall of applicableBalls) {
+                                drawStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall, true)
+                            }
+                        }
+                    })()
+                }
                 for (let strand of level.strands) {
                     drawStrand(strand.type, strand.ball1, strand.ball2)
                 }
@@ -306,8 +326,6 @@ export default class Canvas {
                         ctx.restore()
                     }
                 }
-
-                ctx.resetTransform()
                 
                 if (this.mode === 1) {
 
@@ -315,12 +333,15 @@ export default class Canvas {
 
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.left) {
                     window.game.InputTracker.ball = ballToDrag
-                    window.game.InputTracker.ball.body.isStatic = true
-                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
+
                     level.deleteStrands(ballToDrag)
+                    ballToDrag.getOffStrand(true)
+
+                    Matter.Body.setStatic(window.game.InputTracker.ball.body, true)
+                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
                     
                 } else if (window.game.InputTracker.ball !== undefined && !window.game.InputTracker.left) {
-                    window.game.InputTracker.ball.body.isStatic = false
+                    Matter.Body.setStatic(window.game.InputTracker.ball.body, false)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
 
                     if (canBuild) {
@@ -332,6 +353,15 @@ export default class Canvas {
                                 level.createStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall)
                             }
                         }
+                    } else if (applicableStrand) {
+                        window.game.InputTracker.ball.putOnStrand(
+                            applicableStrand,
+                            window.game.InputTracker.cursorIntersectsLineProgress(
+                                applicableStrand.ball1.x, applicableStrand.ball1.y,
+                                applicableStrand.ball2.x, applicableStrand.ball2.y,
+                                window.game.InputTracker.ball.x, window.game.InputTracker.ball.y
+                            )
+                        )
                     }
 
                     window.game.InputTracker.ball = undefined
@@ -376,6 +406,8 @@ export default class Canvas {
                     makeCircle(x - dist, y + dist)
                     makeCircle(x + dist, y + dist)
                 }
+
+                ctx.resetTransform()
 
                 break
             case 2: //level transition

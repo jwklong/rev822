@@ -70,6 +70,15 @@ class Gooball {
     strand
 
     /**
+     * What strand it is on when climbing
+     * @type {Object?}
+     * @property {Strand} strand
+     * @property {number} progress - A value from 0 - 1, meaning left to right
+     * @property {boolean} reverse - Reversed direction
+     */
+    strandOn
+
+    /**
      * Stops gooballs from building on this gooball
      * @type {string}
      */
@@ -160,6 +169,43 @@ class Gooball {
 
     clone() {
         return new Gooball(this.xml, this.type)
+    }
+
+    /**
+     * put ball on strand
+     * @param {Strand} strand 
+     * @param {number} progress 
+     * @param {boolean} reverse
+     */
+    putOnStrand(strand, progress, reverse = Math.random() > 0.5) {
+        this.strandOn = {
+            strand: strand,
+            progress: progress,
+            reverse: reverse
+        }
+
+        Matter.Body.setStatic(this.body, true)
+        window.game.InputTracker.ball.body.collisionFilter.mask = 0b00
+    }
+
+    
+    /**
+     * remove ball from strand
+     * @param {boolean} expectError - if false will error if not on a strand
+     * @returns {boolean} true, but if expect error is enabled then not being on a strand will return false
+     */
+    getOffStrand(expectError = false) {
+        if (!this.strandOn) {
+            if (!expectError) throw "gooball is not on a strand"
+            return false
+        }
+
+        this.strandOn = null
+
+        Matter.Body.setStatic(this.body, false)
+        window.game.InputTracker.ball.body.collisionFilter.mask = 0b11  
+
+        return true
     }
 }
 

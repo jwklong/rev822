@@ -316,9 +316,17 @@ class Level {
 
             for (let body of this.bodies) {
                 if (Matter.Query.collides(body.body, [ball.body]).length > 0) {
-                    if (body.sticky && this.getStrandsOfBall(ball).length > 0) ball.body.isStatic = true
+                    if (body.sticky && this.getStrandsOfBall(ball).length > 0) Matter.Body.setStatic(ball.body, true)
                     if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
                 }
+            }
+
+            if (ball.strandOn) {
+                //TODO: make,, ball,, move,,
+
+                let point = ball.strandOn.strand.pointOnStrand(ball.strandOn.progress)
+
+                Matter.Body.setPosition(ball.body, Matter.Vector.create(point.x, point.y))
             }
         }
 
@@ -491,6 +499,18 @@ class Strand {
     set ball2(val) {
         this.#ball2 = val
         this.constraint.bodyB = this.#ball2.body
+    }
+
+    /**
+     * get a point on the strand
+     * @param {number} progress - where on the strand, example is 0.5 being the middle
+     * @returns {{x: number, y: number}}
+     */
+    pointOnStrand(progress) {
+        let x = this.ball1.x + (this.ball2.x - this.ball1.x) * progress
+        let y = this.ball1.y + (this.ball2.y - this.ball1.y) * progress
+
+        return {x, y}
     }
 
     /**
