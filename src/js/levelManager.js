@@ -484,6 +484,7 @@ class Strand {
     /**
      * @type {Matter.Constraint}
      * @see {@link https://brm.io/matter-js/docs/classes/Constraint.html|Matter.Constraint}
+     * @readonly
      */
     constraint
 
@@ -506,6 +507,11 @@ class Strand {
         this.constraint.bodyB = this.#ball2.body
     }
 
+    /** 
+     * distance between the two balls
+     * @type {number}
+     * @readonly
+     */
     get length() {
         return Matter.Constraint.currentLength(this.constraint)
     }
