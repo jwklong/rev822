@@ -90,6 +90,17 @@ class Gooball {
      */
     antigrav = false
 
+    /**
+     * value from 0 - 1, example being 0.5 means half of the time it will be random and half of the time it will choose the quickest path
+     */
+    intelligence = 0.9
+
+    /**
+     * how fast the gooball climbs strands. measured in px/s
+     * @type {number}
+     */
+    climbspeed = 45
+
     /** @type {number} */
     get x() { return this.body.position.x }
     set x(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(val, this.y)) }
@@ -105,7 +116,7 @@ class Gooball {
     /**
      * @param {Object} xml 
      * @param {string} type 
-     * @param {boolean} [clone=false]
+     * @param {boolean} clone
      */
     constructor(xml, type, clone = false) {
         this.xml = xml
@@ -144,9 +155,11 @@ class Gooball {
         this.body.collisionFilter.mask = 0b11
 
         if (xml.attributes) {
-            if (xml.attributes.mass) this.mass = xml.attributes.mass || 30
-            if (xml.attributes.antigrav) this.antigrav = true
-            if (xml.attributes.nobuild) this.nobuild = true
+            this.mass = xml.attributes.mass || 30
+            this.antigrav = xml.attributes.antigrav || false
+            this.nobuild = xml.attributes.nobuild || false
+            this.intelligence = xml.attributes.intelligence || 0.9
+            this.climbspeed = xml.attributes.climbspeed || 45
         }
 
         for (const [key, value] of Object.entries(xml.body)) {
@@ -185,7 +198,7 @@ class Gooball {
         }
 
         Matter.Body.setStatic(this.body, true)
-        window.game.InputTracker.ball.body.collisionFilter.mask = 0b00
+        this.body.collisionFilter.mask = 0b00
     }
 
     
@@ -203,7 +216,7 @@ class Gooball {
         this.strandOn = null
 
         Matter.Body.setStatic(this.body, false)
-        window.game.InputTracker.ball.body.collisionFilter.mask = 0b11  
+        this.body.collisionFilter.mask = 0b11  
 
         return true
     }

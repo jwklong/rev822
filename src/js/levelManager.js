@@ -327,7 +327,18 @@ class Level {
             }
 
             if (ball.strandOn) {
-                //TODO: make,, ball,, move,,
+                ball.strandOn.progress += ball.climbspeed * dt / ball.strandOn.strand.length * (ball.strandOn.reverse ? -1 : 1)
+
+                if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {
+                    let choiceball = ball.strandOn.progress <= 0 ? ball.strandOn.strand.ball1 : ball.strandOn.strand.ball2
+                    let choicestrands = this.getStrandsOfBall(choiceball)
+                    
+                    //TODO: finish this
+
+                    let choicestrand = choicestrands[Math.floor(Math.random() * choicestrands.length)]
+
+                    ball.putOnStrand(choicestrand, (ball.strandOn.reverse ? 1 : 0), ball.strandOn.reverse)
+                }
 
                 let point = ball.strandOn.strand.pointOnStrand(ball.strandOn.progress)
 
