@@ -332,10 +332,19 @@ class Level {
                 if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {
                     let choiceball = ball.strandOn.progress <= 0 ? ball.strandOn.strand.ball1 : ball.strandOn.strand.ball2
                     let choicestrands = this.getStrandsOfBall(choiceball)
-                    
-                    //TODO: finish this
 
                     let choicestrand = choicestrands[Math.floor(Math.random() * choicestrands.length)]
+
+                    if (Math.random() < ball.intelligence) {
+                        let newchoicestrand = choicestrands.sort((a, b) => {
+                            let ballA = choiceball == a.ball1 ? a.ball2 : a.ball1
+                            let ballB = choiceball == b.ball1 ? b.ball2 : b.ball1
+
+                            return this.camera.distanceFromCamera(ballA.x, ballA.y) - this.camera.distanceFromCamera(ballB.x, ballB.y)
+                        })[0]
+
+                        if (newchoicestrand != ball.strandOn.strand) choicestrand = newchoicestrand
+                    }
 
                     let choiceIsFirst = choiceball == choicestrand.ball1
                     let diffProgress = ball.strandOn.progress <= 0 ? -ball.strandOn.progress : 1 - ball.strandOn.progress
@@ -367,6 +376,16 @@ class Camera {
         y: 0,
         zoom: 1,
         fixed: false
+    }
+
+    /**
+     * get distance from point to camera
+     * @param {number} x
+     * @param {number} y
+     * @return {number}
+     */
+    distanceFromCamera(x, y) {
+        return Math.hypot(x - this.props.x, y - this.props.y)
     }
 
     // TODO: animate camera
