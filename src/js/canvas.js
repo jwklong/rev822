@@ -200,7 +200,11 @@ export default class Canvas {
                     drawStrand(strand.type, strand.ball1, strand.ball2)
                 }
                 let ballToDrag = null
-                for (let ball of level.balls.sort((a, b) => a.strandOn - b.strandOn)) {
+                for (
+                    let ball of level.balls
+                    .sort((a, b) => !b.strandOn - !a.strandOn)
+                    .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
+                ) {
                     for (let layer of ball.layers.sort((a, b) => a.z - b.z)) {
                         renderImage(layer, ball.x, ball.y)
                     }

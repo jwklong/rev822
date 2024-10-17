@@ -308,10 +308,10 @@ class Level {
         if (window.game.InputTracker.ball != undefined) {
             let nextx = window.game.InputTracker.x + this.camera.props.x - 1280 / 2 / this.camera.props.zoom
             let nexty = -window.game.InputTracker.y + this.camera.props.y + 720 / 2 / this.camera.props.zoom
-            Matter.Body.setVelocity(window.game.InputTracker.ball.body, Matter.Vector.create(
-                nextx - window.game.InputTracker.ball.x,
-                nexty - window.game.InputTracker.ball.y
-            ))
+
+            window.game.InputTracker.ball.vx = nextx - window.game.InputTracker.ball.x
+            window.game.InputTracker.ball.vy = nexty - window.game.InputTracker.ball.y
+
             window.game.InputTracker.ball.x = nextx
             window.game.InputTracker.ball.y = nexty
         }
@@ -323,6 +323,33 @@ class Level {
                 if (Matter.Query.collides(body.body, [ball.body]).length > 0) {
                     if (body.sticky && this.getStrandsOfBall(ball).length > 0) Matter.Body.setStatic(ball.body, true)
                     if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
+                }
+            }
+
+            for (let strand of this.strands) {
+                if (
+                    window.game.InputTracker.cursorIntersectsLine(
+                        strand.ball1.x, strand.ball1.y,
+                        strand.ball2.x, strand.ball2.y,
+                        ball.shape.radius / 1.5,
+                        ball.x, ball.y
+                    ) &&
+                    !ball.strandOn &&
+                    window.game.InputTracker.ball != ball &&
+                    this.getStrandsOfBall(ball).length == 0
+                ) {
+                    let progress = window.game.InputTracker.cursorIntersectsLineProgress(
+                        strand.ball1.x, strand.ball1.y,
+                        strand.ball2.x, strand.ball2.y,
+                        ball.x, ball.y
+                    )
+
+                    strand.ball1.vx = ball.vx * progress / 2
+                    strand.ball1.vy = ball.vy * progress / 2
+                    strand.ball2.vx = ball.vx * (1 - progress) / 2
+                    strand.ball2.vy = ball.vy * (1 - progress) / 2
+
+                    ball.putOnStrand(strand, progress)
                 }
             }
 

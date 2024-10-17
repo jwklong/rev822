@@ -109,6 +109,29 @@ class Gooball {
     get y() { return this.body.position.y }
     set y(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(this.x, val)) }
 
+    /**
+     * x velocity
+     * @type {number}
+     */
+    get vx() { return this.body.velocity.x }
+    set vx(val) { Matter.Body.setVelocity(this.body, Matter.Vector.create(val, this.vy)) }
+
+    /**
+     * y velocity
+     * @type {number}
+     */
+    get vy() { return this.body.velocity.y }
+    set vy(val) { Matter.Body.setVelocity(this.body, Matter.Vector.create(this.vx, val)) }
+
+
+    /**
+     * total velocity
+     * modify vx and vy instead of this
+     * @type {number}
+     * @readonly
+     */
+    get velocity() { return Math.hypot(this.vx, this.vy) }
+
     /** @type {number} */
     get mass() { return this.body.mass }
     set mass(val) { Matter.Body.setMass(this.body, val) }
