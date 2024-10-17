@@ -337,7 +337,10 @@ class Level {
 
                     let choicestrand = choicestrands[Math.floor(Math.random() * choicestrands.length)]
 
-                    ball.putOnStrand(choicestrand, (ball.strandOn.reverse ? 1 : 0), ball.strandOn.reverse)
+                    let choiceIsFirst = choiceball == choicestrand.ball1
+                    let diffProgress = ball.strandOn.progress <= 0 ? -ball.strandOn.progress : 1 - ball.strandOn.progress
+
+                    ball.putOnStrand(choicestrand, (!choiceIsFirst ? 1 - diffProgress : diffProgress), !choiceIsFirst)
                 }
 
                 let point = ball.strandOn.strand.pointOnStrand(ball.strandOn.progress)
