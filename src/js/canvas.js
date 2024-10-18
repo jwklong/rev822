@@ -160,6 +160,7 @@ export default class Canvas {
                             applicableBalls.push(x)
                         })
                         
+                        if (!window.game.InputTracker.ball.strand) return
                         applicableBalls = applicableBalls.sort((a, b) => { 
                             let distanceA = Math.hypot(a.x - window.game.InputTracker.ball.x, a.y - window.game.InputTracker.ball.y)
                             let distanceB = Math.hypot(b.x - window.game.InputTracker.ball.x, b.y - window.game.InputTracker.ball.y)
