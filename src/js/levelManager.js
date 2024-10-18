@@ -223,6 +223,14 @@ class Level {
         return this.strands.find(strand => (strand.ball1 === a && strand.ball2 === b) || (strand.ball1 === b && strand.ball2 === a))
     }
 
+    /** 
+     * @param {Strand} strand
+     * @returns {Gooball[]}
+     */
+    getBallsOnStrand(strand) {
+        return this.balls.filter(ball => ball.strandOn && ball.strandOn.strand === strand)
+    }
+
     /** @param {Gooball} gooball */
     killGooball(gooball) {
         this.deleteStrands(gooball)
@@ -244,8 +252,7 @@ class Level {
                 if (this.getStrandsOfBall(a).length == 0) a.body.collisionFilter.mask = 0b11
                 if (this.getStrandsOfBall(b).length == 0) b.body.collisionFilter.mask = 0b11
 
-                a.getOffStrand(true)
-                b.getOffStrand(true)
+                this.getBallsOnStrand(strand).forEach(v => v.getOffStrand())
 
                 this.strands.splice(i,1)
                 return

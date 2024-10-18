@@ -253,7 +253,7 @@ export default class Canvas {
                         level.getStrandsOfBall(ball).length == 0 ||
                         ball.strand.detachable
                     )) {
-                        if (ballToDrag == null) ballToDrag = ball 
+                        ballToDrag = ball 
                     }
                 }
 
