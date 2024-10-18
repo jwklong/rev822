@@ -85,6 +85,12 @@ class Gooball {
     nobuild = false
 
     /**
+     * Stops gooballs from climbing on this gooball + does not trigger pipes
+     * @type {string}
+     */
+    noclimb = false
+
+    /**
      * @type {boolean}
      * @readonly
      */
@@ -181,6 +187,7 @@ class Gooball {
             this.mass = xml.attributes.mass || 30
             this.antigrav = xml.attributes.antigrav || false
             this.nobuild = xml.attributes.nobuild || false
+            this.noclimb = xml.attributes.noclimb || false
             this.intelligence = xml.attributes.intelligence || 0.9
             this.climbspeed = xml.attributes.climbspeed || 45
         }

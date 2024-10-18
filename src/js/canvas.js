@@ -141,7 +141,7 @@ export default class Canvas {
                             strand.ball2.x, strand.ball2.y,
                             window.game.InputTracker.ball.shape.radius / 1.5,
                             window.game.InputTracker.ball.x, window.game.InputTracker.ball.y
-                        )) {
+                        ) && !window.game.GooballManager.types[strand.type].noclimb) {
                             applicableStrand = strand
                             break
                         }

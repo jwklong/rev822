@@ -342,6 +342,7 @@ class Level {
                         ball.x, ball.y
                     ) &&
                     !ball.strandOn &&
+                    !window.game.GooballManager.types[strand.type].noclimb &&
                     window.game.InputTracker.ball != ball &&
                     this.getStrandsOfBall(ball).length == 0
                 ) {
