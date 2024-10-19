@@ -92,9 +92,9 @@ export class Pipe {
 
     /**
      * balls in range of pipe
-     * @param {Ball[]} balls
+     * @param {Gooball[]} balls
      * @param {number} padding - decreases range
-     * @returns {Ball[]}
+     * @returns {Gooball[]}
      */
     ballsInRange(balls, padding = 0) {
         return balls.filter(ball => window.game.InputTracker.withinCircle(this.x, this.y, this.radius - padding, ball.x, ball.y))
