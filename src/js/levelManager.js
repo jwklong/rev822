@@ -115,8 +115,8 @@ class Level {
     /**
      * conditions to win level
      * @type {Object?}
-     * @param {string} type - "balls" for amount of balls, more soon
-     * @param {number} target
+     * @property {string} type - "balls" for amount of balls, more soon
+     * @property {number} target
      */
     goal
 
