@@ -13,9 +13,9 @@
     <scene>
         <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
         <layer img="IMAGE_GOINGUP_HILL" x="0" y="-800" size="1" z="0" />
-        <circle static x="0" y="-1595" radius="1100" sticky />
-        <rect static x="-820" y="0" width="200" height="2160" detaches />
-        <rect static x="820" y="0" width="200" height="2160" detaches />
+        <circle static x="0" y="-1595" radius="1100" material="grass" sticky />
+        <rect static x="-820" y="0" width="200" height="65536" detaches />
+        <rect static x="820" y="0" width="200" height="65536" detaches />
         <ball type="common" x="80" y="-460" ref="0" />
         <ball type="common" x="-80" y="-460" ref="1" />
         <ball type="common" x="80" y="-300" ref="2" />

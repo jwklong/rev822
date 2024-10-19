@@ -10,6 +10,6 @@
     <image id="IMAGE_LOGO" src="images/logo.png" />
     <image id="IMAGE_TEMP_BACKGROUND" src="images/backdrop.jpg" />
 
-    <image id="IMAGE_BLUE_SKIES" src="images/blueskies.png">
-    <image id="IMAGE_SUNSETTER" src="images/sunsetter.svg">
+    <image id="IMAGE_BLUE_SKIES" src="images/blueskies.png" />
+    <image id="IMAGE_SUNSETTER" src="images/sunsetter.svg" />
 </resources>

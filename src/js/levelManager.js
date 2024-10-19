@@ -559,7 +559,7 @@ class GenericBody {
 
     /** @type {number} */
     get rotation() { return this.body.angle * 180 / Math.PI}
-    set rotation(val) { Matter.Body.rotate(this.body, val / 180 * Math.PI) }
+    set rotation(val) { Matter.Body.rotate(this.body, (val-this.rotation) / 180 * Math.PI) }
 
     /** @type {number} */
     get mass() { return this.body.mass }
