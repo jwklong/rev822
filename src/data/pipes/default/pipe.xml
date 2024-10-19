@@ -1,0 +1,8 @@
+<pipe>
+    <resources>
+        <image id="IMAGE_PIPE_DEFAULT" src="pipes/default/pipe.svg" />
+        <image id="IMAGE_PIPE_DEFAULT_CAP" src="pipes/default/capclosed.svg" />
+        <image id="IMAGE_PIPE_DEFAULT_CAP_OPEN" src="pipes/default/capopen.svg" />
+    </resources>
+    <state pipe="IMAGE_PIPE_DEFAULT" cap="IMAGE_PIPE_DEFAULT_CAP" capopen="IMAGE_PIPE_DEFAULT_CAP_OPEN" />
+</pipe>

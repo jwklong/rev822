@@ -25,7 +25,7 @@ export default class LevelManager {
             parseAttributeValue: true,
             alwaysCreateTextNode: true,
             textNodeName: "value",
-            isArray: (_, jPath) => /^level.(resources|scene)\.[^\.]+$/.test(jPath)
+            isArray: (_, jPath) => /^level\.(resources|scene)\.[^\.]+$/.test(jPath)
         })
 
         const xml = parser.parse((await fs.readFile(path.join(src, "level.xml"))).toString())

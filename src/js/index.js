@@ -6,6 +6,7 @@ import ResourceManager from "./resourceManager.js";
 import MaterialManager from "./materialManager.js";
 import AudioManager from "./audioManager.js";
 import GooballManager from "./gooballManager.js";
+import PipeManager from "./pipeManager.js"
 import LevelManager from "./levelManager.js";
 import Canvas from "./canvas.js";
 import ProfileManager from "./profileManager.js";
@@ -20,7 +21,8 @@ const fs = require("fs/promises")
  * @property {ResourceManager} ResourceManager - Handles resource loading and management
  * @property {MaterialManager} MaterialManager - Manages materials for physics
  * @property {AudioManager} AudioManager - Play music & SFX
- * @property {AudioManager} GooballManager - Manages gooballs
+ * @property {GooballManager} GooballManager - Manages gooballs
+ * @property {PipeManager} PipeManager - Manages all types of pipes
  * @property {LevelManager} LevelManager - Handles level data, the core of the game
  * @property {Canvas} Canvas - Manages the drawing canvas
  * @property {ProfileManager} ProfileManager - Contains all the player data and settings
@@ -36,6 +38,7 @@ let game = {
     MaterialManager: new MaterialManager,
     AudioManager: new AudioManager,
     GooballManager: new GooballManager,
+    PipeManager: new PipeManager,
     LevelManager: new LevelManager,
     Canvas: new Canvas,
     ProfileManager: new ProfileManager,
@@ -54,6 +57,14 @@ window.game = game;
 
     for (const ballFolder of ballsFolder) {
         await game.GooballManager.addType(path.join(__dirname, "../data/gooballs", ballFolder))
+    }
+
+    //pipes
+    var pipesFolder = (await fs.readdir(path.join(__dirname, "../data/pipes")))
+        .filter(async (src) => (await fs.stat(path.join(__dirname, "../data/pipes", src))).isDirectory())
+
+    for (const pipeFolder of pipesFolder) {
+        await game.PipeManager.addType(path.join(__dirname, "../data/pipes", pipeFolder))
     }
 
     //levels

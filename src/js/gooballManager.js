@@ -19,7 +19,7 @@ export default class GooballManager {
             parseAttributeValue: true,
             alwaysCreateTextNode: true,
             textNodeName: "value",
-            isArray: (_, jPath) => /^ball.(resources|body)\.[^\.]+$/.test(jPath)
+            isArray: (_, jPath) => /^ball\.(resources|body)\.[^\.]+$/.test(jPath)
         })
 
         const xml = parser.parse((await fs.readFile(path.join(src, "ball.xml"))).toString())
