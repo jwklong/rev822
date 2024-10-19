@@ -79,6 +79,12 @@ class Gooball {
     strandOn
 
     /**
+     * @type {boolean}
+     * @readonly
+     */
+    get isOnStrand() { return this.strandOn !== undefined }
+
+    /**
      * Stops gooballs from building on this gooball
      * @type {string}
      */
@@ -211,7 +217,7 @@ class Gooball {
     }
 
     clone() {
-        return new Gooball(this.xml, this.type)
+        return new Gooball(this.xml, this.type, true)
     }
 
     /**

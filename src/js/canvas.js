@@ -84,7 +84,7 @@ export default class Canvas {
                 let level = window.game.LevelManager.currentLevel
                 ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
-                function renderImage(layer, ox = 0, oy = 0) {
+                function renderLayer(layer, ox = 0, oy = 0) {
                     var image = window.game.ResourceManager.getResource(layer.img).image
                     var w = image.width * layer.size.x
                     var h = image.height * layer.size.y
@@ -102,7 +102,29 @@ export default class Canvas {
                 }
 
                 for (let layer of level.layers.sort((a, b) => a.z - b.z).filter(a => a.z <= 0)) {
-                    renderImage(layer)
+                    renderLayer(layer)
+                }
+                
+                function renderPipe(pipe, state, stretch = 0) {
+                    var image = window.game.ResourceManager.getResource(pipe.states[state]).image
+                    var w = image.width
+                    var h = image.height
+                    var x = pipe.x + 1280 / 2 / level.camera.props.zoom - w / 2 - level.camera.props.x
+                    var y = -pipe.y + 720 / 2 / level.camera.props.zoom - h / 2 + level.camera.props.y
+                    var rotation = pipe.direction * Math.PI / 180
+                    ctx.translate(x + w / 2, y + h / 2)
+
+                    ctx.rotate(rotation)
+                    ctx.translate(-(x + w / 2), -(y + h / 2))
+                    ctx.drawImage(image, x, y - stretch, w, h + stretch)
+                    ctx.translate(x + w / 2, y + h / 2)
+                    ctx.rotate(-rotation)
+                    ctx.translate(-(x + w / 2), -(y + h / 2))
+                }
+                //pipes here
+                for (let pipe of level.pipes) {
+                    renderPipe(pipe, "pipe", 65536)
+                    renderPipe(pipe, pipe.isActive(level) ? "capopen" : "cap")
                 }
 
                 //gooballs here
@@ -207,7 +229,7 @@ export default class Canvas {
                     .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
                 ) {
                     for (let layer of ball.layers.sort((a, b) => a.z - b.z)) {
-                        renderImage(layer, ball.x, ball.y)
+                        renderLayer(layer, ball.x, ball.y)
                     }
 
                     if (window.game.InputTracker.distanceTo(
@@ -259,7 +281,7 @@ export default class Canvas {
                 }
 
                 for (let layer of level.layers.sort((a, b) => a.z - b.z).filter(a => a.z > 0)) {
-                    renderImage(layer)
+                    renderLayer(layer)
                 }
 
                 if (level.debug) {
@@ -322,6 +344,25 @@ export default class Canvas {
                             ctx.fillStyle = "#0f08"
                             ctx.strokeStyle = "#0f0"
                         }
+                        ctx.lineWidth = 4
+                        ctx.save()
+                        ctx.clip()
+                        ctx.lineWidth *= 2
+                        ctx.fill()
+                        ctx.stroke()
+                        ctx.restore()
+                    }
+
+                    for (var pipe of level.pipes) {
+                        ctx.beginPath()
+                        ctx.arc(
+                            pipe.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
+                            -pipe.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom,
+                            pipe.radius, 0, 2 * Math.PI
+                        )
+                        ctx.closePath()
+                        ctx.fillStyle = "#0f08"
+                        ctx.strokeStyle = "#0f0"
                         ctx.lineWidth = 4
                         ctx.save()
                         ctx.clip()

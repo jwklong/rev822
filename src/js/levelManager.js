@@ -202,6 +202,17 @@ class Level {
                         this.createStrand(type, ball1, ball2)
                     }
                     break
+                case "pipe":
+                    for (let v of value) {
+                        let pipe = window.game.PipeManager.types[v.attributes.type].clone()
+                        pipe.x = v.attributes.x
+                        pipe.y = v.attributes.y
+                        pipe.direction = v.attributes.direction
+                        pipe.radius = v.attributes.radius || 80
+                        pipe.ref = String(v.attributes.ref)
+                        this.pipes.push(pipe)
+                    }
+                    break
                 default:
                     console.warn(`unknown object '${key}' in level ${this.id}`)
             }
@@ -378,7 +389,10 @@ class Level {
                     !ball.strandOn &&
                     !window.game.GooballManager.types[strand.type].noclimb &&
                     window.game.InputTracker.ball != ball &&
-                    this.getStrandsOfBall(ball).length == 0
+                    this.getStrandsOfBall(ball).length == 0 &&
+                    this.pipes.filter(v => v.isActive(this)).reduce((p, v) => {
+                        return p && v.ballsInRange([ball]).length == 0
+                    }, true)
                 ) {
                     let progress = window.game.InputTracker.cursorIntersectsLineProgress(
                         strand.ball1.x, strand.ball1.y,
@@ -396,7 +410,13 @@ class Level {
             }
 
             if (ball.strandOn) {
-                ball.strandOn.progress += ball.climbspeed * dt / ball.strandOn.strand.length * (ball.strandOn.reverse ? -1 : 1)
+                ball.strandOn.progress += (
+                    ball.climbspeed *
+                    dt /
+                    ball.strandOn.strand.length *
+                    (ball.strandOn.reverse ? -1 : 1) *
+                    (this.pipes.find(pipe => pipe.isActive(this)) ? 3 : 1)
+                )
 
                 if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {
                     let choiceball = ball.strandOn.progress <= 0 ? ball.strandOn.strand.ball1 : ball.strandOn.strand.ball2
@@ -408,6 +428,15 @@ class Level {
                         let newchoicestrand = choicestrands.sort((a, b) => {
                             let ballA = choiceball == a.ball1 ? a.ball2 : a.ball1
                             let ballB = choiceball == b.ball1 ? b.ball2 : b.ball1
+
+                            let activePipes = this.pipes.filter(pipe => pipe.isActive(this))
+                                .sort((a, b) => {
+                                    return Math.hypot(a.x - ballA.x, a.y - ballA.y) - Math.hypot(b.x - ballA.x, b.y - ballA.y)
+                                })
+
+                            if (activePipes[0]) {
+                                return Math.hypot(activePipes[0].x - ballA.x, activePipes[0].y - ballA.y) - Math.hypot(activePipes[0].x - ballB.x, activePipes[0].y - ballB.y)
+                            } 
 
                             return this.camera.distanceFromCamera(ballA.x, ballA.y) - this.camera.distanceFromCamera(ballB.x, ballB.y)
                         })[0]
@@ -424,6 +453,38 @@ class Level {
                 let point = ball.strandOn.strand.pointOnStrand(ball.strandOn.progress)
 
                 Matter.Body.setPosition(ball.body, Matter.Vector.create(point.x, point.y))
+
+                if (
+                    !this.pipes.filter(v => v.isActive(this)).reduce((p, v) => {
+                        return p && v.ballsInRange([ball]).length == 0
+                    }, true)
+                ) {
+                    ball.getOffStrand()
+                }
+            }
+
+            for (let pipe of this.pipes.filter(pipe => pipe.isActive(this))) {
+                if (pipe.ballsInRange([ball]).length == 0) continue
+
+                if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0) {
+                    this.killGooball(ball)
+                    pipe.ballsSucked += 1
+                    continue
+                }
+
+                let directionToPipe = {
+                    x: pipe.x - ball.x,
+                    y: pipe.y - ball.y
+                }
+
+                let distance = Math.hypot(directionToPipe.x, directionToPipe.y)
+                directionToPipe.x /= distance
+                directionToPipe.y /= distance
+
+                Matter.Body.applyForce(ball.body, ball.body.position, Matter.Vector.create(
+                    directionToPipe.x * 0.1,
+                    directionToPipe.y * 0.1
+                ))
             }
         }
 

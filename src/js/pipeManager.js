@@ -45,6 +45,21 @@ export class Pipe {
     /** @type {number} */
     ballsSucked = 0
 
+    /** @type {number} */
+    x = 0
+
+    /** @type {number} */
+    y = 0
+
+    /** @type {number} */
+    direction = 0
+
+    /** @type {number} */
+    radius = 80
+
+    /** @type {string} */
+    ref
+
     /**
      * @param {Object} xml 
      * @param {string} type 
@@ -68,5 +83,28 @@ export class Pipe {
             cap: xml.state.attributes.cap,
             capopen: xml.state.attributes.capopen
         }
+    }
+
+    /** @returns {Pipe} */
+    clone() {
+        return new Pipe(this.xml, this.type, true)
+    }
+
+    /**
+     * balls in range of pipe
+     * @param {Ball[]} balls
+     * @param {number} padding - decreases range
+     * @returns {Ball[]}
+     */
+    ballsInRange(balls, padding = 0) {
+        return balls.filter(ball => window.game.InputTracker.withinCircle(this.x, this.y, this.radius - padding, ball.x, ball.y))
+    }
+
+    /**
+     * @param {Level} level
+     * @returns {boolean}
+     */
+    isActive(level) {
+        return this.ballsInRange(level.balls).filter(ball => level.getStrandsOfBall(ball).length > 0).length > 0
     }
 }

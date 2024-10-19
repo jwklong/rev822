@@ -41,5 +41,6 @@
         <strand type="common" from="3" to="0" />
         <strand type="common" from="0" to="2" />
         <strand type="common" from="1" to="3" />
+        <pipe type="default" x="0" y="0" />
     </scene>
 </level>
