@@ -8,6 +8,7 @@
         </camera>
         <title>Going Up</title>
         <desc>TBD</desc>
+        <goal type="balls" target="4" />
     </head>
     <scene>
         <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />

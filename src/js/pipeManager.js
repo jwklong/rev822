@@ -42,6 +42,9 @@ export class Pipe {
         capopen: ""
     }
 
+    /** @type {number} */
+    ballsSucked = 0
+
     /**
      * @param {Object} xml 
      * @param {string} type 

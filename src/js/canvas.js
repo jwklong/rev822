@@ -51,11 +51,11 @@ export default class Canvas {
 
                     ctx.font = '48px "FONT_COOKIES"'
                     ctx.strokeStyle = 'black'
+                    ctx.textAlign = 'center'
                     ctx.lineWidth = 8
                     ctx.strokeText('Click to continue', 640, 560)
                     ctx.lineWidth = 4
                     ctx.strokeText('Click to continue', 640, 560)
-                    ctx.textAlign = 'center'
                     ctx.fillStyle = 'white'
                     ctx.fillText('Click to continue', 640, 560)
 
@@ -334,6 +334,24 @@ export default class Canvas {
                 
                 if (this.mode === 1) {
 
+                } else {
+                    if (!level.camera.props.fixed && level.goal) {
+                        let text = ""
+
+                        switch (level.goal.type) {
+                            case "balls":
+                                text = `${level.goalAmount} of ${level.goal.target} balls collected`
+                        }
+
+                        ctx.font = '36px "FONT_TCCEB"'
+                        ctx.strokeStyle = 'black'
+                        ctx.textAlign = 'left'
+                        ctx.textBaseline = 'bottom'
+                        ctx.lineWidth = 6
+                        ctx.strokeText(text, 24, 720 - 16)
+                        ctx.fillStyle = 'white'
+                        ctx.fillText(text, 24, 720 - 16)
+                    }
                 }
 
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.left) {

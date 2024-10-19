@@ -85,6 +85,9 @@ class Level {
     /** @type {Gooball[]} */
     balls = []
 
+    /** @type {Pipe[]} */
+    pipes = []
+
     /** @type {Strand[]} */
     strands = []
 
@@ -110,6 +113,29 @@ class Level {
     height
 
     /**
+     * conditions to win level
+     * @type {Object?}
+     * @param {string} type - "balls" for amount of balls, more soon
+     * @param {number} target
+     */
+    goal
+
+    /**
+     * @type {number}
+     * @readonly
+     */
+    get goalAmount() {
+        if (!this.goal) return 0
+
+        switch(this.goal.type) {
+            case "balls":
+                return this.pipes.reduce((v, p) => v + p.ballsSucked, 0)
+        }
+        
+        return 0
+    }
+
+    /**
      * @param {Object} xml
      * @param {string} id 
      * @param {boolean} [clone=false]
@@ -130,6 +156,14 @@ class Level {
                 for (const resource of value) {
                     window.game.ResourceManager.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
                 }
+            }
+        }
+
+        //goal
+        if (xml.head.goal) {
+            this.goal = {
+                type: xml.head.goal.attributes.type,
+                target: xml.head.goal.attributes.target
             }
         }
 
