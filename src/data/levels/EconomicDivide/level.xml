@@ -1,4 +1,4 @@
-<level debug>
+<level>
     <resources>
         <image id="IMAGE_ECONOMICDIVIDE_CLIFF1" src="levels/EconomicDivide/cliff1.svg" />
         <image id="IMAGE_ECONOMICDIVIDE_CLIFF2" src="levels/EconomicDivide/cliff2.svg" />
