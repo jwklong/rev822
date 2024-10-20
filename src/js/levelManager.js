@@ -466,7 +466,7 @@ class Level {
             for (let pipe of this.pipes.filter(pipe => pipe.isActive(this))) {
                 if (pipe.ballsInRange([ball]).length == 0) continue
 
-                if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length > 0) {
+                if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0) {
                     this.killGooball(ball)
                     pipe.ballsSucked += 1
                     continue
