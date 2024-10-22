@@ -7,8 +7,8 @@ let Utils = {
      * @param {*?} or - the default
      * @returns {*}
      */
-    parseAttribute: (input, or) => {
-        if (input == "") return or || input
+    parseAttribute: (input, or = undefined) => {
+        if ((input == undefined || input == "" || input == NaN) && or !== undefined) return or
 
         if (typeof input == "string") {
             var randomTest = /^(-?\d+)-(-?\d+)$/g.exec(input)

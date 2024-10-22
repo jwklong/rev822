@@ -581,6 +581,7 @@ class GenericBody {
 
     /** @param {Object} attributes */
     constructor(attributes, body) {
+
         this.body = body || Matter.Body.Create()
         this.body.collisionFilter.category = 0b10
         this.body.collisionFilter.mask = 0b11
@@ -618,7 +619,7 @@ class RectBody extends GenericBody {
     height
 
     constructor(attributes) {
-        super(attributes, Matter.Bodies.rectangle(0, 0, attributes.width, attributes.height))
+        super(attributes, Matter.Bodies.rectangle(0, 0, window.game.Utils.parseAttribute(attributes.width), window.game.Utils.parseAttribute(attributes.height)))
 
         this.width = window.game.Utils.parseAttribute(attributes.width)
         this.height = window.game.Utils.parseAttribute(attributes.height)

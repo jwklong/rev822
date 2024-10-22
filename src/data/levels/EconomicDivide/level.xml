@@ -1,4 +1,4 @@
-<level debug>
+<level>
     <resources>
         <image id="IMAGE_ECONOMICDIVIDE_CLIFF1" src="levels/EconomicDivide/cliff1.svg" />
         <image id="IMAGE_ECONOMICDIVIDE_CLIFF2" src="levels/EconomicDivide/cliff2.svg" />
@@ -16,8 +16,8 @@
         <layer img="IMAGE_ECONOMICDIVIDE_CLIFF1" x="-615" y="-231" size="0.8" z="0" />
         <layer img="IMAGE_ECONOMICDIVIDE_CLIFF2" x="615" y="-231" size="0.8" z="0" />
 
-        <rect static x="-824" y="0" width="200" height="65536" detaches />
-        <rect static x="824" y="0" width="200" height="65536" detaches />
+        <rect static x="-1124" y="0" width="200" height="65536" detaches />
+        <rect static x="1124" y="0" width="200" height="65536" detaches />
 
         <circle static x="-400" y="16" radius="80" sticky />
         <rect static x="-750" y="0" width="700" height="100" rotation="5" material="grass" sticky />
@@ -42,31 +42,31 @@
         <strand type="common" from="0" to="2" />
         <strand type="common" from="1" to="3" />
 
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
-        <ball type="common" x="-1000--700" y="1500-1800" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
 
         <pipe type="default" x="800" y="100" />
     </scene>
