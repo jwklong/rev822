@@ -42,31 +42,31 @@
         <strand type="common" from="0" to="2" />
         <strand type="common" from="1" to="3" />
 
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
-        <ball type="common" x="-960" y="1440" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="1500-4000" />
 
         <pipe type="default" x="800" y="100" />
     </scene>
