@@ -188,8 +188,8 @@ class Level {
                 case "ball":
                     for (let v of value) {
                         let ball = window.game.GooballManager.types[v.attributes.type].clone()
-                        ball.x = v.attributes.x
-                        ball.y = v.attributes.y
+                        ball.x = window.game.Utils.parseAttribute(v.attributes.x)
+                        ball.y = window.game.Utils.parseAttribute(v.attributes.y)
                         ball.ref = String(v.attributes.ref)
                         this.balls.push(ball)
                     }
@@ -205,10 +205,10 @@ class Level {
                 case "pipe":
                     for (let v of value) {
                         let pipe = window.game.PipeManager.types[v.attributes.type].clone()
-                        pipe.x = v.attributes.x
-                        pipe.y = v.attributes.y
-                        pipe.direction = v.attributes.direction
-                        pipe.radius = v.attributes.radius || 80
+                        pipe.x = window.game.Utils.parseAttribute(v.attributes.x)
+                        pipe.y = window.game.Utils.parseAttribute(v.attributes.y)
+                        pipe.direction = window.game.Utils.parseAttribute(v.attributes.direction, 0)
+                        pipe.radius = window.game.Utils.parseAttribute(v.attributes.radius, 80)
                         pipe.ref = String(v.attributes.ref)
                         this.pipes.push(pipe)
                     }
@@ -587,17 +587,17 @@ class GenericBody {
 
         this.ref = String(attributes.ref) || null
 
-        this.x = attributes.x
-        this.y = attributes.y
+        this.x = window.game.Utils.parseAttribute(attributes.x)
+        this.y = window.game.Utils.parseAttribute(attributes.y)
 
-        this.rotation = attributes.rotation || 0
+        this.rotation = window.game.Utils.parseAttribute(attributes.rotation, 0)
 
-        this.static = attributes.static || false
+        this.static = window.game.Utils.parseAttribute(attributes.static, false)
 
-        this.material = attributes.material || "default"
+        this.material = window.game.Utils.parseAttribute(attributes.material, "default")
 
-        this.sticky = attributes.sticky
-        this.detaches = attributes.detaches
+        this.sticky = window.game.Utils.parseAttribute(attributes.sticky)
+        this.detaches = window.game.Utils.parseAttribute(attributes.detaches)
     }
 }
 
@@ -620,8 +620,8 @@ class RectBody extends GenericBody {
     constructor(attributes) {
         super(attributes, Matter.Bodies.rectangle(0, 0, attributes.width, attributes.height))
 
-        this.width = attributes.width
-        this.height = attributes.height
+        this.width = window.game.Utils.parseAttribute(attributes.width)
+        this.height = window.game.Utils.parseAttribute(attributes.height)
     }
 }
 
@@ -638,7 +638,7 @@ class CircleBody extends GenericBody {
     constructor(attributes) {
         super(attributes, Matter.Bodies.circle(0, 0, attributes.radius))
 
-        this.radius = attributes.radius
+        this.radius = window.game.Utils.parseAttribute(attributes.radius)
     }
 }
 

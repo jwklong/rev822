@@ -20,7 +20,7 @@
             "sections": [
                 "Global",
                 "Classes",
-                "Modules"
+                "Namespaces"
             ],
             "include_css": ["./static-docs/custom.css"]
         }

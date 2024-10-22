@@ -1,3 +1,4 @@
+import Utils from "./utils.js";
 import Layer from "./layer.js";
 import Easing from "./easing.js";
 import InputTracker from "./inputTracker.js";
@@ -14,6 +15,7 @@ const path = require("path")
 const fs = require("fs/promises")
 
 /**
+ * @property {Utils} Utils - Provides utility functions
  * @property {Layer} Layer - Custom image data for rendering
  * @property {Easing} Easing - Provides easing functions
  * @property {InputTracker} InputTracker - Tracks mouse movements
@@ -30,6 +32,7 @@ const fs = require("fs/promises")
  * @property {number} timePassed - Tracks the time passed in the game
  */
 let game = {
+    Utils,
     Layer,
     Easing,
     InputTracker: new InputTracker,
