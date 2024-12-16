@@ -25,12 +25,12 @@ export default class LevelManager {
             parseAttributeValue: true,
             alwaysCreateTextNode: true,
             textNodeName: "value",
-            isArray: (_, jPath) => /^level\.(resources|scene)\.[^\.]+$/.test(jPath)
+            isArray: (tagName) => tagName !== "attributes"
         })
 
         const xml = parser.parse((await fs.readFile(path.join(src, "level.xml"))).toString())
 
-        this.levels[id] = new Level(xml.level, id)
+        this.levels[id] = new Level(xml.level[0], id)
     }
 
     /**
@@ -66,8 +66,8 @@ export default class LevelManager {
 }
 
 class Level {
-    /** @type {Layer[]} */
-    layers = []
+    /** @type {LayerGroup} */
+    layers = new window.game.Layer.Group
 
     /** @type {Camera} */
     camera = new Camera
@@ -143,16 +143,16 @@ class Level {
     constructor(xml, id, clone = false) {
         this.id = id
         this.xml = xml
-        this.title = xml.head.title.value
-        this.desc = xml.head.desc.value
+        this.title = xml.head[0].title[0].value
+        this.desc = xml.head[0].desc[0].value
         this.debug = xml.attributes ? xml.attributes.debug : false
 
-        this.width = xml.head.camera.attributes.width
-        this.height = xml.head.camera.attributes.height
+        this.width = xml.head[0].camera[0].attributes.width
+        this.height = xml.head[0].camera[0].attributes.height
 
         //parse dem resources
         if (!clone) {
-            for (const [key, value] of Object.entries(xml.resources)) {
+            for (const [key, value] of Object.entries(xml.resources[0])) {
                 for (const resource of value) {
                     window.game.ResourceManager.addResource(key, resource.attributes.id, path.join(__dirname, "../data", resource.attributes.src))
                 }
@@ -160,19 +160,19 @@ class Level {
         }
 
         //goal
-        if (xml.head.goal) {
+        if (xml.head[0].goal) {
             this.goal = {
-                type: xml.head.goal.attributes.type,
-                target: xml.head.goal.attributes.target
+                type: xml.head[0].goal[0].attributes.type,
+                target: xml.head[0].goal[0].attributes.target
             }
         }
 
         //parse dem everythinjg else
-        for (const [key, value] of Object.entries(xml.scene)) {
+        for (const [key, value] of Object.entries(xml.scene[0])) {
             switch (key) {
                 case "layer":
                     for (let v of value) {
-                        this.layers.push(new window.game.Layer(v))
+                        this.layers.push(window.game.Layer.fromXML(v.attributes))
                     }
                     break
                 case "rect":
@@ -353,9 +353,7 @@ class Level {
             (this.height - 720 / this.camera.props.zoom) / 2
         )
 
-        for (let layer of this.layers) {
-            layer.tick(dt)
-        }
+        this.layers.tick(dt)
 
         if (window.game.InputTracker.ball != undefined) {
             let nextx = window.game.InputTracker.x + this.camera.props.x - 1280 / 2 / this.camera.props.zoom
@@ -415,7 +413,7 @@ class Level {
                     dt /
                     ball.strandOn.strand.length *
                     (ball.strandOn.reverse ? -1 : 1) *
-                    (this.pipes.find(pipe => pipe.isActive(this)) ? 3 : 1)
+                    (this.pipes.find(pipe => pipe.isActive(this)) ? 4 : 1)
                 )
 
                 if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {

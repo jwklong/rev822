@@ -39,8 +39,8 @@ class Gooball {
     /** @type {string?} */
     ref
 
-    /** @type {Layer[]} */
-    layers = []
+    /** @type {LayerGroup} */
+    layers = new window.game.Layer.Group
 
     /** @type {GooballEye[]} */
     eyes = []
@@ -202,7 +202,7 @@ class Gooball {
             switch (key) {
                 case "layer":
                     for (let v of value) {
-                        this.layers.push(new window.game.Layer(v))
+                        this.layers.push(window.game.Layer.fromXML(v.attributes))
                     }
                     break
                 case "eye":
@@ -255,6 +255,48 @@ class Gooball {
         this.body.collisionFilter.mask = 0b11  
 
         return true
+    }
+
+    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1) {
+        this.layers.render(ctx, ox - this.x, oy - this.y, osx, osy)
+
+        const level = window.game.LevelManager.currentLevel
+
+        if (window.game.InputTracker.distanceTo(
+            this.x + 1280 / 2 - level.camera.props.x,
+            -this.y + 720 / 2 + level.camera.props.y,
+        ) < 320 && (
+            level.getStrandsOfBall(this).length == 0 ||
+            (this.strand && this.strand.detachable)
+        )) {
+            for (let eye of this.eyes) {
+                ctx.fillStyle = "#fff"
+                ctx.strokeStyle = "#000"
+                ctx.lineWidth = 1
+                
+                ctx.beginPath()
+                ctx.arc(
+                    this.x + eye.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x,
+                    -(this.y + eye.y) + 720 / 2 / level.camera.props.zoom + level.camera.props.y,
+                    eye.radius, 0, 2 * Math.PI
+                )
+                ctx.closePath()
+                ctx.fill()
+                ctx.stroke()
+
+                ctx.fillStyle = "#000"
+                
+                ctx.beginPath()
+                ctx.arc(
+                    this.x + eye.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x,
+                    -(this.y + eye.y) + 720 / 2 / level.camera.props.zoom + level.camera.props.y,
+                    eye.radius / 4, 0, 2 * Math.PI
+                )
+                ctx.closePath()
+                ctx.fill()
+                ctx.stroke()
+            }
+        }
     }
 }
 

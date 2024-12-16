@@ -26,9 +26,11 @@ export default class Canvas {
      */
     element = document.querySelector('canvas')
 
+    get ctx() { return this.element.getContext('2d') }
+
     /** @param {number} dt */
     tick(dt) {
-        const ctx = this.element.getContext('2d')
+        let ctx = this.ctx
         ctx.clearRect(0, 0, 1280, 720)
         ctx.globalAlpha = 1
         ctx.resetTransform()
@@ -84,26 +86,7 @@ export default class Canvas {
                 let level = window.game.LevelManager.currentLevel
                 ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
-                function renderLayer(layer, ox = 0, oy = 0) {
-                    var image = window.game.ResourceManager.getResource(layer.img).image
-                    var w = image.width * layer.size.x
-                    var h = image.height * layer.size.y
-                    var x = layer.x + ox + 1280 / 2 / level.camera.props.zoom - w / 2 - level.camera.props.x
-                    var y = -(layer.y + oy) + 720 / 2 / level.camera.props.zoom - h / 2 + level.camera.props.y
-                    var rotation = layer.rotation * Math.PI / 180
-                    ctx.translate(x + w / 2, y + h / 2)
-
-                    ctx.rotate(rotation)
-                    ctx.translate(-(x + w / 2), -(y + h / 2))
-                    ctx.drawImage(image, x, y, w, h)
-                    ctx.translate(x + w / 2, y + h / 2)
-                    ctx.rotate(-rotation)
-                    ctx.translate(-(x + w / 2), -(y + h / 2))
-                }
-
-                for (let layer of level.layers.sort((a, b) => a.z - b.z).filter(a => a.z <= 0)) {
-                    renderLayer(layer)
-                }
+                ctx = level.layers.filter(a => a.z <= 0).render(ctx, level.camera.props.x, level.camera.props.y)
                 
                 function renderPipe(pipe, state, stretch = 0) {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
@@ -228,45 +211,7 @@ export default class Canvas {
                     .sort((a, b) => !b.strandOn - !a.strandOn)
                     .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
                 ) {
-                    for (let layer of ball.layers.sort((a, b) => a.z - b.z)) {
-                        renderLayer(layer, ball.x, ball.y)
-                    }
-
-                    if (window.game.InputTracker.distanceTo(
-                        ball.x + 1280 / 2 - level.camera.props.x,
-                        -ball.y + 720 / 2 + level.camera.props.y,
-                    ) < 320 && (
-                        level.getStrandsOfBall(ball).length == 0 ||
-                        (ball.strand && ball.strand.detachable)
-                    )) {
-                        for (let eye of ball.eyes) {
-                            ctx.fillStyle = "#fff"
-                            ctx.strokeStyle = "#000"
-                            ctx.lineWidth = 1
-                            
-                            ctx.beginPath()
-                            ctx.arc(
-                                ball.x + eye.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x,
-                                -(ball.y + eye.y) + 720 / 2 / level.camera.props.zoom + level.camera.props.y,
-                                eye.radius, 0, 2 * Math.PI
-                            )
-                            ctx.closePath()
-                            ctx.fill()
-                            ctx.stroke()
-    
-                            ctx.fillStyle = "#000"
-                            
-                            ctx.beginPath()
-                            ctx.arc(
-                                ball.x + eye.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x,
-                                -(ball.y + eye.y) + 720 / 2 / level.camera.props.zoom + level.camera.props.y,
-                                eye.radius / 4, 0, 2 * Math.PI
-                            )
-                            ctx.closePath()
-                            ctx.fill()
-                            ctx.stroke()
-                        }
-                    }
+                    ball.render(ctx, level.camera.props.x, level.camera.props.y, level.camera.props.zoom, level.camera.props.zoom)
 
                     if (window.game.InputTracker.withinCircle(
                         ball.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
@@ -280,9 +225,7 @@ export default class Canvas {
                     }
                 }
 
-                for (let layer of level.layers.sort((a, b) => a.z - b.z).filter(a => a.z > 0)) {
-                    renderLayer(layer)
-                }
+                ctx = level.layers.filter(a => a.z > 0).render(ctx, level.camera.props.x, level.camera.props.y)
 
                 if (level.debug) {
                     for (var body of level.bodies) {
