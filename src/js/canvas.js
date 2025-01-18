@@ -35,6 +35,8 @@ export default class Canvas {
         ctx.globalAlpha = 1
         ctx.resetTransform()
 
+        let { toCanvasPos, toLevelCanvasPos } = window.game.Utils
+
         switch(this.mode) {
             case -1: //begin
                 const fillAmount = window.game.ResourceManager.loadedResources / window.game.ResourceManager.totalResources
@@ -86,7 +88,7 @@ export default class Canvas {
                 let level = window.game.LevelManager.currentLevel
                 ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
-                ctx = level.layers.filter(a => a.z <= 0).render(ctx, level.camera.props.x, level.camera.props.y)
+                ctx = level.layers.filter(a => a.z <= 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
                 
                 function renderPipe(pipe, state, stretch = 0) {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
@@ -116,16 +118,14 @@ export default class Canvas {
 
                     var image = window.game.ResourceManager.getResource(ball.strand.img).image
 
-                    let x1 = ball1.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x
-                    let y1 = -ball1.y + 720 / 2 / level.camera.props.zoom + level.camera.props.y
-                    let x2 = ball2.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x
-                    let y2 = -ball2.y + 720 / 2 / level.camera.props.zoom + level.camera.props.y
+                    let b1 = toLevelCanvasPos(ball1.x, ball1.y, level)
+                    let b2 = toLevelCanvasPos(ball2.x, ball2.y, level)
 
-                    let distance = Math.hypot(x2 - x1, y2 - y1)
-                    let angle = Math.atan2(y2 - y1, x2 - x1)
+                    let distance = Math.hypot(b2.x - b1.x, b2.y - b1.y)
+                    let angle = Math.atan2(b2.y - b1.y, b2.x - b1.x)
 
                     ctx.save()
-                    ctx.translate(x1, y1)
+                    ctx.translate(b1.x, b1.y)
                     ctx.rotate(angle)
                     if (ghost) ctx.globalAlpha = 0.5
                     if (applicableStrand == level.strands.find(v => v.ball1 == ball1 && v.ball2 == ball2)) ctx.filter = "brightness(1.5)"
@@ -211,12 +211,12 @@ export default class Canvas {
                     .sort((a, b) => !b.strandOn - !a.strandOn)
                     .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
                 ) {
-                    ball.render(ctx, level.camera.props.x, level.camera.props.y, level.camera.props.zoom, level.camera.props.zoom)
+                    ball.render(ctx, level.camera.props.x, level.camera.props.y, level.camera.props.zoom)
 
                     if (window.game.InputTracker.withinCircle(
-                        ball.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
-                        -ball.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom,
-                        ball.shape.radius + 4
+                        toLevelCanvasPos(ball.x, ball.y, level).x,
+                        toLevelCanvasPos(ball.x, ball.y, level).y,
+                        ball.shape.radius * level.camera.props.zoom + 4
                     ) && (
                         level.getStrandsOfBall(ball).length == 0 ||
                         ball.strand.detachable
@@ -225,7 +225,7 @@ export default class Canvas {
                     }
                 }
 
-                ctx = level.layers.filter(a => a.z > 0).render(ctx, level.camera.props.x, level.camera.props.y)
+                ctx = level.layers.filter(a => a.z > 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
 
                 if (level.debug) {
                     for (var body of level.bodies) {
@@ -315,6 +315,8 @@ export default class Canvas {
                         ctx.restore()
                     }
                 }
+
+                ctx.resetTransform()
                 
                 if (this.mode === 1) {
 
@@ -388,13 +390,13 @@ export default class Canvas {
                     let y
                     let dist
                     if (window.game.InputTracker.ball == undefined) {
-                        x = ballToDrag.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom
-                        y = -ballToDrag.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom
-                        dist = ballToDrag.shape.radius + 8
+                        x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).x
+                        y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).y
+                        dist = ballToDrag.shape.radius * level.camera.props.zoom + 8
                     } else {
                         x = window.game.InputTracker.x
                         y = window.game.InputTracker.y
-                        dist = window.game.InputTracker.ball.shape.radius + 4
+                        dist = window.game.InputTracker.ball.shape.radius * level.camera.props.zoom + 4
                     }
 
                     function makeCircle(x2, y2) {
@@ -413,8 +415,6 @@ export default class Canvas {
                     makeCircle(x - dist, y + dist)
                     makeCircle(x + dist, y + dist)
                 }
-
-                ctx.resetTransform()
 
                 break
             case 2: //level transition

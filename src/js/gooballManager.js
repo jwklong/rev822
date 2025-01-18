@@ -257,8 +257,8 @@ class Gooball {
         return true
     }
 
-    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1) {
-        this.layers.render(ctx, ox - this.x, oy - this.y, osx, osy)
+    render(ctx, ox = 0, oy = 0, zoom = 1) {
+        this.layers.render(ctx, ox - this.x, oy - this.y, 1, 1, zoom)
 
         const level = window.game.LevelManager.currentLevel
 
@@ -273,11 +273,11 @@ class Gooball {
                 ctx.fillStyle = "#fff"
                 ctx.strokeStyle = "#000"
                 ctx.lineWidth = 1
-                
+
                 ctx.beginPath()
                 ctx.arc(
-                    this.x + eye.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x,
-                    -(this.y + eye.y) + 720 / 2 / level.camera.props.zoom + level.camera.props.y,
+                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).x,
+                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).y,
                     eye.radius, 0, 2 * Math.PI
                 )
                 ctx.closePath()
@@ -288,8 +288,8 @@ class Gooball {
                 
                 ctx.beginPath()
                 ctx.arc(
-                    this.x + eye.x + 1280 / 2 / level.camera.props.zoom - level.camera.props.x,
-                    -(this.y + eye.y) + 720 / 2 / level.camera.props.zoom + level.camera.props.y,
+                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).x,
+                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).y,
                     eye.radius / 4, 0, 2 * Math.PI
                 )
                 ctx.closePath()

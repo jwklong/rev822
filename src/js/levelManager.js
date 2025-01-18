@@ -356,8 +356,8 @@ class Level {
         this.layers.tick(dt)
 
         if (window.game.InputTracker.ball != undefined) {
-            let nextx = window.game.InputTracker.x + this.camera.props.x - 1280 / 2 / this.camera.props.zoom
-            let nexty = -window.game.InputTracker.y + this.camera.props.y + 720 / 2 / this.camera.props.zoom
+            let nextx = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).x
+            let nexty = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).y
 
             window.game.InputTracker.ball.vx = nextx - window.game.InputTracker.ball.x
             window.game.InputTracker.ball.vy = nexty - window.game.InputTracker.ball.y

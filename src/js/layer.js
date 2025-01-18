@@ -3,9 +3,6 @@ export default class Layer {
     /** @type {LayerGroup} */
     static Group
 
-    /** @type {Effect} */
-    static Effect
-
     /** @type {string} */
     img
 
@@ -37,6 +34,15 @@ export default class Layer {
     /** @type {number} */
     rotspeed
 
+    /** @type {number} */
+    transparency
+
+    /** @type {number} */
+    timeSpent = 0
+
+    /** @type {LayerGroup?} */
+    parent
+
     /** @param {Object} xml */
     static fromXML(xml) {
         let layer = new Layer
@@ -55,6 +61,7 @@ export default class Layer {
         layer.z = window.game.Utils.parseAttribute(xml.z, 0)
         layer.rotation = window.game.Utils.parseAttribute(xml.rotation, 0)
         layer.rotspeed = window.game.Utils.parseAttribute(xml.rotspeed, 0)
+        layer.transparency = window.game.Utils.parseAttribute(xml.transparency, 0)
 
         return layer
     }
@@ -62,7 +69,16 @@ export default class Layer {
     /** @param {number} dt */
     tick(dt) {
         this.rotation += this.rotspeed * dt
+        this.timeSpent += dt
+        this.effect(dt)
     }
+
+    /**
+     * Runs every tick to update values manually.
+     * Meant to be overriden when creating layer.
+     * @param {number} dt
+     */
+    effect(dt) {}
 
     /**
      * @param {CanvasRenderingContext2D} ctx
@@ -70,16 +86,19 @@ export default class Layer {
      * @param {number?} oy
      * @param {number?} osx
      * @param {number?} osy
+     * @param {number?} zoom
      * @returns {CanvasRenderingContext2D}
      */
-    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1) {
+    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, zoom = 1) {
         const image = window.game.ResourceManager.getResource(this.img).image
         const w = image.width * this.size.x * osx
         const h = image.height * this.size.y * osy
-        const x = this.x - ox + 1280 / 2 / osx - w / 2
-        const y = -(this.y - oy) + 720 / 2 / osy - h / 2
+        const {x, y} = window.game.Utils.toCanvasPos(this.x - ox, this.y - oy, w, h, zoom)
         const rotation = this.rotation * Math.PI / 180
         ctx.translate(x + w / 2, y + h / 2)
+
+        const oldAlpha = ctx.globalAlpha
+        ctx.globalAlpha = ctx.globalAlpha * (1 - this.transparency)
 
         ctx.rotate(rotation)
         ctx.translate(-(x + w / 2), -(y + h / 2))
@@ -88,12 +107,22 @@ export default class Layer {
         ctx.rotate(-rotation)
         ctx.translate(-(x + w / 2), -(y + h / 2))
 
+        ctx.globalAlpha = oldAlpha
+
         return ctx
+    }
+
+    /**
+     * Removes this layer.
+     */
+    remove() {
+        this.parent.children.splice(this.parent.children.indexOf(this), 1)
     }
 }
 
+/** @class */
 class LayerGroup {
-    /** @type {Array<Layer | Effect | LayerGroup>} */
+    /** @type {Array<(Layer | LayerGroup)>} */
     children = []
 
     /** @type {number} */
@@ -133,12 +162,20 @@ class LayerGroup {
     }
 
     /**
-     * @param {Layer | Effect | LayerGroup} layer
+     * @param {(Layer | LayerGroup)} layer
      */
-    push(layer) { this.children.push(layer) }
+    push(layer) {
+        layer.parent = this
+        this.children.push(layer)
+    }
 
     /**
-     * @param {function(Layer | Effect | LayerGroup): boolean}
+     * @typedef {function} LayerGroupFilterInput
+     * @param {Layer | LayerGroup} v
+     */
+
+    /**
+     * @param {LayerGroupFilterInput} func
      * @returns {LayerGroup}
      */
     filter(func) {
@@ -158,34 +195,18 @@ class LayerGroup {
      * @param {number?} oy
      * @param {number?} osx
      * @param {number?} osy
+     * @param {number?} zoom
      * @returns {CanvasRenderingContext2D}
      */
-    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1) {
+    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, zoom = 1) {
         for (let child of this.children.sort((a, b) => a.z - b.z)) {
             ctx = child.render(ctx,
                 ox + this.x, oy + this.y,
-                osx, osy,
+                osx, osy, zoom
             )
         }
         return ctx
     }
 }
 
-class Effect extends Layer {
-    /** @type {number} */
-    startX
-
-    /** @type {number} */
-    startY
-
-    /** @param {Object} xml */
-    static fromXML(xml) {
-        let effect = super.fromXML(xml)
-        effect.startX = effect.x
-        effect.startY = effect.y
-        return effect
-    }
-}
-
 Layer.Group = LayerGroup
-Layer.Effect = Effect
