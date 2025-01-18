@@ -191,6 +191,7 @@ class Level {
                         ball.x = window.game.Utils.parseAttribute(v.attributes.x)
                         ball.y = window.game.Utils.parseAttribute(v.attributes.y)
                         ball.ref = String(v.attributes.ref)
+                        ball.sleeping = v.attributes.sleeping ?? false
                         this.balls.push(ball)
                     }
                     break
@@ -367,7 +368,25 @@ class Level {
         }
 
         for (let ball of this.balls) {
-            if (ball.antigrav) ball.body.gravityScale = this.getStrandsOfBall(ball).length >= 1 ? -1 : 1
+            ball.tick(dt)
+
+            if (ball.antigrav) ball.body.gravityScale = this.getStrandsOfBall(ball).length > 0 ? -1 : 1
+
+            if (ball.sleeping) {
+                for (let ball2 of this.balls) {
+                    if (
+                        ball2 != ball &&
+                        this.getStrandsOfBall(ball2).length > 0 &&
+                        window.game.InputTracker.withinCircle(
+                            ball2.x, ball2.y,
+                            ball2.strand.length,
+                            ball.x, ball.y
+                        )
+                    ) {
+                        ball.sleeping = false
+                    }
+                }
+            }
 
             for (let body of this.bodies) {
                 if (Matter.Query.collides(body.body, [ball.body]).length > 0) {
@@ -413,7 +432,8 @@ class Level {
                     dt /
                     ball.strandOn.strand.length *
                     (ball.strandOn.reverse ? -1 : 1) *
-                    (this.pipes.find(pipe => pipe.isActive(this)) ? 4 : 1)
+                    (this.pipes.find(pipe => pipe.isActive(this)) ? 4 : 1) *
+                    !ball.sleeping
                 )
 
                 if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {

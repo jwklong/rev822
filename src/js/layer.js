@@ -26,16 +26,16 @@ export default class Layer {
     }
 
     /** @type {number} */
-    z
+    z = 0
 
     /** @type {number} */
-    rotation
+    rotation = 0
 
     /** @type {number} */
-    rotspeed
+    rotspeed = 0
 
     /** @type {number} */
-    transparency
+    transparency = 0
 
     /** @type {number} */
     timeSpent = 0
@@ -122,6 +122,9 @@ export default class Layer {
 
 /** @class */
 class LayerGroup {
+    /** @type {LayerGroup?} */
+    parent
+
     /** @type {Array<(Layer | LayerGroup)>} */
     children = []
 

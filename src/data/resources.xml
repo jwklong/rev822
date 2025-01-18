@@ -12,4 +12,6 @@
 
     <image id="IMAGE_BLUE_SKIES" src="images/blueskies.png" />
     <image id="IMAGE_SUNSETTER" src="images/sunsetter.svg" />
+
+    <image id="IMAGE_SLEEPZ" src="images/sleepZ.png" />
 </resources>

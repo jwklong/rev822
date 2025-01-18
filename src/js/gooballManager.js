@@ -114,6 +114,15 @@ class Gooball {
     climbspeed = 45
 
     /** @type {number} */
+    timeSpent = 0
+
+    /** @type {boolean} */
+    sleeping = false
+
+    /** @type {number}*/
+    lastSlept = Math.random()
+
+    /** @type {number} */
     get x() { return this.body.position.x }
     set x(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(val, this.y)) }
 
@@ -190,12 +199,12 @@ class Gooball {
         this.body.collisionFilter.mask = 0b11
 
         if (xml.attributes) {
-            this.mass = xml.attributes.mass || 30
-            this.antigrav = xml.attributes.antigrav || false
-            this.nobuild = xml.attributes.nobuild || false
-            this.noclimb = xml.attributes.noclimb || false
-            this.intelligence = xml.attributes.intelligence || 0.9
-            this.climbspeed = xml.attributes.climbspeed || 45
+            this.mass = xml.attributes.mass ?? 30
+            this.antigrav = xml.attributes.antigrav ?? false
+            this.nobuild = xml.attributes.nobuild ?? false
+            this.noclimb = xml.attributes.noclimb ?? false
+            this.intelligence = xml.attributes.intelligence ?? 0.9
+            this.climbspeed = xml.attributes.climbspeed ?? 45
         }
 
         for (const [key, value] of Object.entries(xml.body)) {
@@ -268,7 +277,7 @@ class Gooball {
         ) < 320 && (
             level.getStrandsOfBall(this).length == 0 ||
             (this.strand && this.strand.detachable)
-        )) {
+        ) && !this.sleeping) {
             for (let eye of this.eyes) {
                 ctx.fillStyle = "#fff"
                 ctx.strokeStyle = "#000"
@@ -297,6 +306,47 @@ class Gooball {
                 ctx.stroke()
             }
         }
+    }
+
+    tick(dt) {
+        this.layers.tick(dt)
+        this.timeSpent += dt
+
+        if (this.sleeping && this.lastSlept + 2 < this.timeSpent) {
+            this.lastSlept = this.timeSpent
+
+            this.createSleepParticle()
+        }
+    }
+
+    createSleepParticle() {
+        const particle = new window.game.Layer
+        particle.img = "IMAGE_SLEEPZ"
+        particle.x = this.shape.radius / 2
+        particle.y = this.shape.radius / 2
+        particle.size = {x: 0.5, y: 0.5}
+        particle.transparency = 1
+        particle.rotation = Math.random() * 40 - 20
+
+        const xMovement = 5 + Math.random() * 5
+        const yMovement = 5 + Math.random() * 5
+
+        particle.effect = function (dt) {
+            this.x += dt * xMovement
+            this.y += dt * yMovement
+
+            if (this.timeSpent <= 1.5) {
+                this.transparency = 1 - window.game.Easing.easeOut.from(this.timeSpent / 1.5)
+            } else {
+                this.transparency = window.game.Easing.easeIn.from(this.timeSpent / 1.5 - 1)
+            }
+
+            if (this.timeSpent > 3) {
+                this.remove()
+            }
+        }
+
+        this.layers.push(particle)
     }
 }
 

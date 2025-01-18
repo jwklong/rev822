@@ -67,6 +67,19 @@
         <ball type="common" x="-1000--700" y="1500-4000" />
         <ball type="common" x="-1000--700" y="1500-4000" />
         <ball type="common" x="-1000--700" y="1500-4000" />
+        
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="1500-4000" sleeping />
 
         <pipe type="default" x="800" y="100" />
     </scene>

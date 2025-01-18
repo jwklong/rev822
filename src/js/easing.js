@@ -25,11 +25,11 @@ export default class Easing {
     }
 
     /**
-     * Reverses the easing
+     * Inverts the easing
      * @param {Easing} ease
      * @returns {Easing}
      */
-    static reverse(ease) {
+    static invert(ease) {
         return new Easing(ease.y1, ease.x1, ease.y2, ease.x2)
     }
 
