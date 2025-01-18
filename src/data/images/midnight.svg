@@ -1,0 +1,16 @@
+<svg viewBox="0 0 1024 1024" width="1024px" height="1024px" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="11.547" cy="61.902" r="32" id="gradient-1" gradientTransform="matrix(41.580186, 0, 0, 41.580186, -318.449944, -1494.846194)">
+      <stop offset="0" style="stop-color: rgb(0, 29, 115);"></stop>
+      <stop offset="1" style="stop-color: rgb(31, 0, 58);"></stop>
+    </radialGradient>
+    <filter id="gaussian-blur-filter-0" bx:preset="gaussian-blur 1 10" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10 10" edgeMode="none"></feGaussianBlur>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" style="fill: url(#gradient-1);"></rect>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 96px; filter: url(#gaussian-blur-filter-0);" d="M -242.244 399.114 C -154.712 574.178 81.198 527.588 228.874 626.039 C 256.945 644.754 302.521 673.143 320.138 702.504 C 361.69 771.758 377.101 842.083 460.733 880.098 C 530.179 911.664 609.169 892.142 677.793 917.097 C 797.929 960.783 896.909 1048.853 1008.315 1104.557 C 1028.498 1114.649 1078.296 1107.024 1099.579 1107.024 C 1149.606 1107.024 1212.633 1112.78 1259.907 1131.69"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 96px; filter: url(#gaussian-blur-filter-0); stroke-opacity: 0.5;" d="M -89.314 156.157 C -1.782 331.221 234.121 284.631 381.797 383.082 C 409.868 401.797 455.444 430.186 473.061 459.551 C 514.613 528.801 530.024 599.131 613.656 637.141 C 683.102 668.711 762.092 649.181 830.716 674.141 C 950.852 717.821 1049.84 805.891 1161.25 861.601 C 1181.43 871.691 1231.23 864.061 1252.51 864.061 C 1302.54 864.061 1365.57 869.821 1412.84 888.731"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 96px; filter: url(#gaussian-blur-filter-0); stroke-opacity: 0.5;" d="M -391.48 629.74 C -303.95 804.804 -68.036 758.214 79.64 856.663 C 107.711 875.383 153.287 903.773 170.904 933.133 C 212.456 1002.39 227.867 1072.71 311.499 1110.72 C 380.945 1142.29 459.935 1122.76 528.559 1147.72 C 648.695 1191.41 747.675 1279.47 859.088 1335.19 C 879.268 1345.27 929.06 1337.65 950.34 1337.65 C 1000.37 1337.65 1063.4 1343.41 1110.67 1362.31"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 96px; filter: url(#gaussian-blur-filter-0); stroke-opacity: 0.25;" d="M 59.914 -78.17 C 147.446 96.894 383.349 50.304 531.025 148.755 C 559.096 167.47 604.672 195.859 622.289 225.224 C 663.841 294.474 679.252 364.804 762.884 402.814 C 832.33 434.384 911.32 414.854 979.944 439.814 C 1100.08 483.494 1199.06 571.564 1310.47 627.276 C 1330.65 637.366 1380.45 629.736 1401.73 629.736 C 1451.76 629.736 1514.79 635.496 1562.06 654.406"></path>
+</svg>
