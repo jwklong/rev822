@@ -99,7 +99,7 @@ export default class Layer {
 
         const oldAlpha = ctx.globalAlpha
         ctx.globalAlpha = ctx.globalAlpha * (1 - this.transparency)
-
+                
         ctx.rotate(rotation)
         ctx.translate(-(x + w / 2), -(y + h / 2))
         ctx.drawImage(image, x, y, w, h)

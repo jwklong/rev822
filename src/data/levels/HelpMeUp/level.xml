@@ -1,0 +1,27 @@
+<level>
+    <resources>
+        <image id="IMAGE_HELPMEUP_HILL" src="levels/HelpMeUp/bighill.svg" />
+        <image id="IMAGE_HELPMEUP_FLOOR" src="levels/HelpMeUp/floor.svg" />
+    </resources>
+    <head>
+        <camera width="1280" height="2160">
+            <keyframe x="0" y="-720" zoom="1" />
+        </camera>
+        <title>Help Me Up</title>
+        <desc>TBD</desc>
+        <goal type="balls" target="4" />
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+        <layer img="IMAGE_HELPMEUP_FLOOR" x="0" y="-952" size="1" />
+        <layer img="IMAGE_HELPMEUP_HILL" x="434" y="-618" size="1,1" />
+        <layer img="IMAGE_HELPMEUP_HILL" x="-434" y="-618" size="-1,1" />
+
+        <rect static x="-740" y="0" width="200" height="65536" detaches />
+        <rect static x="740" y="0" width="200" height="65536" detaches />
+
+        <rect static x="0" y="-980" width="1280" height="100" material="rock" sticky />
+
+        <ball type="common" x="0" y="0" />
+    </scene>
+</level>
