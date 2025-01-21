@@ -376,6 +376,7 @@ class Level {
                 for (let ball2 of this.balls) {
                     if (
                         ball2 != ball &&
+                        !ball2.sleeping &&
                         this.getStrandsOfBall(ball2).length > 0 &&
                         window.game.InputTracker.withinCircle(
                             ball2.x, ball2.y,
@@ -386,6 +387,12 @@ class Level {
                         ball.sleeping = false
                     }
                 }
+
+                if (this.balls.find(
+                    v => v !== ball &&
+                    this.getStrandFromBalls(ball, v) !== undefined &&
+                    !v.sleeping
+                )) ball.sleeping = false
             }
 
             for (let body of this.bodies) {
@@ -599,7 +606,6 @@ class GenericBody {
 
     /** @param {Object} attributes */
     constructor(attributes, body) {
-
         this.body = body || Matter.Body.Create()
         this.body.collisionFilter.category = 0b10
         this.body.collisionFilter.mask = 0b11

@@ -157,6 +157,7 @@ export default class Canvas {
                         level.balls.forEach(x => {
                             if (x === window.game.InputTracker.ball) return
                             if (x.nobuild) return
+                            if (x.sleeping) return
                             if (level.getStrandsOfBall(x).length === 0) return
                             if (!window.game.InputTracker.shift) {
                                 if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
