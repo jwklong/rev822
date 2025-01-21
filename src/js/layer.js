@@ -95,16 +95,18 @@ export default class Layer {
         const h = image.height * this.size.y * osy
         const {x, y} = window.game.Utils.toCanvasPos(this.x - ox, this.y - oy, w, h, zoom)
         const rotation = this.rotation * Math.PI / 180
-        ctx.translate(x + w / 2, y + h / 2)
 
         const oldAlpha = ctx.globalAlpha
         ctx.globalAlpha = ctx.globalAlpha * (1 - this.transparency)
-                
+        
+        ctx.translate(x + w / 2, y + h / 2)
+        ctx.scale(Math.sign(osx * this.size.x), Math.sign(osx * this.size.y))
         ctx.rotate(rotation)
         ctx.translate(-(x + w / 2), -(y + h / 2))
         ctx.drawImage(image, x, y, w, h)
         ctx.translate(x + w / 2, y + h / 2)
         ctx.rotate(-rotation)
+        ctx.scale(Math.sign(osx * this.size.x), Math.sign(osx * this.size.y))
         ctx.translate(-(x + w / 2), -(y + h / 2))
 
         ctx.globalAlpha = oldAlpha
@@ -205,7 +207,7 @@ class LayerGroup {
         for (let child of this.children.sort((a, b) => a.z - b.z)) {
             ctx = child.render(ctx,
                 ox + this.x, oy + this.y,
-                osx, osy, zoom
+                osx * this.size.x, osy * this.size.y, zoom
             )
         }
         return ctx
