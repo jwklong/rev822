@@ -1,0 +1,25 @@
+<level debug>
+    <resources>
+        <image id="IMAGE_HILLBIT_TERRAIN" src="levels/HillBit/terrain.svg" />
+        <image id="IMAGE_HILLBIT_TERRAINBG" src="levels/HillBit/terrainbg.svg" />
+    </resources>
+    <head>
+        <camera width="2660" height="2048">
+            <keyframe x="0" y="-720" zoom="1" />
+        </camera>
+        <title>Hill Bit</title>
+        <desc>TBD</desc>
+        <goal type="balls" target="6" />
+    </head>
+    <scene>
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="3" z="-1" />
+        <layer img="IMAGE_HILLBIT_TERRAIN" x="-306" y="-304" z="1" />
+        <layer img="IMAGE_HILLBIT_TERRAINBG" x="-306" y="-304" />
+
+        <rect static x="-1430" y="0" width="200" height="65536" detaches />
+        <rect static x="1430" y="0" width="200" height="65536" detaches />
+
+        <rect static x="-550" y="-924" width="1700" height="250" material="grass" sticky />
+        <circle static x="300" y="-900" radius="100" material="grass" sticky />
+    </scene>
+</level>
