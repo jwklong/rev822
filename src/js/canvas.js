@@ -321,24 +321,28 @@ export default class Canvas {
                 
                 if (this.mode === 1) {
 
-                } else {
-                    if (!level.camera.props.fixed && level.goal) {
-                        let text = ""
-
+                } else if (!level.camera.props.fixed) {
+                    let text = ""
+                    if (level.debug) {
+                        let mousePos = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, level)
+                        text = `${mousePos.x.toFixed()}, ${mousePos.y.toFixed()}`
+                    } else if (level.goal) {
                         switch (level.goal.type) {
                             case "balls":
                                 text = `${level.goalAmount} of ${level.goal.target} balls collected`
                         }
-
-                        ctx.font = '36px "FONT_TCCEB"'
-                        ctx.strokeStyle = 'black'
-                        ctx.textAlign = 'left'
-                        ctx.textBaseline = 'bottom'
-                        ctx.lineWidth = 6
-                        ctx.strokeText(text, 24, 720 - 16)
-                        ctx.fillStyle = 'white'
-                        ctx.fillText(text, 24, 720 - 16)
                     }
+
+                    ctx.font = '36px "FONT_TCCEB"'
+                    ctx.strokeStyle = 'black'
+                    ctx.textAlign = 'left'
+                    ctx.textBaseline = 'bottom'
+                    ctx.lineWidth = 4
+                    ctx.strokeText(text, 24, 720 - 16)
+                    ctx.lineWidth = 6
+                    ctx.strokeText(text, 24, 720 - 16)
+                    ctx.fillStyle = 'white'
+                    ctx.fillText(text, 24, 720 - 16)
                 }
 
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.left) {
