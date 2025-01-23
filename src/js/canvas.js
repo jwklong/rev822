@@ -88,7 +88,7 @@ export default class Canvas {
                 let level = window.game.LevelManager.currentLevel
                 ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
-                ctx = level.layers.filter(a => a.z <= 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
+                ctx = level.layers.filter(a => a.z < 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
                 
                 function renderPipe(pipe, state, stretch = 0) {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
@@ -108,9 +108,11 @@ export default class Canvas {
                 }
                 //pipes here
                 for (let pipe of level.pipes) {
-                    renderPipe(pipe, "pipe", 65536)
+                    renderPipe(pipe, "pipe", pipe.length)
                     renderPipe(pipe, pipe.isActive(level) ? "capopen" : "cap")
                 }
+
+                ctx = level.layers.filter(a => a.z == 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
 
                 //gooballs here
                 function drawStrand(type, ball1, ball2, ghost = false) {

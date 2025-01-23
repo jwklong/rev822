@@ -210,6 +210,7 @@ class Level {
                         pipe.y = window.game.Utils.parseAttribute(v.attributes.y)
                         pipe.direction = window.game.Utils.parseAttribute(v.attributes.direction, 0)
                         pipe.radius = window.game.Utils.parseAttribute(v.attributes.radius, 80)
+                        pipe.length = window.game.Utils.parseAttribute(v.attributes.length, 65535)
                         pipe.ref = String(v.attributes.ref)
                         this.pipes.push(pipe)
                     }

@@ -57,6 +57,12 @@ export class Pipe {
     /** @type {number} */
     radius = 80
 
+    /**
+     * Length of pipe, defaults to cover the level
+     * @type {number}
+     */
+    length = 65535
+
     /** @type {string} */
     ref
 

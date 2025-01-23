@@ -1,4 +1,4 @@
-<level debug>
+<level>
     <resources>
         <image id="IMAGE_HILLBIT_TERRAIN" src="levels/HillBit/terrain.svg" />
         <image id="IMAGE_HILLBIT_TERRAINBG" src="levels/HillBit/terrainbg.svg" />
@@ -13,8 +13,8 @@
     </head>
     <scene>
         <layer img="IMAGE_SUNSETTER" x="0" y="0" size="3" z="-1" />
-        <layer img="IMAGE_HILLBIT_TERRAIN" x="-306" y="-304" z="1" />
-        <layer img="IMAGE_HILLBIT_TERRAINBG" x="-306" y="-304" />
+        <layer img="IMAGE_HILLBIT_TERRAIN" x="-306" y="-304" z="0" />
+        <layer img="IMAGE_HILLBIT_TERRAINBG" x="-306" y="-304" z="-0.5" />
 
         <rect static x="1430" y="0" width="200" height="65536" detaches />
 
@@ -29,20 +29,47 @@
         <circle static x="170" y="-550" radius="40" material="grass" />
         <rect static x="70" y="-550" width="200" height="80" material="grass" sticky />
         <rect static x="0" y="-500" width="100" height="250" rotation="45" material="grass" sticky />
-        <rect static x="-40" y="-350" width="100" height="400" material="grass" />
-        <rect static x="0" y="-250" width="100" height="250" rotation="-45" material="grass" />
-        <rect static x="200" y="-170" width="350" height="100" material="grass" />
+        <rect static x="-40" y="-350" width="100" height="400" material="grass" sticky />
+        <rect static x="0" y="-250" width="100" height="250" rotation="-45" material="grass" sticky />
+        <rect static x="200" y="-170" width="350" height="100" material="grass" sticky />
         <rect static x="430" y="20" width="100" height="500" rotation="-25" material="grass" />
         <circle static x="535" y="245" radius="50" material="grass" sticky />
         <rect static x="-30" y="245" width="1150" height="100" material="grass" sticky />
         <circle static x="-600" y="245" radius="50" material="grass" sticky />
         <rect static x="-560" y="160" width="100" height="200" rotation="25" material="grass" />
-        <rect static x="-410" y="100" width="300" height="100" material="grass" />
-        <rect static x="-240" y="30" width="100" height="250" rotation="45" material="grass" />
-        <rect static x="-190" y="-100" width="100" height="400" material="grass" />
+        <rect static x="-410" y="100" width="300" height="100" material="grass" sticky />
+        <rect static x="-240" y="30" width="100" height="250" rotation="45" material="grass" sticky />
+        <rect static x="-190" y="-100" width="100" height="400" material="grass" sticky />
         <rect static x="-240" y="-245" width="100" height="250" rotation="-45" material="grass" sticky />
         <rect static x="-280" y="-280" width="200" height="80" material="grass" sticky />
         <circle static x="-370" y="-280" radius="40" material="grass" />
         <rect static x="-250" y="-490" width="100" height="450" rotation="25" material="grass" />
+
+        <ball type="ivy" x="-840" y="-770" ref="1" />
+        <ball type="ivy" x="-680" y="-770" ref="2" />
+        <ball type="ivy" x="-760" y="-620" ref="3" />
+
+        <strand type="ivy" from="1" to="2" />
+        <strand type="ivy" from="2" to="3" />
+        <strand type="ivy" from="3" to="1" />
+
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+        <ball type="ivy" x="-900--600" y="-500--200" />
+
+        <ball type="ivy" x="-100-100" y="400-600" sleeping />
+        <ball type="ivy" x="-100-100" y="400-600" sleeping />
+        <ball type="ivy" x="-100-100" y="400-600" sleeping />
+        <ball type="balloon" x="-100-100" y="400-600" sleeping />
+
+        <pipe type="default" x="100" y="-370" direction="-90" length="200" />
     </scene>
 </level>
