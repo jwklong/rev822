@@ -16,7 +16,7 @@
         <layer img="IMAGE_HILLBIT_TERRAIN" x="-306" y="-304" z="0" />
         <layer img="IMAGE_HILLBIT_TERRAINBG" x="-306" y="-304" z="-0.5" />
 
-        <rect static x="1430" y="0" width="200" height="65536" detaches />
+        <rect static x="-1430" y="0" width="200" height="65536" detaches />
 
         <rect static x="-550" y="-924" width="1700" height="250" material="grass" sticky />
         <circle static x="300" y="-900" radius="100" material="grass" sticky />
