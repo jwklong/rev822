@@ -1,3 +1,13 @@
+.sidebar-container {
+    padding: 0 !important;
+}
+
+.sidebar {
+    padding-bottom: 0 !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+}
+
 .type-signature {
     color: #999 !important;
 }

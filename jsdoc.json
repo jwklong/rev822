@@ -22,11 +22,13 @@
                 "Classes",
                 "Namespaces"
             ],
-            "include_css": ["./static-docs/custom.css"]
+            "include_css": ["./static-docs/custom.css"],
+            "include_js": ["./static-docs/custom.js"]
         }
     },
     "markdown": {
         "hardwrap": false,
         "idInHeadings": true
-    }
+    },
+    "allowUnknownTags": true
 }
