@@ -8,7 +8,6 @@
     <image id="IMAGE_LOADFINISHED" src="images/loadingFinished.png" />
 
     <image id="IMAGE_LOGO" src="images/logo.png" />
-    <image id="IMAGE_TEMP_BACKGROUND" src="images/backdrop.jpg" />
 
     <image id="IMAGE_BLUE_SKIES" src="images/backgrounds/blueskies.svg" />
     <image id="IMAGE_SUNSETTER" src="images/backgrounds/sunsetter.svg" />

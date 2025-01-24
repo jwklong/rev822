@@ -46,9 +46,9 @@ export default class Canvas {
 
                     const image1 = window.game.ResourceManager.getResource('IMAGE_LOADFINISHED').image
                     
-                    const image2 = window.game.ResourceManager.getResource('IMAGE_TEMP_BACKGROUND').image
+                    const image2 = window.game.ResourceManager.getResource('IMAGE_BLUE_SKIES').image
 
-                    ctx.drawImage(image2, 0, 0, 1280, 720)
+                    ctx.drawImage(image2, 0, -280, 1280, 1280)
                     ctx.drawImage(image1, 540, 260)
 
                     ctx.lineJoin = 'round'
