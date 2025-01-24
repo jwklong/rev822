@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="455.079" cy="-391.923" r="512" id="gradient-0" gradientTransform="matrix(0, 3.04996, -3.04996, 0, -683.366832, -1862.231324)">
+      <stop offset="0" style="stop-color: rgb(68, 68, 68);"></stop>
+      <stop offset="0.323" style="stop-color: rgb(53, 53, 53);"></stop>
+      <stop offset="1" style="stop-color: rgb(3, 3, 3);"></stop>
+    </radialGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="91.389" y1="423.47" x2="91.389" y2="1159.083" id="gradient-1" gradientTransform="matrix(1, 0, 0, 1, 32.088787, -9.56974)">
+      <stop offset="0" style="stop-color: rgb(100% 100% 100%)"></stop>
+      <stop offset="1" style="stop-color: rgb(56.687% 56.687% 56.687%)"></stop>
+    </linearGradient>
+    <filter id="gaussian-blur-filter-1" bx:preset="gaussian-blur 1 16" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="16 16" edgeMode="none"></feGaussianBlur>
+    </filter>
+  </defs>
+  <rect width="1024" height="1024" style="fill: url(#gradient-0);"></rect>
+  <polygon style="stroke-width: 96px; fill-opacity: 0.2; fill: url(#gradient-1);" points="17.207 786.714 125.507 413.9 221.707 868.893 287.807 708.544 390.107 1149.51 -143.09 1141.49"></polygon>
+  <polygon style="stroke-width: 96px; fill: rgba(0, 0, 0, 0.118);" points="1113.46 470.569 1085.39 470.569 818.814 685.039 387.834 727.129 261.634 915.539 -12.966 935.589 -181.37 1009.75 -155.37 1204.18 1482.26 1053.84"></polygon>
+  <ellipse style="fill: none; stroke-width: 96px; filter: url(#gaussian-blur-filter-1); stroke: rgba(255, 255, 255, 0.067);" cx="512" cy="-1414.4" rx="1614.31" ry="1614.31"></ellipse>
+</svg>
