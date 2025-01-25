@@ -13,6 +13,8 @@
     </head>
     <scene>
         <layer img="IMAGE_SUNSETTER" x="0" y="0" size="3" z="-1" />
+        <layer img="IMAGE_LEVEL_BUSH" x="-25" y="400" size="1.5" />
+        <layer img="IMAGE_LEVEL_CLOUD" x="1000" y="-300" />
         <layer img="IMAGE_HILLBIT_TERRAIN" x="-306" y="-304" z="0" />
         <layer img="IMAGE_HILLBIT_TERRAINBG" x="-306" y="-304" z="-0.5" />
 

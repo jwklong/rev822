@@ -13,8 +13,9 @@
     </head>
     <scene>
         <layer img="IMAGE_SUNSETTER" x="0" y="0" size="2" z="-1" />
-        <layer img="IMAGE_ECONOMICDIVIDE_CLIFF1" x="-615" y="-231" size="0.8" z="0" />
-        <layer img="IMAGE_ECONOMICDIVIDE_CLIFF2" x="615" y="-231" size="0.8" z="0" />
+        <layer img="IMAGE_LEVEL_BUSH" x="-980" y="80" />
+        <layer img="IMAGE_ECONOMICDIVIDE_CLIFF1" x="-615" y="-231" size="0.8" />
+        <layer img="IMAGE_ECONOMICDIVIDE_CLIFF2" x="615" y="-231" size="0.8" />
 
         <rect static x="-1124" y="0" width="200" height="65536" detaches />
         <rect static x="1124" y="0" width="200" height="65536" detaches />
