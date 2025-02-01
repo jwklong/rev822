@@ -1,0 +1,24 @@
+<level>
+    <resources>
+        <image id="IMAGE_HANGLOW_GROUND" src="levels/HangLow/ground.svg" />
+        <image id="IMAGE_HANGLOW_PLATFORM" src="levels/HangLow/platform.svg" />
+    </resources>
+    <head>
+        <camera width="1440" height="2160">
+            <keyframe x="0" y="-720" zoom="1" />
+        </camera>
+        <title>Going Up</title>
+        <desc>TBD</desc>
+        <goal type="balls" target="4" />
+    </head>
+    <scene>
+        <layer img="IMAGE_CAVED" x="0" y="300" size="2" z="-1" />
+        
+        <layer img="IMAGE_HANGLOW_PLATFORM" x="-450" y="-150" size="1.5" />
+        <layer img="IMAGE_HANGLOW_PLATFORM" x="450" y="-200" size="-1.5,1.5" />
+        <layer img="IMAGE_HANGLOW_GROUND" x="0" y="-800" size="1.5" />
+        
+        <rect static x="-820" y="0" width="200" height="65536" detaches />
+        <rect static x="820" y="0" width="200" height="65536" detaches />
+    </scene>
+</level>
