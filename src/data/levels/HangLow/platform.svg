@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="215.635" y1="111.815" x2="215.635" y2="481.475" id="gradient-0">
+      <stop offset="0" style="stop-color: rgb(106, 106, 106);"></stop>
+      <stop offset="1" style="stop-color: rgb(40, 40, 40);"></stop>
+    </linearGradient>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="400.212" cy="147.176" r="43.725" id="gradient-1" gradientTransform="matrix(1.679895, 0, 0, 1.679895, -272.193933, -92.518898)">
+      <stop offset="0" style="stop-color: rgb(143, 143, 143);"></stop>
+      <stop offset="1" style="stop-color: rgb(213, 213, 213);"></stop>
+    </radialGradient>
+  </defs>
+  <path d="M 0 419.865 L 0 481.475 C 61.61 481.475 431.271 173.425 431.271 111.815 L 369.661 111.815 C 431.271 173.425 61.61 481.475 0 419.865 Z" style="fill: url(#gradient-0);"></path>
+  <path stroke-width="0" opacity="0.984313725490196" d="M 357.763 97.04 C 373.169 90.543 429.495 92.051 446.273 104.146 C 463.051 116.241 452.12 143.014 429.883 133.802 C 407.646 124.59 401.687 118.262 370.947 130.995 C 340.206 143.728 342.358 103.537 357.763 97.04 Z" style="fill-opacity: 1; fill-rule: nonzero; stroke-dasharray: none; stroke-dashoffset: 0px; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 4; stroke-opacity: 1; stroke-width: 1px; paint-order: normal; vector-effect: none; opacity: 1; mix-blend-mode: normal; isolation: auto; fill: url(#gradient-1);"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 48px;" d="M 307.72 172.438 C 313.819 172.438 320.37 171.664 326.37 172.438 C 338.686 174.027 350.771 179.898 362.739 183.162 C 382.291 188.495 400.386 193.991 418.691 202.746 C 425.065 205.794 432.706 209.786 436.409 216.267 C 439.644 221.929 442.026 228.292 444.336 234.452"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 48px;" d="M 126.665 282.944 C 181.592 282.944 239.186 290.989 266.078 346.356 C 277.34 369.541 274.898 395.623 280.999 420.026"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 48px;" d="M 220.384 206.476 C 250.965 215.65 284.162 225.588 310.84 243.777 C 337.398 261.885 362.975 301.437 370.056 333.3"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 48px;" d="M 70.713 346.822 C 89.349 346.822 107.826 355.463 125.266 361.277 C 153.727 370.764 191.807 385.087 209.194 411.167"></path>
+  <path style="fill: none; stroke: rgba(255, 255, 255, 0.067); stroke-width: 48px;" d="M 13.362 373.606 C 42.741 394.592 65.828 422.354 86.1 451.939 C 101.903 475.003 117.352 499 106.149 527.008 C 105.324 529.07 103.649 520.739 103.352 519.548 C 102.174 514.836 99.965 510.443 97.756 506.026 C 92.92 496.353 84.076 487.935 80.971 477.584 C 80.899 477.346 78.446 468.725 79.106 468.725 C 81.24 468.725 88.572 482.528 89.83 485.044"></path>
+</svg>
