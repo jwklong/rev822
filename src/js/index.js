@@ -104,5 +104,11 @@ window.game = game;
         requestAnimationFrame(tick)
     }
 
+    addEventListener('keyup', event => {
+        if (event.key == 'Escape') {
+            game.Canvas.togglePause()
+        }
+    })
+
     requestAnimationFrame(tick)
 })()

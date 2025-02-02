@@ -517,4 +517,14 @@ export default class Canvas {
             }
         }, true, false)
     }
+
+    /**
+     * Toggles the pause menu
+     * Will only work if you are in a level or you are already paused
+     * @argument {boolean} override - Forces it to be paused or not
+     */
+    togglePause(override) {
+        if (this.mode != 0 && this.mode != 1) return
+        this.mode = Number(override ?? !this.mode)
+    }
 }
