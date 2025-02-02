@@ -322,7 +322,20 @@ export default class Canvas {
                 ctx.resetTransform()
                 
                 if (this.mode === 1) {
+                    ctx.translate(1280 / 2, 720 / 2)
+                    ctx.rotate(-0.1)
 
+                    ctx.fillStyle = "#000"
+                    ctx.fillRect(-1000, -750, 2000, 500)
+                    ctx.fillRect(-1000, 250, 2000, 500)
+
+                    ctx.resetTransform()
+
+                    ctx.font = '48px "FONT_COOKIES"'
+                    ctx.fillStyle = "#fff"
+                    ctx.textAlign = 'left'
+                    ctx.textBaseline = 'top'
+                    ctx.fillText(level.title, 36, 36)
                 } else if (!level.camera.props.fixed) {
                     let text = ""
                     if (level.debug) {
