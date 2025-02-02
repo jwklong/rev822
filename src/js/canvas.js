@@ -141,7 +141,7 @@ export default class Canvas {
                 let applicableBalls = []
                 let applicableStrand = null
                 let canBuild = false
-                if (window.game.InputTracker.ball) {
+                if (window.game.InputTracker.ball && this.mode == 0) {
                     for (let strand of level.strands) {
                         if (window.game.InputTracker.cursorIntersectsLine(
                             strand.ball1.x, strand.ball1.y,
@@ -223,7 +223,7 @@ export default class Canvas {
                     ) && (
                         level.getStrandsOfBall(ball).length == 0 ||
                         ball.strand.detachable
-                    ) && !ball.sleeping) {
+                    ) && !ball.sleeping && this.mode == 0) {
                         ballToDrag = ball 
                     }
                 }
@@ -356,7 +356,7 @@ export default class Canvas {
                     Matter.Body.setStatic(window.game.InputTracker.ball.body, true)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
                     
-                } else if (window.game.InputTracker.ball !== undefined && !window.game.InputTracker.left) {
+                } else if (window.game.InputTracker.ball !== undefined && (!window.game.InputTracker.left || this.mode == 1)) {
                     Matter.Body.setStatic(window.game.InputTracker.ball.body, false)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
 
