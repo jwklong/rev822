@@ -58,6 +58,16 @@ class Gooball {
      */
     shape = {}
 
+    /** @type {Material} */
+    #material
+    /** @type {string} */
+    get material() { return this.#material.name }
+    set material(val) {
+        this.#material = window.game.MaterialManager.getMaterial(val)
+        this.body.friction = this.#material.friction
+        this.body.restitution = this.#material.bounciness
+    }
+
     /**
      * @type {Object?}
      * @property {string} img
@@ -197,6 +207,12 @@ class Gooball {
         }
         this.body.collisionFilter.category = 0b01
         this.body.collisionFilter.mask = 0b11
+
+        if (xml.head.attributes && xml.head.attributes.material) {
+            this.material = xml.head.attributes.material
+        } else {
+            this.material = "rock"
+        }
 
         if (xml.attributes) {
             this.mass = xml.attributes.mass ?? 30
