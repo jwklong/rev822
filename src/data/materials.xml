@@ -3,4 +3,5 @@
     <material name="grass" friction="0.95" bounciness="0.2" />
     <material name="rock" friction="1" bounciness="0.1" />
     <material name="ice" friction="0" bounciness="0.05" />
+    <material name="snow" friction="0.5" bounciness="0.1" />
 </materials>

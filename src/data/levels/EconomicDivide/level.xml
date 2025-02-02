@@ -21,16 +21,16 @@
         <rect static x="1124" y="0" width="200" height="65536" detaches />
 
         <circle static x="-400" y="16" radius="80" sticky />
-        <rect static x="-750" y="0" width="700" height="100" rotation="5" material="grass" sticky />
-        <rect static x="-710" y="-200" width="100" height="700" rotation="-58" sticky />
-        <rect static x="-800" y="-400" width="100" height="700" rotation="-23" sticky />
+        <rect static x="-750" y="0" width="700" height="100" rotation="-5" material="grass" sticky />
+        <rect static x="-710" y="-200" width="100" height="700" rotation="58" sticky />
+        <rect static x="-800" y="-400" width="100" height="700" rotation="23" sticky />
 
         <circle static x="275" y="-220" radius="40" material="rock" />
-        <rect static x="450" y="-290" width="300" height="100" rotation="8" material="grass" sticky />
-        <rect static x="700" y="-328" width="300" height="100" rotation="-25" material="grass" sticky />
-        <rect static x="740" y="-310" width="300" height="100" rotation="15" material="grass" sticky />
-        <rect static x="1000" y="-310" width="300" height="100" rotation="-15" material="grass" sticky />
-        <rect static x="300" y="-610" width="100" height="700" rotation="2" sticky />
+        <rect static x="450" y="-290" width="300" height="100" rotation="-8" material="grass" sticky />
+        <rect static x="700" y="-328" width="300" height="100" rotation="25" material="grass" sticky />
+        <rect static x="740" y="-310" width="300" height="100" rotation="-15" material="grass" sticky />
+        <rect static x="1000" y="-310" width="300" height="100" rotation="15" material="grass" sticky />
+        <rect static x="300" y="-610" width="100" height="700" rotation="-2" sticky />
 
         <ball type="common" x="-720" y="80" ref="0" />
         <ball type="common" x="-880" y="80" ref="1" />
