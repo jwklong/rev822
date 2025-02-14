@@ -12,8 +12,9 @@ export default class Canvas {
      */
     mode = -1
 
-    /** @type {number} */
+    /** @type {boolean} */
     transition = false
+
     /**
      * - 0 = in
      * - 1 = out
@@ -330,6 +331,14 @@ export default class Canvas {
                     ctx.textAlign = 'left'
                     ctx.textBaseline = 'top'
                     ctx.fillText(level.title, 36, 36)
+
+                    let continueButton = new CanvasButton(136, 200, 'continue')
+                    ctx = continueButton.render(ctx)
+                    if (continueButton.clicked) this.togglePause(false)
+
+                    let retryButton = new CanvasButton(136, 256, 'retry')
+                    ctx = retryButton.render(ctx)
+                    if (retryButton.clicked && !this.transition) this.playLevel(level.id, true)
                 } else if (!level.camera.props.fixed) {
                     let text = ""
                     if (level.debug) {
@@ -504,6 +513,9 @@ export default class Canvas {
      * @returns {CanvasRenderingContext2D}
      */
     renderCursor(ctx, ballToDrag = null) {
+        let { toCanvasPos, toLevelCanvasPos } = window.game.Utils
+        let level = window.game.LevelManager.currentLevel
+
         if (ballToDrag === null && window.game.InputTracker.ball == undefined) {
             ctx.beginPath()
             ctx.arc(window.game.InputTracker.x, window.game.InputTracker.y, 16, 0, 2 * Math.PI)
@@ -584,7 +596,7 @@ class CanvasButton {
         ctx.beginPath()
         ctx.roundRect(this.x - this.width / 2, this.y - this.size / 2, this.width, this.size, 8)
         ctx.closePath()
-        ctx.fillStyle = "#111"
+        ctx.fillStyle = "#000"
         if (this.hoveredOver) ctx.fillStyle = "#222"
         ctx.fill()
 
