@@ -362,8 +362,10 @@ export default class Canvas {
                     ctx.fillStyle = 'white'
                     ctx.fillText(text, 24, 720 - 16)
 
-                    let continueButton = new CanvasButton(1280 - 136, 200, 'continue')
-                    ctx = continueButton.render(ctx)
+                    if (level.goalCompleted) {
+                        let continueButton = new CanvasButton(1280 - 128, 720 - 36, 'continue')
+                        ctx = continueButton.render(ctx)
+                    }
                 }
 
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.left) {
