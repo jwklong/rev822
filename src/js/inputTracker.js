@@ -11,6 +11,11 @@ export default class InputTracker {
     right = false
 
     /** @type {Boolean} */
+    leftOnce = false
+    /** @type {Boolean} */
+    rightOnce = false
+
+    /** @type {Boolean} */
     shift = false
 
     /** @type {Boolean} */
@@ -25,11 +30,13 @@ export default class InputTracker {
         let the = this
 
         /** @param {MouseEvent} event */
-        function mouseHandler(event) {
+        function mouseHandler(event, buttonRelated = false) {
             the.x = clamp(0, event.pageX, 1280)
             the.y = clamp(0, event.pageY, 720)
     
+            the.leftOnce = !the.left && buttonRelated
             the.left = event.buttons % 2 >= 1
+            the.rightOnce = !the.right && buttonRelated
             the.right = event.buttons % 4 >= 2
 
             the.inWindow = true
@@ -40,7 +47,7 @@ export default class InputTracker {
             the.shift = event.shiftKey
         }
 
-        addEventListener("mousedown", ev => mouseHandler(ev))
+        addEventListener("mousedown", ev => mouseHandler(ev, true))
         addEventListener("mouseup", ev => mouseHandler(ev))
         addEventListener("mousemove", ev => mouseHandler(ev))
         addEventListener("mouseout", ev => the.inWindow = false)
@@ -136,5 +143,24 @@ export default class InputTracker {
         const t = ((cx - x1) * dx + (cy- y1) * dy) / (dx * dx + dy * dy);
       
         return Math.max(0, Math.min(1, t));
+    }
+
+    /**
+     * Checks if the cursor is inside a box
+     * @param {number} x1 
+     * @param {number} y1 
+     * @param {number} x2 
+     * @param {number} y2
+     * @param {number} cx - Replaces mouse X
+     * @param {number} cy - Replaces mouse Y
+     * @returns {boolean}
+     */
+    inBox(x1, y1, x2, y2, cx = this.x, cy = this.y) {
+        return cx >= x1 && cx <= x2 && cy >= y1 && cy <= y2
+    }
+
+    resetOnce() {
+        this.leftOnce = false
+        this.rightOnce = false
     }
 }

@@ -34,6 +34,7 @@ export default class Canvas {
         ctx.clearRect(0, 0, 1280, 720)
         ctx.globalAlpha = 1
         ctx.resetTransform()
+        ctx.lineJoin = 'round'
 
         let { toCanvasPos, toLevelCanvasPos } = window.game.Utils
 
@@ -51,17 +52,10 @@ export default class Canvas {
                     ctx.drawImage(image2, 0, -280, 1280, 1280)
                     ctx.drawImage(image1, 540, 260)
 
-                    ctx.lineJoin = 'round'
+                    let continueButton = new CanvasButton(640, 560, 'continue')
+                    ctx = continueButton.render(ctx)
 
-                    ctx.font = '48px "FONT_COOKIES"'
-                    ctx.strokeStyle = 'black'
-                    ctx.textAlign = 'center'
-                    ctx.lineWidth = 8
-                    ctx.strokeText('Click to continue', 640, 560)
-                    ctx.lineWidth = 4
-                    ctx.strokeText('Click to continue', 640, 560)
-                    ctx.fillStyle = 'white'
-                    ctx.fillText('Click to continue', 640, 560)
+                    ctx = this.renderCursor(ctx)
 
                     ctx.globalAlpha = Math.max(1-window.game.TimeManager.getTimer('POSTLOADING').timePassed, 0)
                     ctx.fillStyle = 'white'
@@ -69,10 +63,10 @@ export default class Canvas {
 
                     if (
                         window.game.TimeManager.getTimer('POSTLOADING').finished &&
-                        window.game.InputTracker.left &&
+                        continueButton.clicked &&
                         !this.transition
                     ) {
-                        this.playLevel("Test")
+                        this.playLevel("GoingUp")
                     }
 
                     break
@@ -396,45 +390,7 @@ export default class Canvas {
                     window.game.InputTracker.ball = undefined
                 }
 
-                if (ballToDrag === null && window.game.InputTracker.ball == undefined) {
-                    ctx.beginPath()
-                    ctx.arc(window.game.InputTracker.x, window.game.InputTracker.y, 16, 0, 2 * Math.PI)
-                    ctx.closePath()
-                    ctx.fillStyle = "#000"
-                    ctx.fill()
-                    ctx.strokeStyle = "#fff"
-                    ctx.lineWidth = 4
-                    ctx.stroke()
-                } else {
-                    let x
-                    let y
-                    let dist
-                    if (window.game.InputTracker.ball == undefined) {
-                        x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).x
-                        y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).y
-                        dist = ballToDrag.shape.radius * level.camera.props.zoom + 8
-                    } else {
-                        x = window.game.InputTracker.x
-                        y = window.game.InputTracker.y
-                        dist = window.game.InputTracker.ball.shape.radius * level.camera.props.zoom + 4
-                    }
-
-                    function makeCircle(x2, y2) {
-                        ctx.beginPath()
-                        ctx.arc(x2, y2, 8, 0, 2 * Math.PI)
-                        ctx.closePath()
-                        ctx.fillStyle = "#000"
-                        ctx.fill()
-                        ctx.strokeStyle = "#fff"
-                        ctx.lineWidth = 4
-                        ctx.stroke()
-                    }
-
-                    makeCircle(x - dist, y - dist)
-                    makeCircle(x + dist, y - dist)
-                    makeCircle(x - dist, y + dist)
-                    makeCircle(x + dist, y + dist)
-                }
+                ctx = this.renderCursor(ctx, ballToDrag)
 
                 break
             case 2: //level transition
@@ -539,5 +495,113 @@ export default class Canvas {
     togglePause(override) {
         if (this.mode != 0 && this.mode != 1) return
         this.mode = Number(override ?? !this.mode)
+    }
+
+    /**
+     * Renders a cursor on the canvas
+     * @param {CanvasRenderingContext2D} ctx
+     * @param {Gooball?} ballToDrag - gooball hovered over
+     * @returns {CanvasRenderingContext2D}
+     */
+    renderCursor(ctx, ballToDrag = null) {
+        if (ballToDrag === null && window.game.InputTracker.ball == undefined) {
+            ctx.beginPath()
+            ctx.arc(window.game.InputTracker.x, window.game.InputTracker.y, 16, 0, 2 * Math.PI)
+            ctx.closePath()
+            ctx.fillStyle = "#000"
+            ctx.fill()
+            ctx.strokeStyle = "#fff"
+            ctx.lineWidth = 4
+            ctx.stroke()
+        } else {
+            let x
+            let y
+            let dist
+            if (window.game.InputTracker.ball == undefined) {
+                x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).x
+                y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).y
+                dist = ballToDrag.shape.radius * level.camera.props.zoom + 8
+            } else {
+                x = window.game.InputTracker.x
+                y = window.game.InputTracker.y
+                dist = window.game.InputTracker.ball.shape.radius * level.camera.props.zoom + 4
+            }
+
+            function makeCircle(x2, y2) {
+                ctx.beginPath()
+                ctx.arc(x2, y2, 8, 0, 2 * Math.PI)
+                ctx.closePath()
+                ctx.fillStyle = "#000"
+                ctx.fill()
+                ctx.strokeStyle = "#fff"
+                ctx.lineWidth = 4
+                ctx.stroke()
+            }
+
+            makeCircle(x - dist, y - dist)
+            makeCircle(x + dist, y - dist)
+            makeCircle(x - dist, y + dist)
+            makeCircle(x + dist, y + dist)
+        }
+
+        return ctx
+    }
+}
+
+/**
+ * @class
+ */
+class CanvasButton {
+    /** @type {number} */
+    x = 0
+
+    /** @type {number} */
+    y = 0
+
+    /** @type {number} */
+    width = 0
+
+    /** @type {number} */
+    size = 16
+
+    /** @type {string} */
+    text = ""
+
+    constructor(x, y, text = "", width = 216, size = 40) {
+        this.x = x
+        this.y = y
+        this.width = width
+        this.size = size
+        this.text = text
+    }
+
+    /**
+     * Renders the button
+     * @param {CanvasRenderingContext2D} ctx
+     * @returns {CanvasRenderingContext2D}
+     */
+    render(ctx) {
+        ctx.beginPath()
+        ctx.roundRect(this.x - this.width / 2, this.y - this.size / 2, this.width, this.size, 8)
+        ctx.closePath()
+        ctx.fillStyle = "#111"
+        if (this.hoveredOver) ctx.fillStyle = "#222"
+        ctx.fill()
+
+        ctx.textBaseline = "middle"
+        ctx.textAlign = "center"
+        ctx.font = `${this.size*0.8}px FONT_TCCEB`
+        ctx.fillStyle = "#fff"
+        ctx.fillText(this.text, this.x, this.y)
+
+        return ctx
+    }
+
+    get hoveredOver() {
+        return window.game.InputTracker.inBox(this.x - this.width / 2, this.y - this.size / 2, this.x + this.width / 2, this.y + this.size / 2)
+    }
+
+    get clicked() {
+        return window.game.InputTracker.leftOnce && this.hoveredOver
     }
 }

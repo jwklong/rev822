@@ -101,6 +101,8 @@ window.game = game;
 
         game.Canvas.tick(dt)
 
+        game.InputTracker.resetOnce()
+
         requestAnimationFrame(tick)
     }
 
