@@ -135,6 +135,10 @@ class Level {
         return 0
     }
 
+    get goalCompleted() {
+        return this.goalAmount >= this.goal.target
+    }
+
     /**
      * @param {Object} xml
      * @param {string} id 

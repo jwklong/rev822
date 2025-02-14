@@ -361,6 +361,9 @@ export default class Canvas {
                     ctx.strokeText(text, 24, 720 - 16)
                     ctx.fillStyle = 'white'
                     ctx.fillText(text, 24, 720 - 16)
+
+                    let continueButton = new CanvasButton(1280 - 136, 200, 'continue')
+                    ctx = continueButton.render(ctx)
                 }
 
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.left) {
