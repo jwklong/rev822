@@ -96,15 +96,21 @@ class Gooball {
 
     /**
      * Stops gooballs from building on this gooball
-     * @type {string}
+     * @type {boolean}
      */
     nobuild = false
 
     /**
      * Stops gooballs from climbing on this gooball + does not trigger pipes
-     * @type {string}
+     * @type {boolean}
      */
     noclimb = false
+
+    /**
+     * Prevents gooballs from sticking on sticky surfaces
+     * @type {boolean}
+     */
+    nostick = false
 
     /**
      * @type {boolean}
@@ -219,6 +225,7 @@ class Gooball {
             this.antigrav = xml.attributes.antigrav ?? false
             this.nobuild = xml.attributes.nobuild ?? false
             this.noclimb = xml.attributes.noclimb ?? false
+            this.nostick = xml.attributes.nostick ?? false
             this.intelligence = xml.attributes.intelligence ?? 0.9
             this.climbspeed = xml.attributes.climbspeed ?? 45
         }
