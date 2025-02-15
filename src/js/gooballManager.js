@@ -294,10 +294,12 @@ class Gooball {
 
         const level = window.game.LevelManager.currentLevel
 
-        if (window.game.InputTracker.distanceTo(
-            this.x + 1280 / 2 - level.camera.props.x,
-            -this.y + 720 / 2 + level.camera.props.y,
-        ) < 320 && (
+        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x, this.y, level)
+        if (window.game.InputTracker.withinCircle(
+            ballOnCanvas.x,
+            ballOnCanvas.y,
+            280 + this.shape.radius
+        ) && (
             level.getStrandsOfBall(this).length == 0 ||
             (this.strand && this.strand.detachable)
         ) && !this.sleeping) {

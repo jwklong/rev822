@@ -383,10 +383,10 @@ class Level {
                         ball2 != ball &&
                         !ball2.sleeping &&
                         this.getStrandsOfBall(ball2).length > 0 &&
-                        window.game.InputTracker.withinCircle(
+                        window.game.Utils.withinCircle(
+                            ball.x, ball.y,
                             ball2.x, ball2.y,
-                            ball2.strand.length,
-                            ball.x, ball.y
+                            ball2.strand.length
                         )
                     ) {
                         ball.sleeping = false
@@ -409,11 +409,11 @@ class Level {
 
             for (let strand of this.strands) {
                 if (
-                    window.game.InputTracker.cursorIntersectsLine(
+                    window.game.Utils.intersectsLine(
+                        ball.x, ball.y,
                         strand.ball1.x, strand.ball1.y,
                         strand.ball2.x, strand.ball2.y,
-                        ball.shape.radius / 1.5,
-                        ball.x, ball.y
+                        ball.shape.radius / 1.5
                     ) &&
                     !ball.strandOn &&
                     !window.game.GooballManager.types[strand.type].noclimb &&

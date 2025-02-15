@@ -138,11 +138,11 @@ export default class Canvas {
                 let canBuild = false
                 if (window.game.InputTracker.ball && this.mode == 0) {
                     for (let strand of level.strands) {
-                        if (window.game.InputTracker.cursorIntersectsLine(
+                        if (window.game.Utils.intersectsLine(
+                            window.game.InputTracker.ball.x, window.game.InputTracker.ball.y,
                             strand.ball1.x, strand.ball1.y,
                             strand.ball2.x, strand.ball2.y,
                             window.game.InputTracker.ball.shape.radius / 1.5,
-                            window.game.InputTracker.ball.x, window.game.InputTracker.ball.y
                         ) && !window.game.GooballManager.types[strand.type].noclimb) {
                             applicableStrand = strand
                             break
@@ -393,10 +393,10 @@ export default class Canvas {
                     } else if (applicableStrand) {
                         window.game.InputTracker.ball.putOnStrand(
                             applicableStrand,
-                            window.game.InputTracker.cursorIntersectsLineProgress(
+                            window.game.Utils.intersectsLineProgress(
+                                window.game.InputTracker.ball.x, window.game.InputTracker.ball.y,
                                 applicableStrand.ball1.x, applicableStrand.ball1.y,
                                 applicableStrand.ball2.x, applicableStrand.ball2.y,
-                                window.game.InputTracker.ball.x, window.game.InputTracker.ball.y
                             )
                         )
                     }
@@ -615,7 +615,7 @@ class CanvasButton {
     }
 
     get hoveredOver() {
-        return window.game.InputTracker.inBox(this.x - this.width / 2, this.y - this.size / 2, this.x + this.width / 2, this.y + this.size / 2)
+        return window.game.InputTracker.withinRect(this.x - this.width / 2, this.y - this.size / 2, this.x + this.width / 2, this.y + this.size / 2)
     }
 
     get clicked() {

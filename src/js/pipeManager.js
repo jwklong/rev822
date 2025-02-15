@@ -103,7 +103,7 @@ export class Pipe {
      * @returns {Gooball[]}
      */
     ballsInRange(balls, padding = 0) {
-        return balls.filter(ball => window.game.InputTracker.withinCircle(this.x, this.y, this.radius - padding, ball.x, ball.y))
+        return balls.filter(ball => window.game.Utils.withinCircle(ball.x, ball.y, this.x, this.y, this.radius - padding))
     }
 
     /**

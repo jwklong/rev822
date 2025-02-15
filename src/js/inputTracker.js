@@ -59,104 +59,71 @@ export default class InputTracker {
     /**
      * Gets the distance to a point from the relative mouse position.
      * @param {number} x 
-     * @param {number} y 
-     * @param {number} cx - Replaces mouse X
-     * @param {number} cy - Replaces mouse Y
+     * @param {number} y
      * @returns {number}
      */
-    distanceTo(x, y, cx = this.x, cy = this.y) {
-        return Math.hypot(cx - x, cy - y)
+    distanceTo(x, y) {
+        return window.game.Utils.distanceTo(this.x, this.y, x, y)
     }
     
     /**
      * checks if the mouse is inside a circle
-     * @param {number} x
-     * @param {number} y
+     * @param {number} cx
+     * @param {number} cy
      * @param {number} radius
-     * @param {number} cx - Replaces mouse X
-     * @param {number} cy - Replaces mouse Y
      * @returns {boolean}
      */
-    withinCircle(x, y, radius, cx = this.x, cy = this.y) {
-        return this.distanceTo(x, y, cx, cy) <= radius
+    withinCircle(cx, cy, radius) {
+        return window.game.Utils.withinCircle(this.x, this.y, cx, cy, radius)
     }
 
     /**
      * Checks if a line between two points intersects the cursor + radius for margin of error
-     * @param {number} x1 
-     * @param {number} y1 
-     * @param {number} x2 
-     * @param {number} y2 
-     * @param {number} radius 
-     * @param {number} cx - Replaces mouse X
-     * @param {number} cy - Replaces mouse Y
+     * @param {number} lx1 
+     * @param {number} ly1 
+     * @param {number} lx2 
+     * @param {number} ly2 
+     * @param {number} radius
      * @returns {boolean}
      */
-    cursorIntersectsLine(x1, y1, x2, y2, radius, cx = this.x, cy = this.y) {
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-
-        const t = this.cursorIntersectsLineProgress(x1, y1, x2, y2, cx, cy)
-      
-        const closestX = x1 + t * dx;
-        const closestY = y1 + t * dy;
-      
-        return this.withinCircle(closestX, closestY, radius, cx, cy);
+    cursorIntersectsLine(lx1, ly1, lx2, ly2, radius) {
+        return window.game.Utils.intersectsLine(this.x, this.y, lx1, ly1, lx2, ly2, radius)
     }
 
     /**
      * Gets distance from cursor to closest point on line
-     * @param {number} x1 
-     * @param {number} y1 
-     * @param {number} x2 
-     * @param {number} y2
-     * @param {number} cx - Replaces mouse X
-     * @param {number} cy - Replaces mouse Y
+     * @param {number} lx1
+     * @param {number} ly1
+     * @param {number} lx2
+     * @param {number} ly2
      * @returns {number}
      */
-    cursorIntersectsLineDistance(x1, y1, x2, y2, cx = this.x, cy = this.y) {
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-
-        const t = this.cursorIntersectsLineProgress(x1, y1, x2, y2, cx, cy)
-      
-        const closestX = x1 + t * dx;
-        const closestY = y1 + t * dy;
-      
-        return this.distanceTo(closestX, closestY, cx, cy)
+    cursorIntersectsLineDistance(lx1, ly1, lx2, ly2) {
+        return window.game.Utils.intersectsLineDistance(this.x, this.y, lx1, ly1, lx2, ly2)
     }
 
     /**
      * Gets progress on a line from cursor
-     * @param {number} x1 
-     * @param {number} y1 
-     * @param {number} x2 
-     * @param {number} y2
-     * @param {number} cx - Replaces mouse X
-     * @param {number} cy - Replaces mouse Y
+     * @param {number} lx1 
+     * @param {number} ly1 
+     * @param {number} lx2 
+     * @param {number} ly2
      * @returns {number}
      */
-    cursorIntersectsLineProgress(x1, y1, x2, y2, cx = this.x, cy = this.y) {
-        const dx = x2 - x1;
-        const dy = y2 - y1;
-      
-        const t = ((cx - x1) * dx + (cy- y1) * dy) / (dx * dx + dy * dy);
-      
-        return Math.max(0, Math.min(1, t));
+    cursorIntersectsLineProgress(lx1, ly1, lx2, ly2) {
+        return window.game.Utils.intersectsLineProgress(this.x, this.y, lx1, ly1, lx2, ly2)
     }
 
     /**
      * Checks if the cursor is inside a box
-     * @param {number} x1 
-     * @param {number} y1 
-     * @param {number} x2 
-     * @param {number} y2
-     * @param {number} cx - Replaces mouse X
-     * @param {number} cy - Replaces mouse Y
+     * @param {number} rx1 
+     * @param {number} ry1 
+     * @param {number} rx2 
+     * @param {number} ry2
      * @returns {boolean}
      */
-    inBox(x1, y1, x2, y2, cx = this.x, cy = this.y) {
-        return cx >= x1 && cx <= x2 && cy >= y1 && cy <= y2
+    withinRect(rx1, ry1, rx2, ry2) {
+        return window.game.Utils.withinRect(this.x, this.y, rx1, ry1, rx2, ry2)
     }
 
     resetOnce() {
