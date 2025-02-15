@@ -4,7 +4,7 @@ const path = require("path")
 const Matter = require("matter-js")
 
 /** @class */
-export default class GooballManager {
+export class GooballManager {
     /** @type {Object<string, Gooball>} */
     types = {}
 
@@ -29,7 +29,7 @@ export default class GooballManager {
 }
 
 /** @class */
-class Gooball {
+export class Gooball {
     /** @type {Object} */
     xml
 
@@ -40,7 +40,7 @@ class Gooball {
     ref
 
     /** @type {LayerGroup} */
-    layers = new window.game.Layer.Group
+    layers = new window.game.Classes.Layer.Group
 
     /** @type {GooballEye[]} */
     eyes = []
@@ -234,7 +234,7 @@ class Gooball {
             switch (key) {
                 case "layer":
                     for (let v of value) {
-                        this.layers.push(window.game.Layer.fromXML(v.attributes))
+                        this.layers.push(window.game.Classes.Layer.fromXML(v.attributes))
                     }
                     break
                 case "eye":
@@ -345,7 +345,7 @@ class Gooball {
     }
 
     createSleepParticle() {
-        const particle = new window.game.Layer
+        const particle = new window.game.Classes.Layer
         particle.img = "IMAGE_SLEEPZ"
         particle.x = this.shape.radius / 2
         particle.y = this.shape.radius / 2
@@ -361,9 +361,9 @@ class Gooball {
             this.y += dt * yMovement
 
             if (this.timeSpent <= 1.5) {
-                this.transparency = 1 - window.game.Easing.easeOut.from(this.timeSpent / 1.5)
+                this.transparency = 1 - window.game.Classes.Easing.easeOut.from(this.timeSpent / 1.5)
             } else {
-                this.transparency = window.game.Easing.easeIn.from(this.timeSpent / 1.5 - 1)
+                this.transparency = window.game.Classes.Easing.easeIn.from(this.timeSpent / 1.5 - 1)
             }
 
             if (this.timeSpent > 3) {
@@ -376,7 +376,7 @@ class Gooball {
 }
 
 /** @class */
-class GooballEye {
+export class GooballEye {
     /** @type {number} */
     x
 

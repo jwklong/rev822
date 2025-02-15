@@ -1,7 +1,7 @@
 const bezierEasing = require('bezier-easing')
 
 /** @class */
-export default class Easing {
+export class Easing {
     /**
      * @param {number} x1 
      * @param {number} y1 

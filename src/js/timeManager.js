@@ -1,5 +1,5 @@
 /** @class */
-export default class TimeManager {
+export class TimeManager {
     /** @type {Object<string, Timer>} */
     timers = {}
 
@@ -38,7 +38,7 @@ export default class TimeManager {
     }
 }
 
-class Timer {
+export class Timer {
     /** @type {number} */
     timePassed = 0
 

@@ -3,7 +3,7 @@ const fs = require("fs/promises")
 const path = require("path")
 
 /** @class */
-export default class MaterialManager {
+export class MaterialManager {
     /** @type {Material[]} */
     materials = {}
 
@@ -41,7 +41,7 @@ export default class MaterialManager {
 }
 
 /** @class */
-class Material {
+export class Material {
     /** @type {string} */
     name
 

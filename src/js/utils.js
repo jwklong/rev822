@@ -1,5 +1,5 @@
 /** @namespace */
-let Utils = {
+export let Utils = {
     /**
      * parses attributes from xml,
      * if the input is something like "1-10" it will pick a random integer between those numbers
@@ -196,5 +196,3 @@ let Utils = {
         return inside
     }
 }
-
-export default Utils

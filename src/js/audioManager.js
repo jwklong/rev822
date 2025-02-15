@@ -1,5 +1,5 @@
 /** @class */
-export default class AudioManager {
+export class AudioManager {
     /** @type {Object<string, Sound>} */
     sounds = {}
 
@@ -48,7 +48,7 @@ export default class AudioManager {
 }
 
 /** @see {@link AudioManager#createSound} */
-class Sound {
+export class Sound {
     /**
      * @type {string}
      * @readonly

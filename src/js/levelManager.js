@@ -6,7 +6,7 @@ const Matter = require("matter-js")
 // TODO: support for level.js (custom code for levels)
 
 /** @class */
-export default class LevelManager {
+export class LevelManager {
     /** @type {Object<string, Level>} */
     levels = {}
 
@@ -65,9 +65,9 @@ export default class LevelManager {
     }
 }
 
-class Level {
+export class Level {
     /** @type {LayerGroup} */
-    layers = new window.game.Layer.Group
+    layers = new window.game.Classes.Layer.Group
 
     /** @type {Camera} */
     camera = new Camera
@@ -176,7 +176,7 @@ class Level {
             switch (key) {
                 case "layer":
                     for (let v of value) {
-                        this.layers.push(window.game.Layer.fromXML(v.attributes))
+                        this.layers.push(window.game.Classes.Layer.fromXML(v.attributes))
                     }
                     break
                 case "rect":
@@ -523,7 +523,7 @@ class Level {
 }
 
 /** @class */
-class Camera {
+export class Camera {
     /**
      * @type {Object}
      * @property {number} x
@@ -551,7 +551,7 @@ class Camera {
     // TODO: animate camera
 }
 
-class GenericBody {
+export class GenericBody {
     /**
      * @type {string}
      * @readonly\ 
@@ -636,17 +636,27 @@ class GenericBody {
         this.detaches = window.game.Utils.parseAttribute(attributes.detaches)
     }
 
+    /**
+     * Gets if a point is inside a body
+     * @param {number} x
+     * @param {number} y
+     * @returns {boolean}
+     */
     pointInsideBody(x, y) {
         return window.game.Utils.withinPolygon(x, y, this.vertices)
     }
 
+    /**
+     * Checks if the body is being clicked on
+     * @returns {boolean}
+     */
     clickedOn() {
         return this.pointInsideBody(window.game.InputTracker.x, window.game.InputTracker.y) && window.game.InputTracker.leftOnce
     }
 }
 
 /** @extends GenericBody */
-class RectBody extends GenericBody {
+export class RectBody extends GenericBody {
     type = "rect"
 
     /**
@@ -670,7 +680,7 @@ class RectBody extends GenericBody {
 }
 
 /** @extends GenericBody */
-class CircleBody extends GenericBody {
+export class CircleBody extends GenericBody {
     type = "circle"
 
     /**
@@ -687,7 +697,7 @@ class CircleBody extends GenericBody {
 }
 
 /** @class */
-class Strand {
+export class Strand {
     /**
      * @type {Matter.Constraint}
      * @see {@link https://brm.io/matter-js/docs/classes/Constraint.html|Matter.Constraint}

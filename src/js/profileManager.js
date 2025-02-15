@@ -1,7 +1,7 @@
 //TODO: actually do this :(
 
 /** @class */
-export default class ProfileManager {
+export class ProfileManager {
     constructor() {
         //load,,, profiles!!!
     }
@@ -11,6 +11,6 @@ export default class ProfileManager {
 }
 
 /** @class */
-class Profile {
+export class Profile {
 
 }

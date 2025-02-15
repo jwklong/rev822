@@ -3,7 +3,7 @@ const fs = require("fs/promises")
 const path = require("path")
 
 /** @class */
-export default class PipeManager {
+export class PipeManager {
     /** @type {Object<string, Gooball>} */
     types = {}
 

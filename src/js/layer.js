@@ -1,5 +1,5 @@
 /** @class */
-export default class Layer {
+export class Layer {
     /** @type {LayerGroup} */
     static Group
 
@@ -123,7 +123,7 @@ export default class Layer {
 }
 
 /** @class */
-class LayerGroup {
+export class LayerGroup {
     /** @type {LayerGroup?} */
     parent
 

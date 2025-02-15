@@ -1,20 +1,21 @@
-import Utils from "./utils.js";
-import Layer from "./layer.js";
-import Easing from "./easing.js";
-import InputTracker from "./inputTracker.js";
-import TimeManager from "./timeManager.js";
-import ResourceManager from "./resourceManager.js";
-import MaterialManager from "./materialManager.js";
-import AudioManager from "./audioManager.js";
-import GooballManager from "./gooballManager.js";
-import PipeManager from "./pipeManager.js"
-import LevelManager from "./levelManager.js";
-import Canvas from "./canvas.js";
-import ProfileManager from "./profileManager.js";
+import { Utils } from "./utils.js";
+import { Layer } from "./layer.js";
+import { Easing } from "./easing.js";
+import { InputTracker } from "./inputTracker.js";
+import { TimeManager, Timer } from "./timeManager.js";
+import { ResourceManager, GenericResource, ImageResource, AudioResource, FontResource } from "./resourceManager.js";
+import { MaterialManager, Material } from "./materialManager.js";
+import { AudioManager, Sound } from "./audioManager.js";
+import { GooballManager, Gooball, GooballEye } from "./gooballManager.js";
+import { PipeManager, Pipe } from "./pipeManager.js"
+import { LevelManager, Level, Camera, GenericBody, RectBody, CircleBody, Strand } from "./levelManager.js";
+import { Canvas, CanvasButton } from "./canvas.js";
+import { ProfileManager, Profile } from "./profileManager.js";
 const path = require("path")
 const fs = require("fs/promises")
 
 /**
+ * @property {Object} Classes - contains all classes that can be init'd
  * @property {Utils} Utils - Provides utility functions
  * @property {Layer} Layer - Custom image data for rendering
  * @property {Easing} Easing - Provides easing functions
@@ -32,9 +33,22 @@ const fs = require("fs/promises")
  * @property {number} timePassed - Tracks the time passed in the game
  */
 let game = {
+    Classes: {
+        Layer,
+        Easing,
+
+        InputTracker,
+        TimeManager, Timer,
+        ResourceManager, GenericResource, ImageResource, AudioResource, FontResource,
+        MaterialManager, Material,
+        AudioManager, Sound,
+        GooballManager, Gooball, GooballEye,
+        PipeManager, Pipe,
+        LevelManager, Level, Camera, GenericBody, RectBody, CircleBody, Strand,
+        Canvas, CanvasButton,
+        ProfileManager, Profile
+    },
     Utils,
-    Layer,
-    Easing,
     InputTracker: new InputTracker,
     TimeManager: new TimeManager,
     ResourceManager: new ResourceManager,

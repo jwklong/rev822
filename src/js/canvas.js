@@ -1,7 +1,7 @@
 const Matter = require("matter-js")
 
 /** @class */
-export default class Canvas {
+export class Canvas {
     /**
      * - -1 = loading
      * - 0 = playing
@@ -430,7 +430,7 @@ export default class Canvas {
 
                 for (let i = 0; i < 20; i++) {
                     var x = (((window.game.timePassed * 1.3 / 2) % 2) + (i - 2)) * 72
-                    var y = 720 - (36 + window.game.Easing.easeOut.from(doubleease(window.game.timePassed * 1.3 + i % 2)) * 96)
+                    var y = 720 - (36 + window.game.Classes.Easing.easeOut.from(doubleease(window.game.timePassed * 1.3 + i % 2)) * 96)
                     ctx.beginPath()
                     ctx.arc(x, y, 12, 0, 2 * Math.PI)
                     ctx.closePath()
@@ -444,7 +444,7 @@ export default class Canvas {
         if (this.transition) {
             ctx.globalAlpha = 1
             ctx.fillStyle = "#000"
-            ctx.fillRect(1 - (window.game.Easing.easeInOut.from(window.game.TimeManager.getTimer("TRANSITION").timePassed) + this.transitionType - 1) * 1300 - 10, 0, 1300, 720)
+            ctx.fillRect(1 - (window.game.Classes.Easing.easeInOut.from(window.game.TimeManager.getTimer("TRANSITION").timePassed) + this.transitionType - 1) * 1300 - 10, 0, 1300, 720)
         }
     }
 
@@ -504,7 +504,7 @@ export default class Canvas {
     /**
      * Toggles the pause menu
      * Will only work if you are in a level or you are already paused
-     * @argument {boolean} override - Forces it to be paused or not
+     * @param {boolean} override - Forces it to be paused or not
      */
     togglePause(override) {
         if (this.mode != 0 && this.mode != 1) return
@@ -568,7 +568,7 @@ export default class Canvas {
 /**
  * @class
  */
-class CanvasButton {
+export class CanvasButton {
     /** @type {number} */
     x = 0
 

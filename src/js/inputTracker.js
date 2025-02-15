@@ -1,5 +1,5 @@
 /** @class */
-export default class InputTracker {
+export class InputTracker {
     /** @type {Number} */
     x = 0
     /** @type {Number} */

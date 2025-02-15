@@ -3,7 +3,7 @@ const fs = require("fs/promises")
 const path = require("path")
 
 /** @class */
-export default class ResourceManager {
+export class ResourceManager {
     /** @type {Object<string, GenericResource>} */
     resources = {}
 
@@ -73,7 +73,7 @@ export default class ResourceManager {
     }
 }
 
-class GenericResource {
+export class GenericResource {
     /** @type {boolean} */
     loaded = false
 
@@ -112,7 +112,7 @@ class GenericResource {
 }
 
 /** @extends GenericResource */
-class ImageResource extends GenericResource {
+export class ImageResource extends GenericResource {
     type = "image"
 
     /**
@@ -147,7 +147,7 @@ class ImageResource extends GenericResource {
 }
 
 /** @extends GenericResource */
-class AudioResource extends GenericResource {
+export class AudioResource extends GenericResource {
     type = "audio"
 
     /**
@@ -180,7 +180,7 @@ class AudioResource extends GenericResource {
 }
 
 /** @extends GenericResource */
-class FontResource extends GenericResource {
+export class FontResource extends GenericResource {
     type = "font"
 
     load() {
