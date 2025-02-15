@@ -362,7 +362,7 @@ export default class Canvas {
                     ctx.fillStyle = 'white'
                     ctx.fillText(text, 24, 720 - 16)
 
-                    if (level.goalCompleted) {
+                    if (level.goal && level.goalCompleted) {
                         let continueButton = new CanvasButton(1280 - 128, 720 - 36, 'continue')
                         ctx = continueButton.render(ctx)
                     }
