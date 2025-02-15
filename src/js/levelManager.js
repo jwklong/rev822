@@ -609,6 +609,12 @@ class GenericBody {
         this.body.restitution = this.#material.bounciness
     }
 
+    /** @type {Array<{x: number, y: number}>} */
+    get vertices() { return this.body.vertices }
+    set vertices(x) {
+        Matter.Body.setVertices(this.body, x)
+    }
+
     /** @param {Object} attributes */
     constructor(attributes, body) {
         this.body = body || Matter.Body.Create()
@@ -628,6 +634,14 @@ class GenericBody {
 
         this.sticky = window.game.Utils.parseAttribute(attributes.sticky)
         this.detaches = window.game.Utils.parseAttribute(attributes.detaches)
+    }
+
+    pointInsideBody(x, y) {
+        return window.game.Utils.withinPolygon(x, y, this.vertices)
+    }
+
+    clickedOn() {
+        return this.pointInsideBody(window.game.InputTracker.x, window.game.InputTracker.y) && window.game.InputTracker.leftOnce
     }
 }
 

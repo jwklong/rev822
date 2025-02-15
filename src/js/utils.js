@@ -174,6 +174,26 @@ let Utils = {
      */
     withinRect(x, y, rx1, ry1, rx2, ry2) {
         return x >= rx1 && x <= rx2 && y >= ry1 && y <= ry2
+    },
+
+    /**
+     * Checks if a point is inside a polygon
+     * @param {number} x 
+     * @param {number} y
+     * @param {Array<{x: number, y: number}>} vertices
+     * @returns {boolean}
+     */
+    withinPolygon(x, y, vertices) {
+        let inside = false
+        for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
+            const xi = vertices[i].x
+            const yi = vertices[i].y
+            const xj = vertices[j].x
+            const yj = vertices[j].y
+            const intersect = ((yi > y) !== (yj > y)) && (x < ((xj - xi) * (y - yi)) / (yj - yi) + xi)
+            if (intersect) inside = !inside
+        }
+        return inside
     }
 }
 
