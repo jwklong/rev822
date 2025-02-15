@@ -423,10 +423,10 @@ class Level {
                         return p && v.ballsInRange([ball]).length == 0
                     }, true)
                 ) {
-                    let progress = window.game.InputTracker.cursorIntersectsLineProgress(
+                    let progress = window.game.Utils.intersectsLineProgress(
+                        ball.x, ball.y,
                         strand.ball1.x, strand.ball1.y,
-                        strand.ball2.x, strand.ball2.y,
-                        ball.x, ball.y
+                        strand.ball2.x, strand.ball2.y
                     )
 
                     strand.ball1.vx = ball.vx * progress / 2

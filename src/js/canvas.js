@@ -368,7 +368,7 @@ export default class Canvas {
                     }
                 }
 
-                if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.left) {
+                if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.leftOnce) {
                     window.game.InputTracker.ball = ballToDrag
 
                     level.deleteStrands(ballToDrag)
