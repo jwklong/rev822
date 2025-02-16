@@ -614,10 +614,12 @@ export class CanvasButton {
         return ctx
     }
 
+    /** @type {boolean} */
     get hoveredOver() {
         return window.game.InputTracker.withinRect(this.x - this.width / 2, this.y - this.size / 2, this.x + this.width / 2, this.y + this.size / 2)
     }
 
+    /** @type {boolean} */
     get clicked() {
         return window.game.InputTracker.leftOnce && this.hoveredOver
     }
