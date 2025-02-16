@@ -1,24 +1,35 @@
 /** @class */
 export class InputTracker {
-    /** @type {Number} */
+    /** @type {number} */
     x = 0
-    /** @type {Number} */
+    /** @type {number} */
     y = 0
 
-    /** @type {Boolean} */
+    /**
+     * @type {number}
+     * @readonly
+     */
+    get levelX() { return window.game.Utils.fromLevelCanvasPos(this.x, this.y, window.game.LevelManager.currentLevel).x }
+    /**
+     * @type {number}
+     * @readonly
+     */
+    get levelY() { return window.game.Utils.fromLevelCanvasPos(this.x, this.y, window.game.LevelManager.currentLevel).y }
+
+    /** @type {boolean} */
     left = false
-    /** @type {Boolean} */
+    /** @type {boolean} */
     right = false
 
-    /** @type {Boolean} */
+    /** @type {boolean} */
     leftOnce = false
-    /** @type {Boolean} */
+    /** @type {boolean} */
     rightOnce = false
 
-    /** @type {Boolean} */
+    /** @type {boolean} */
     shift = false
 
-    /** @type {Boolean} */
+    /** @type {boolean} */
     inWindow = true
 
     /** @type {Gooball?} */

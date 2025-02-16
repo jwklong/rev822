@@ -24,11 +24,18 @@ export let Utils = {
      * converts a position in the level to a position on the canvas, taking account of the camera
      * @param {number} x - the x position in the level
      * @param {number} y - the y position in the level
+     * @param {number} width - the width of the object (for centering)
+     * @param {number} height - the height of the object (for centering)
      * @param {Level} level - the level
      * @returns {{x: number, y: number}}
      */
-    toLevelCanvasPos(x, y, level) {
-        return Utils.toCanvasPos(x - level.camera.props.x, y - level.camera.props.y, 0, 0, level.camera.props.zoom)
+    toLevelCanvasPos(x, y, level, width = 0, height = 0) {
+        let zoom = level.camera.props.zoom
+        let canvasPos = Utils.toCanvasPos(x, y, width, height, zoom)
+        return {
+            x: canvasPos.x - level.camera.props.x * zoom,
+            y: canvasPos.y + level.camera.props.y * zoom
+        }
     },
     
     /**
@@ -42,8 +49,8 @@ export let Utils = {
      */
     toCanvasPos(x, y, width = 0, height = 0, zoom = 1) {
         return {
-            x: x + 1280 / 2 / zoom - width / 2,
-            y: -y + 720 / 2 / zoom - height / 2
+            x: x * zoom + 1280 / 2 - width / 2,
+            y: -y * zoom + 720 / 2 - height / 2
         }
     },
 

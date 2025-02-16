@@ -93,7 +93,7 @@ export class Layer {
         const image = window.game.ResourceManager.getResource(this.img).image
         const w = image.width * this.size.x * osx
         const h = image.height * this.size.y * osy
-        const {x, y} = window.game.Utils.toCanvasPos(this.x - ox, this.y - oy, w, h, zoom)
+        let {x, y} = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, window.game.LevelManager.currentLevel, w, h)
         const rotation = this.rotation * Math.PI / 180
 
         const oldAlpha = ctx.globalAlpha

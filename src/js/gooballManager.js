@@ -294,7 +294,7 @@ export class Gooball {
 
         const level = window.game.LevelManager.currentLevel
 
-        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x, this.y, level)
+        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level)
         if (window.game.InputTracker.withinCircle(
             ballOnCanvas.x,
             ballOnCanvas.y,
@@ -310,8 +310,8 @@ export class Gooball {
 
                 ctx.beginPath()
                 ctx.arc(
-                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).x,
-                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).y,
+                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).x,
+                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).y,
                     eye.radius, 0, 2 * Math.PI
                 )
                 ctx.closePath()
@@ -322,8 +322,8 @@ export class Gooball {
                 
                 ctx.beginPath()
                 ctx.arc(
-                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).x,
-                    window.game.Utils.toCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, 0, 0, zoom).y,
+                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).x,
+                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).y,
                     eye.radius / 4, 0, 2 * Math.PI
                 )
                 ctx.closePath()

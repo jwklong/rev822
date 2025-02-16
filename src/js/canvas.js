@@ -83,7 +83,7 @@ export class Canvas {
                 let level = window.game.LevelManager.currentLevel
                 ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
-                ctx = level.layers.filter(a => a.z < 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
+                ctx = level.layers.filter(a => a.z < 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
                 
                 function renderPipe(pipe, state, stretch = 0) {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
@@ -107,7 +107,7 @@ export class Canvas {
                     renderPipe(pipe, pipe.isActive(level) ? "capopen" : "cap")
                 }
 
-                ctx = level.layers.filter(a => a.z == 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
+                ctx = level.layers.filter(a => a.z == 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
 
                 //gooballs here
                 function drawStrand(type, ball1, ball2, ghost = false) {
@@ -209,7 +209,7 @@ export class Canvas {
                     .sort((a, b) => !b.strandOn - !a.strandOn)
                     .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
                 ) {
-                    ball.render(ctx, level.camera.props.x, level.camera.props.y, level.camera.props.zoom)
+                    ball.render(ctx, 0, 0, level.camera.props.zoom)
 
                     if (window.game.InputTracker.withinCircle(
                         toLevelCanvasPos(ball.x, ball.y, level).x,
@@ -223,7 +223,7 @@ export class Canvas {
                     }
                 }
 
-                ctx = level.layers.filter(a => a.z > 0).render(ctx, level.camera.props.x, level.camera.props.y, 1, 1, level.camera.props.zoom)
+                ctx = level.layers.filter(a => a.z > 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
 
                 if (level.debug) {
                     for (var body of level.bodies) {
@@ -343,7 +343,7 @@ export class Canvas {
                     let text = ""
                     if (level.debug) {
                         let mousePos = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, level)
-                        text = `${mousePos.x.toFixed()}, ${mousePos.y.toFixed()}`
+                        text = `${window.game.InputTracker.x}, ${window.game.InputTracker.y} => ${mousePos.x.toFixed()}, ${mousePos.y.toFixed()}`
                     } else if (level.goal) {
                         switch (level.goal.type) {
                             case "balls":
