@@ -187,7 +187,7 @@ export class FontResource extends GenericResource {
         return new Promise((resolve, reject) => {
             if (this.loaded) reject("Resource is already loaded")
             
-            const font = new FontFace(this.id, `url(${this.src.replaceAll("\\", "/")})`) //note, this hates backslashes,,, never improving this code ever
+            const font = new FontFace(this.id, `url("${this.src.replaceAll("\\", "/")}")`) //note, this hates backslashes,,, never improving this code ever
 
             font.load().then(() => {
                 document.fonts.add(font)
