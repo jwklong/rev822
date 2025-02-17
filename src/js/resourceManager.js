@@ -138,9 +138,9 @@ export class ImageResource extends GenericResource {
                 the.loaded = true
                 resolve()
             }
-            img.onerror = () => {
+            img.onerror = e => {
                 img.remove()
-                reject("Failed to load resource")
+                reject("Failed to load image resource", e)
             }
         })
     }
@@ -171,9 +171,9 @@ export class AudioResource extends GenericResource {
                 the.loaded = true
                 resolve()
             }
-            aud.onerror = () => {
+            aud.onerror = e => {
                 aud.remove()
-                reject("Failed to load resource")
+                reject("Failed to load audio resource", e)
             }
         })
     }
@@ -193,8 +193,8 @@ export class FontResource extends GenericResource {
                 document.fonts.add(font)
                 this.loaded = true
                 resolve()
-            }).catch(() => {
-                reject("Failed to load resource")
+            }).catch(e => {
+                reject("Failed to load font resource", e)
             })
         })
     }
