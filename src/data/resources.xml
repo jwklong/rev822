@@ -18,6 +18,4 @@
 
     <image id="IMAGE_LEVEL_BUSH" src="images/levelassets/bush.svg" />
     <image id="IMAGE_LEVEL_CLOUD" src="images/levelassets/cloud.svg" />
-
-    <image id="thing that errors" src="images/levelassets/notcloud.svg" />
 </resources>
