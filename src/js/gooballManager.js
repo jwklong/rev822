@@ -301,11 +301,11 @@ export class Gooball {
 
         const level = window.game.LevelManager.currentLevel
 
-        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level)
+        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level, 0, 0, true)
         if (window.game.InputTracker.withinCircle(
             ballOnCanvas.x,
             ballOnCanvas.y,
-            280 + this.shape.radius
+            280 * zoom + this.shape.radius
         ) && (
             level.getStrandsOfBall(this).length == 0 ||
             (this.strand && this.strand.detachable)

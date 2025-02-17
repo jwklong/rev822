@@ -212,8 +212,8 @@ export class Canvas {
                     ball.render(ctx, 0, 0, level.camera.props.zoom)
 
                     if (window.game.InputTracker.withinCircle(
-                        toLevelCanvasPos(ball.x, ball.y, level).x,
-                        toLevelCanvasPos(ball.x, ball.y, level).y,
+                        toLevelCanvasPos(ball.x, ball.y, level, 0, 0, true).x,
+                        toLevelCanvasPos(ball.x, ball.y, level, 0, 0, true).y,
                         ball.shape.radius * level.camera.props.zoom + 4
                     ) && (
                         level.getStrandsOfBall(ball).length == 0 ||
@@ -535,8 +535,8 @@ export class Canvas {
             let y
             let dist
             if (window.game.InputTracker.ball == undefined) {
-                x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).x
-                y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).y
+                x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level, 0, 0, true).x
+                y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level, 0, 0, true).y
                 dist = ballToDrag.shape.radius * level.camera.props.zoom + 8
             } else {
                 x = window.game.InputTracker.x
