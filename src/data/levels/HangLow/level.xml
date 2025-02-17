@@ -5,7 +5,9 @@
     </resources>
     <head>
         <camera width="1440" height="2160">
-            <keyframe x="0" y="-720" zoom="1" />
+            <keyframe x="0" y="-600" zoom="2" />
+            <keyframe x="0" y="500" zoom="2" pause="2" duration="2" />
+            <keyframe x="0" y="0" zoom="1" pause="1" duration="2" />
         </camera>
         <title>Hang Low</title>
         <desc>TBD</desc>

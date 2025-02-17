@@ -339,7 +339,7 @@ export class Canvas {
                     let retryButton = new CanvasButton(136, 256, 'retry')
                     ctx = retryButton.render(ctx)
                     if (retryButton.clicked && !this.transition) this.playLevel(level.id, true)
-                } else if (!level.camera.props.fixed) {
+                } else if (!level.camera.fixed) {
                     let text = ""
                     if (level.debug) {
                         let mousePos = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, level)
@@ -508,6 +508,7 @@ export class Canvas {
      */
     togglePause(override) {
         if (this.mode != 0 && this.mode != 1) return
+        if (window.game.LevelManager.currentLevel.camera.fixed) return
         this.mode = Number(override ?? !this.mode)
     }
 

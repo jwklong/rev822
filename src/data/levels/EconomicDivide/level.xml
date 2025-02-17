@@ -5,7 +5,8 @@
     </resources>
     <head>
         <camera width="2048" height="1280">
-            <keyframe x="0" y="0" zoom="1" />
+            <keyframe x="550" y="-50" zoom="1.5" />
+            <keyframe x="-350" y="100" zoom="1" pause="3" duration="3" />
         </camera>
         <title>Economic Divide</title>
         <desc>TBD</desc>
@@ -43,44 +44,44 @@
         <strand type="common" from="0" to="2" />
         <strand type="common" from="1" to="3" />
 
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
-        <ball type="common" x="-1000--700" y="1500-4000" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
+        <ball type="common" x="-1000--700" y="800-1200" />
         
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
-        <ball type="common" x="600-800" y="1500-4000" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
+        <ball type="common" x="600-800" y="800-1200" sleeping />
 
         <pipe type="default" x="800" y="100" />
     </scene>

@@ -5,7 +5,8 @@
     </resources>
     <head>
         <camera width="1280" height="2160">
-            <keyframe x="0" y="-720" zoom="1" />
+            <keyframe x="0" y="0" zoom="2" />
+            <keyframe x="0" y="-720" zoom="1" pause="1" duration="3" />
         </camera>
         <title>Help Me Up</title>
         <desc>TBD</desc>

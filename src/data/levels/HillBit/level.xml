@@ -5,7 +5,9 @@
     </resources>
     <head>
         <camera width="2660" height="2048">
-            <keyframe x="0" y="-720" zoom="1" />
+            <keyframe x="100" y="-370" zoom="2" />
+            <keyframe x="-25" y="400" zoom="1.5" pause="1" duration="2" />
+            <keyframe x="-500" y="-500" zoom="0.8" pause="1" duration="2" />
         </camera>
         <title>Hill Bit</title>
         <desc>TBD</desc>

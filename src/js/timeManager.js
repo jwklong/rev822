@@ -74,8 +74,9 @@ export class Timer {
     /** @param {number} dt */
     tick(dt) {
         this.timePassed += dt
+        this.timePassed = Math.min(this.timePassed, this.length)
 
-        this.while()
+        this.while(this.timePassed)
 
         if (this.finished) this.onfinish()
     }

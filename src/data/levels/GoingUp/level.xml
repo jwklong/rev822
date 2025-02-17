@@ -4,7 +4,8 @@
     </resources>
     <head>
         <camera width="1440" height="2160">
-            <keyframe x="0" y="-720" zoom="1" />
+            <keyframe x="0" y="300" zoom="2" />
+            <keyframe x="0" y="-400" zoom="1" pause="2" duration="3" />
         </camera>
         <title>Going Up</title>
         <desc>TBD</desc>
@@ -22,21 +23,21 @@
         <ball type="common" x="-80" y="-460" ref="1" />
         <ball type="common" x="80" y="-300" ref="2" />
         <ball type="common" x="-80" y="-300" ref="3" />
-        <ball type="common" x="-700" y="700"/>
-        <ball type="common" x="-600" y="800"/>
-        <ball type="common" x="-500" y="900"/>
-        <ball type="common" x="-400" y="1000"/>
-        <ball type="common" x="-300" y="1100"/>
-        <ball type="common" x="-200" y="1200"/>
-        <ball type="common" x="-100" y="1300"/>
-        <ball type="common" x="0" y="1400"/>
-        <ball type="common" x="100" y="1500"/>
-        <ball type="common" x="200" y="1600"/>
-        <ball type="common" x="300" y="1700"/>
-        <ball type="common" x="400" y="1800"/>
-        <ball type="common" x="500" y="1900"/>
-        <ball type="common" x="600" y="2000"/>
-        <ball type="common" x="700" y="2100"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
+        <ball type="common" x="-200-200" y="700-2000"/>
         <strand type="common" from="0" to="1" />
         <strand type="common" from="1" to="2" />
         <strand type="common" from="2" to="3" />

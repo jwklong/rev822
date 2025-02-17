@@ -46,6 +46,7 @@ export class LevelManager {
     }
     set currentLevel(id) {
         this.#currentLevel = this.levels[id].clone()
+
         this.#currentLevel.engine = Matter.Engine.create()
         this.#currentLevel.engine.gravity.y = -1
         for (let body of this.#currentLevel.bodies) {
@@ -62,6 +63,8 @@ export class LevelManager {
             strand.ball1 = this.#currentLevel.getGooballFromRef(strand.ball1.ref)
             strand.ball2 = this.#currentLevel.getGooballFromRef(strand.ball2.ref)
         }
+
+        this.#currentLevel.camera.playKeyframes()
     }
 }
 
@@ -168,6 +171,19 @@ export class Level {
             this.goal = {
                 type: xml.head[0].goal[0].attributes.type,
                 target: xml.head[0].goal[0].attributes.target
+            }
+        }
+
+        //camera
+        if (xml.head[0].camera) {
+            for (let [i, v] of Object.entries(xml.head[0].camera[0].keyframe)) {
+                let keyframe = new CameraKeyframe
+                keyframe.x = window.game.Utils.parseAttribute(v.attributes.x, 0)
+                keyframe.y = window.game.Utils.parseAttribute(v.attributes.y, 0)
+                keyframe.zoom = window.game.Utils.parseAttribute(v.attributes.zoom, 0)
+                keyframe.duration = window.game.Utils.parseAttribute(v.attributes.duration, 0)
+                keyframe.pause = window.game.Utils.parseAttribute(v.attributes.pause, 0) + (i == 1 ? 1 : 0)
+                this.camera.keyframes.push(keyframe)
             }
         }
 
@@ -331,7 +347,7 @@ export class Level {
 
     /** @param {number} dt */
     tick(dt) {
-        if (this.camera.props.fixed == false && window.game.InputTracker.inWindow) {
+        if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
             if (100 - window.game.InputTracker.x > 0) {
                 this.camera.props.x -= (100 - window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
             } else if (-1180 + window.game.InputTracker.x > 0) {
@@ -531,14 +547,24 @@ export class Camera {
      * @property {number} x
      * @property {number} y
      * @property {number} zoom
-     * @property {boolean} fixed
      */
     props = {
         x: 0,
         y: 0,
-        zoom: 1,
-        fixed: false
+        zoom: 1
     }
+
+    /**
+     * Keyframes to play when the level starts.
+     * @type {Keyframe[]}
+     */
+    keyframes = []
+
+    /**
+     * Stops player from moving camera around
+     * @type {boolean}
+     */
+    fixed = false
 
     /**
      * get distance from point to camera
@@ -550,7 +576,80 @@ export class Camera {
         return Math.hypot(x - this.props.x, y - this.props.y)
     }
 
-    // TODO: animate camera
+    /**
+     * Plays a keyframe
+     * @param {CameraKeyframe} keyframe
+     * @returns {Timer}
+     */
+    playKeyframe(keyframe) {
+        let timer = window.game.TimeManager.createTimer('CAMERA_KEYFRAME', Math.max(keyframe.duration + keyframe.pause, 0.001))
+        const originalProps = this.props
+
+        this.fixed = true
+
+        timer.while = (timePassed) => {
+            let progress = Math.min((timePassed - keyframe.pause) / keyframe.duration, 1)
+            if (progress > 0) {
+                this.props = {
+                    x: keyframe.easing.from(progress) * (keyframe.x - originalProps.x) + originalProps.x,
+                    y: keyframe.easing.from(progress) * (keyframe.y - originalProps.y) + originalProps.y,
+                    zoom: keyframe.easing.from(progress) * (keyframe.zoom - originalProps.zoom) + originalProps.zoom
+                }
+            }
+        }
+        timer.onfinish = () => { this.fixed = false }
+
+        return timer
+    }
+
+    /**
+     * Plays keyframes in order
+     * @param {CameraKeyframe[]} keyframes - By default will play from the preset keyframes property of the camera
+     */
+    playKeyframes(keyframes = this.keyframes) {
+        if (keyframes.length == 0) return
+
+        const doKeyframe = (i) => {
+            let keyframe = keyframes[i]
+            let timer = this.playKeyframe(keyframe)
+
+            if (i < keyframes.length - 1) {
+                timer.onfinish = () => {
+                    doKeyframe(i + 1)
+                }
+            }
+        }
+
+        doKeyframe(0)
+    }
+}
+
+/** @class */
+export class CameraKeyframe {
+    /** @type {number} */
+    x = 0
+
+    /** @type {number} */
+    y = 0
+
+    /** @type {number} */
+    zoom = 1
+
+    /** @type {Easing} */
+    easing
+
+    /** @type {number} */
+    duration = 0
+
+    /**
+     * pause BEFORE the keyframe
+     * @type {number}
+     */
+    pause = 0
+
+    constructor() {
+        this.easing = window.game.Classes.Easing.easeInOut //default
+    }
 }
 
 export class GenericBody {

@@ -8,7 +8,7 @@ import { MaterialManager, Material } from "./materialManager.js";
 import { AudioManager, Sound } from "./audioManager.js";
 import { GooballManager, Gooball, GooballEye } from "./gooballManager.js";
 import { PipeManager, Pipe } from "./pipeManager.js"
-import { LevelManager, Level, Camera, GenericBody, RectBody, CircleBody, Strand } from "./levelManager.js";
+import { LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand } from "./levelManager.js";
 import { Canvas, CanvasButton } from "./canvas.js";
 import { ProfileManager, Profile } from "./profileManager.js";
 const path = require("path")
@@ -44,7 +44,7 @@ let game = {
         AudioManager, Sound,
         GooballManager, Gooball, GooballEye,
         PipeManager, Pipe,
-        LevelManager, Level, Camera, GenericBody, RectBody, CircleBody, Strand,
+        LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand,
         Canvas, CanvasButton,
         ProfileManager, Profile
     },
