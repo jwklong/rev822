@@ -113,6 +113,12 @@ export class Gooball {
     nostick = false
 
     /**
+     * Sticks to all surfaces
+     * @type {boolean}
+     */
+    sticky = false
+
+    /**
      * @type {boolean}
      * @readonly
      */
@@ -226,6 +232,7 @@ export class Gooball {
             this.nobuild = xml.attributes.nobuild ?? false
             this.noclimb = xml.attributes.noclimb ?? false
             this.nostick = xml.attributes.nostick ?? false
+            this.sticky = xml.attributes.sticky ?? false
             this.intelligence = xml.attributes.intelligence ?? 0.9
             this.climbspeed = xml.attributes.climbspeed ?? 45
         }

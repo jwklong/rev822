@@ -402,7 +402,7 @@ export class Level {
 
             for (let body of this.bodies) {
                 if (Matter.Query.collides(body.body, [ball.body]).length > 0) {
-                    if (body.sticky && this.getStrandsOfBall(ball).length > 0) Matter.Body.setStatic(ball.body, true)
+                    if (!ball.nostick && (body.sticky || ball.sticky) && this.getStrandsOfBall(ball).length > 0) Matter.Body.setStatic(ball.body, true)
                     if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
                 }
             }
@@ -450,7 +450,9 @@ export class Level {
 
                 if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {
                     let choiceball = ball.strandOn.progress <= 0 ? ball.strandOn.strand.ball1 : ball.strandOn.strand.ball2
-                    let choicestrands = this.getStrandsOfBall(choiceball)
+                    let choicestrands = this.getStrandsOfBall(choiceball).filter(v =>
+                        !(v.ball1.noclimb || v.ball2.noclimb)
+                    )
 
                     let choicestrand = choicestrands[Math.floor(Math.random() * choicestrands.length)]
 

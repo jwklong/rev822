@@ -1,0 +1,16 @@
+<ball mass="50" sticky noclimb nobuild>
+    <resources>
+        <image id="IMAGE_BALL_POKEY_BODY" src="gooballs/pokey/body.svg" />
+        <image id="IMAGE_BALL_POKEY_STRAND" src="gooballs/pokey/strand.svg" />
+    </resources>
+    <head>
+        <shape type="circle" radius="28" />
+        <strand img="IMAGE_BALL_POKEY_STRAND" length="180" range="60" amount="3" detachable />
+    </head>
+    <body>
+        <layer img="IMAGE_BALL_POKEY_BODY" x="0" y="0" />
+
+        <eye x="-13" y="9" radius="9" />
+        <eye x="13" y="9" radius="9" />
+    </body>
+</ball>
