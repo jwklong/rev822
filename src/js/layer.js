@@ -40,6 +40,12 @@ export class Layer {
     /** @type {number} */
     timeSpent = 0
 
+    /**
+     * Mixes layer with color
+     * @type {string}
+     */
+    color
+
     /** @type {LayerGroup?} */
     parent
 
@@ -62,6 +68,7 @@ export class Layer {
         layer.rotation = window.game.Utils.parseAttribute(xml.rotation, 0)
         layer.rotspeed = window.game.Utils.parseAttribute(xml.rotspeed, 0)
         layer.transparency = window.game.Utils.parseAttribute(xml.transparency, 0)
+        layer.color = window.game.Utils.parseAttribute(xml.color)
 
         return layer
     }
@@ -87,14 +94,27 @@ export class Layer {
      * @param {number?} osx
      * @param {number?} osy
      * @param {number?} zoom
-     * @returns {CanvasRenderingContext2D}
      */
     render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, zoom = 1) {
-        const image = window.game.ResourceManager.getResource(this.img).image
+        let image = window.game.ResourceManager.getResource(this.img).image
         const w = image.width * this.size.x * osx
         const h = image.height * this.size.y * osy
         let {x, y} = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, window.game.LevelManager.currentLevel, w, h)
         const rotation = this.rotation * Math.PI / 180
+
+        if (this.color) {
+            let tempCanvas = document.createElement('canvas')
+            tempCanvas.width = image.width
+            tempCanvas.height = image.height
+            let tempCtx = tempCanvas.getContext('2d')
+            tempCtx.drawImage(image, 0, 0)
+            tempCtx.globalCompositeOperation = 'multiply'
+            tempCtx.fillStyle = this.color
+            tempCtx.fillRect(0, 0, image.width, image.height)
+            tempCtx.globalCompositeOperation = 'destination-atop'
+            tempCtx.drawImage(image, 0, 0)
+            image = tempCanvas
+        }
 
         const oldAlpha = ctx.globalAlpha
         ctx.globalAlpha = ctx.globalAlpha * (1 - this.transparency)
@@ -110,8 +130,6 @@ export class Layer {
         ctx.translate(-(x + w / 2), -(y + h / 2))
 
         ctx.globalAlpha = oldAlpha
-
-        return ctx
     }
 
     /**
@@ -201,16 +219,14 @@ export class LayerGroup {
      * @param {number?} osx
      * @param {number?} osy
      * @param {number?} zoom
-     * @returns {CanvasRenderingContext2D}
      */
     render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, zoom = 1) {
         for (let child of this.children.sort((a, b) => a.z - b.z)) {
-            ctx = child.render(ctx,
+            child.render(ctx,
                 ox + this.x, oy + this.y,
                 osx * this.size.x, osy * this.size.y, zoom
             )
         }
-        return ctx
     }
 }
 

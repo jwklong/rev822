@@ -15,6 +15,7 @@
     <image id="IMAGE_CAVED" src="images/backgrounds/caved.svg" />
 
     <image id="IMAGE_SLEEPZ" src="images/sleepZ.png" />
+    <image id="IMAGE_GOOSPLAT" src="images/goosplat.svg" />
 
     <image id="IMAGE_LEVEL_BUSH" src="images/levelassets/bush.svg" />
     <image id="IMAGE_LEVEL_CLOUD" src="images/levelassets/cloud.svg" />

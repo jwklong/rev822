@@ -1,4 +1,4 @@
-<ball mass="30">
+<ball mass="30" splatcolor="#333">
     <resources>
         <image id="IMAGE_BALL_COMMON_BODY" src="gooballs/common/body.svg" />
         <image id="IMAGE_BALL_COMMON_STRAND" src="gooballs/common/strand.svg" />

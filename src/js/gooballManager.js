@@ -144,6 +144,12 @@ export class Gooball {
     /** @type {number}*/
     lastSlept = Math.random()
 
+    /**
+     * Color of goo splats
+     * @type {string}
+     */
+    splatColor = "#fff"
+
     /** @type {number} */
     get x() { return this.body.position.x }
     set x(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(val, this.y)) }
@@ -235,6 +241,7 @@ export class Gooball {
             this.sticky = xml.attributes.sticky ?? false
             this.intelligence = xml.attributes.intelligence ?? 0.9
             this.climbspeed = xml.attributes.climbspeed ?? 45
+            this.splatColor = xml.attributes.splatcolor ?? "#fff"
         }
 
         for (const [key, value] of Object.entries(xml.body)) {
@@ -296,6 +303,12 @@ export class Gooball {
         return true
     }
 
+    /**
+     * @param {CanvasRenderingContext2D} ctx 
+     * @param {number} ox 
+     * @param {number} oy 
+     * @param {number} zoom 
+     */
     render(ctx, ox = 0, oy = 0, zoom = 1) {
         this.layers.render(ctx, ox - this.x, oy - this.y, 1, 1, zoom)
 
@@ -340,6 +353,7 @@ export class Gooball {
         }
     }
 
+    /** @param {number} dt */
     tick(dt) {
         this.layers.tick(dt)
         this.timeSpent += dt
@@ -351,11 +365,15 @@ export class Gooball {
         }
     }
 
+    /**
+     * Creates sleep particle
+     */
     createSleepParticle() {
         const particle = new window.game.Classes.Layer
         particle.img = "IMAGE_SLEEPZ"
         particle.x = this.shape.radius / 2
         particle.y = this.shape.radius / 2
+        particle.z = 999
         particle.size = {x: 0.5, y: 0.5}
         particle.transparency = 1
         particle.rotation = Math.random() * 40 - 20
@@ -379,6 +397,36 @@ export class Gooball {
         }
 
         this.layers.push(particle)
+    }
+
+    /**
+     * @returns {Layer}
+     */
+    createSplat() {
+        const splat = new window.game.Classes.Layer
+        splat.img = "IMAGE_GOOSPLAT"
+        splat.x = this.x
+        splat.y = this.y
+        splat.z = 999
+        splat.rotation = Math.random() * 360
+        splat.color = this.splatColor
+
+        const oldX = this.x
+        const oldY = this.y
+        const distance = Math.random() * 32 + 64
+        const time = Math.random() * 0.25 + 0.5
+
+        splat.effect = function() {
+            let progress = window.game.Classes.Easing.easeOut.from(1 / time * this.timeSpent)
+            this.x = oldX + Math.cos((this.rotation + 90) * Math.PI / 180) * distance * progress
+            this.y = oldY + Math.sin(-(this.rotation + 90) * Math.PI / 180) * distance * progress
+
+            if (this.timeSpent > time) {
+                this.remove()
+            }
+        }
+
+        return splat
     }
 }
 

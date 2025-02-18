@@ -1,4 +1,4 @@
-<ball mass="24">
+<ball mass="24" splatcolor="#292">
     <resources>
         <image id="IMAGE_BALL_IVY_BODY" src="gooballs/ivy/body.svg" />
         <image id="IMAGE_BALL_IVY_STRAND" src="gooballs/ivy/strand.svg" />

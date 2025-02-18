@@ -54,9 +54,9 @@ export class Canvas {
                     ctx.drawImage(image1, 540, 260)
 
                     let continueButton = new CanvasButton(640, 560, 'continue')
-                    ctx = continueButton.render(ctx)
+                    continueButton.render(ctx)
 
-                    ctx = this.renderCursor(ctx)
+                    this.renderCursor(ctx)
 
                     ctx.globalAlpha = Math.max(1-window.game.TimeManager.getTimer('POSTLOADING').timePassed, 0)
                     ctx.fillStyle = 'white'
@@ -83,7 +83,7 @@ export class Canvas {
                 let level = window.game.LevelManager.currentLevel
                 ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
-                ctx = level.layers.filter(a => a.z < 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
+                level.layers.filter(a => a.z < 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
                 
                 function renderPipe(pipe, state, stretch = 0) {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
@@ -107,7 +107,7 @@ export class Canvas {
                     renderPipe(pipe, pipe.isActive(level) ? "capopen" : "cap")
                 }
 
-                ctx = level.layers.filter(a => a.z == 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
+                level.layers.filter(a => a.z == 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
 
                 //gooballs here
                 function drawStrand(type, ball1, ball2, ghost = false) {
@@ -223,7 +223,7 @@ export class Canvas {
                     }
                 }
 
-                ctx = level.layers.filter(a => a.z > 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
+                level.layers.filter(a => a.z > 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
 
                 if (level.debug) {
                     for (var body of level.bodies) {
@@ -333,11 +333,11 @@ export class Canvas {
                     ctx.fillText(level.title, 36, 36)
 
                     let continueButton = new CanvasButton(136, 200, 'continue')
-                    ctx = continueButton.render(ctx)
+                    continueButton.render(ctx)
                     if (continueButton.clicked) this.togglePause(false)
 
                     let retryButton = new CanvasButton(136, 256, 'retry')
-                    ctx = retryButton.render(ctx)
+                    retryButton.render(ctx)
                     if (retryButton.clicked && !this.transition) this.playLevel(level.id, true)
                 } else if (!level.camera.fixed) {
                     let text = ""
@@ -364,7 +364,7 @@ export class Canvas {
 
                     if (level.goal && level.goalCompleted) {
                         let continueButton = new CanvasButton(1280 - 128, 720 - 36, 'continue')
-                        ctx = continueButton.render(ctx)
+                        continueButton.render(ctx)
                     }
                 }
 
@@ -376,7 +376,6 @@ export class Canvas {
 
                     Matter.Body.setStatic(window.game.InputTracker.ball.body, true)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
-                    
                 } else if (window.game.InputTracker.ball !== undefined && (!window.game.InputTracker.left || this.mode == 1)) {
                     Matter.Body.setStatic(window.game.InputTracker.ball.body, false)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
@@ -390,12 +389,14 @@ export class Canvas {
                                 level.createStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall)
                             }
                         }
+
+                        level.createSplats(window.game.InputTracker.ball, 3)
                     }
 
                     window.game.InputTracker.ball = undefined
                 }
 
-                ctx = this.renderCursor(ctx, ballToDrag)
+                this.renderCursor(ctx, ballToDrag)
 
                 break
             case 2: //level transition
@@ -507,7 +508,6 @@ export class Canvas {
      * Renders a cursor on the canvas
      * @param {CanvasRenderingContext2D} ctx
      * @param {Gooball?} ballToDrag - gooball hovered over
-     * @returns {CanvasRenderingContext2D}
      */
     renderCursor(ctx, ballToDrag = null) {
         let { toCanvasPos, toLevelCanvasPos } = window.game.Utils
@@ -552,8 +552,6 @@ export class Canvas {
             makeCircle(x - dist, y + dist)
             makeCircle(x + dist, y + dist)
         }
-
-        return ctx
     }
 }
 
@@ -587,7 +585,6 @@ export class CanvasButton {
     /**
      * Renders the button
      * @param {CanvasRenderingContext2D} ctx
-     * @returns {CanvasRenderingContext2D}
      */
     render(ctx) {
         ctx.beginPath()
@@ -602,8 +599,6 @@ export class CanvasButton {
         ctx.font = `${this.size*0.8}px FONT_TCCEB`
         ctx.fillStyle = "#fff"
         ctx.fillText(this.text, this.x, this.y)
-
-        return ctx
     }
 
     /** @type {boolean} */

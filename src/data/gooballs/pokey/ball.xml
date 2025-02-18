@@ -1,4 +1,4 @@
-<ball mass="50" sticky noclimb nobuild>
+<ball mass="50" splatcolor="#fb5" sticky noclimb nobuild>
     <resources>
         <image id="IMAGE_BALL_POKEY_BODY" src="gooballs/pokey/body.svg" />
         <image id="IMAGE_BALL_POKEY_STRAND" src="gooballs/pokey/strand.svg" />

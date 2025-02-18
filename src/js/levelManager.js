@@ -303,6 +303,18 @@ export class Level {
         this.deleteStrands(gooball)
         this.balls = this.balls.filter(v => v !== gooball)
         Matter.Composite.remove(this.engine.world, gooball.body)
+        this.createSplats(gooball, 5)
+    }
+
+    /**
+     * @param {Gooball} ball 
+     * @param {number} amount 
+     */
+    createSplats(ball, amount = 1) {
+        for (let i = 0; i < amount; i++) {
+            let splat = ball.createSplat()
+            this.layers.push(splat)
+        }
     }
 
     /**
@@ -320,7 +332,7 @@ export class Level {
                 this.strands.splice(i,1)
 
                 for (let ball of [a, b]) {
-                    if (this.getStrandsOfBall(ball).length == 0) {
+                    if (this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
                         ball.body.collisionFilter.mask = 0b11
                         Matter.Body.setStatic(ball.body, false)
 
