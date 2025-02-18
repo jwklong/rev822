@@ -554,8 +554,8 @@ export class Level {
                 directionToPipe.y /= distance
 
                 Matter.Body.applyForce(ball.body, ball.body.position, Matter.Vector.create(
-                    directionToPipe.x * 0.1,
-                    directionToPipe.y * 0.1
+                    directionToPipe.x * ball.body.mass * 0.004,
+                    directionToPipe.y * ball.body.mass * 0.004
                 ))
             }
         }
