@@ -316,12 +316,24 @@ export class Level {
             if ((strand.ball1 === a && strand.ball2 === b) || (strand.ball1 === b && strand.ball2 === a)) {
                 Matter.Composite.remove(this.engine.world, strand.constraint)
 
-                if (this.getStrandsOfBall(a).length == 0) a.body.collisionFilter.mask = 0b11
-                if (this.getStrandsOfBall(b).length == 0) b.body.collisionFilter.mask = 0b11
-
                 this.getBallsOnStrand(strand).forEach(v => v.getOffStrand())
-
                 this.strands.splice(i,1)
+
+                for (let ball of [a, b]) {
+                    if (this.getStrandsOfBall(ball).length == 0) {
+                        ball.body.collisionFilter.mask = 0b11
+                        Matter.Body.setStatic(ball.body, false)
+
+                        for (let pipe of this.pipes) { //leap bog wog1 thing
+                            if (pipe.ballsInRange([ball], 16).length > 0) {
+                                this.killGooball(ball)
+                                pipe.ballsSucked += 1
+                                break
+                            }
+                        }
+                    }
+                }
+
                 return
             }
         }
@@ -514,7 +526,7 @@ export class Level {
             for (let pipe of this.pipes.filter(pipe => pipe.isActive(this))) {
                 if (pipe.ballsInRange([ball]).length == 0) continue
 
-                if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0) {
+                if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
                     this.killGooball(ball)
                     pipe.ballsSucked += 1
                     continue
