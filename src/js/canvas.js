@@ -390,15 +390,6 @@ export class Canvas {
                                 level.createStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall)
                             }
                         }
-                    } else if (applicableStrand) {
-                        window.game.InputTracker.ball.putOnStrand(
-                            applicableStrand,
-                            window.game.Utils.intersectsLineProgress(
-                                window.game.InputTracker.ball.x, window.game.InputTracker.ball.y,
-                                applicableStrand.ball1.x, applicableStrand.ball1.y,
-                                applicableStrand.ball2.x, applicableStrand.ball2.y,
-                            )
-                        )
                     }
 
                     window.game.InputTracker.ball = undefined
