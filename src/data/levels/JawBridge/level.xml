@@ -1,0 +1,83 @@
+<level>
+    <resources>
+        <image id="IMAGE_JAWBRIDGE_FLOOR" src="levels/JawBridge/floor.svg" />
+        <image id="IMAGE_JAWBRIDGE_PILLAR" src="levels/JawBridge/pillar.svg" />
+    </resources>
+    <head>
+        <camera width="1600" height="1600"></camera>
+        <title>Jaw Bridge</title>
+        <desc>voluntary construction work</desc>
+        <goal type="balls" target="8" />
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2" z="-1" />
+        <layer img="IMAGE_JAWBRIDGE_FLOOR" x="0" y="-400" size="1.6" />
+        <layer img="IMAGE_JAWBRIDGE_PILLAR" x="-672" y="355" size="1" />
+
+        <rect static x="-900" y="0" width="200" height="65536" detaches />
+        <rect static x="900" y="0" width="200" height="65536" detaches />
+
+        <rect static x="0" y="-800" width="1600" height="200" deadly />
+
+        <circle static x="-270" y="-200" radius="75" material="grass" sticky />
+        <rect static x="-570" y="-175" width="600" height="100" material="grass" />
+        <rect static x="-310" y="-450" width="100" height="550" rotation="15" material="grass" />
+
+        <circle static x="470" y="-250" radius="100" material="grass" sticky />
+        <rect static x="490" y="-530" width="100" height="550" rotation="-15" material="grass" />
+        <rect static x="600" y="-330" width="300" height="100" rotation="50" material="grass" sticky />
+        <rect static x="660" y="-330" width="300" height="100" material="grass" sticky />
+        <rect static x="850" y="-300" width="300" height="100" rotation="-15" material="grass" sticky />
+
+        <rect static x="-750" y="300" width="100" height="1000" rotation="-15" material="rock" />
+
+        <ball type="common" x="-260" y="-100" ref="1" />
+        <ball type="common" x="-420" y="-100" ref="2" />
+        <ball type="common" x="-260" y="60" ref="3" />
+        <ball type="common" x="-420" y="60" ref="4" />
+        <ball type="common" x="-260" y="220" ref="5" />
+        <ball type="common" x="-420" y="220" ref="6" />
+        <ball type="ivy" x="-340" y="380" ref="7" />
+
+        <ball type="ivy" x="-420--260" y="400-700" />
+        <ball type="ivy" x="-420--260" y="400-700" />
+        <ball type="ivy" x="-420--260" y="400-700" />
+        <ball type="ivy" x="-420--260" y="400-700" />
+        <ball type="ivy" x="-420--260" y="400-700" />
+        <ball type="ivy" x="-420--260" y="400-700" />
+
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+        <ball type="common" x="510-780" y="400-700" sleeping />
+
+        <strand type="common" from="1" to="2" />
+        <strand type="common" from="2" to="3" />
+        <strand type="common" from="3" to="4" />
+        <strand type="common" from="4" to="2" />
+        <strand type="common" from="3" to="1" />
+        <strand type="common" from="4" to="1" />
+        <strand type="common" from="4" to="5" />
+        <strand type="common" from="5" to="6" />
+        <strand type="common" from="6" to="3" />
+        <strand type="common" from="6" to="4" />
+        <strand type="common" from="5" to="3" />
+        <strand type="ivy" from="7" to="6" />
+        <strand type="ivy" from="7" to="5" />
+
+        <pipe type="default" x="-600" y="500" direction="-105" />
+    </scene>
+</level>

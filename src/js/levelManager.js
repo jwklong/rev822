@@ -175,7 +175,7 @@ export class Level {
         }
 
         //camera
-        if (xml.head[0].camera) {
+        if (xml.head[0].camera && xml.head[0].camera[0].keyframe) {
             for (let [i, v] of Object.entries(xml.head[0].camera[0].keyframe)) {
                 let keyframe = new CameraKeyframe
                 keyframe.x = window.game.Utils.parseAttribute(v.attributes.x, 0)
@@ -441,9 +441,10 @@ export class Level {
             }
 
             for (let body of this.bodies) {
-                if (Matter.Query.collides(body.body, [ball.body]).length > 0) {
+                if (ball != window.game.InputTracker.ball && Matter.Query.collides(body.body, [ball.body]).length > 0) {
                     if (!ball.nostick && (body.sticky || ball.sticky) && this.getStrandsOfBall(ball).length > 0) Matter.Body.setStatic(ball.body, true)
                     if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
+                    if (body.deadly) this.killGooball(ball)
                 }
             }
 
@@ -704,6 +705,12 @@ export class GenericBody {
      */
     sticky = false
 
+    /**
+     * Kills gooballs on touch
+     * @type {boolean}
+     */
+    deadly = false
+
     /** @type {number} */
     get x() { return this.body.position.x }
     set x(val) { Matter.Body.setPosition(this.body, Matter.Vector.create(val, this.y)) }
@@ -757,8 +764,9 @@ export class GenericBody {
 
         this.material = window.game.Utils.parseAttribute(attributes.material, "default")
 
-        this.sticky = window.game.Utils.parseAttribute(attributes.sticky)
-        this.detaches = window.game.Utils.parseAttribute(attributes.detaches)
+        this.sticky = window.game.Utils.parseAttribute(attributes.sticky, false)
+        this.detaches = window.game.Utils.parseAttribute(attributes.detaches, false)
+        this.deadly = window.game.Utils.parseAttribute(attributes.deadly, false)
     }
 
     /**
