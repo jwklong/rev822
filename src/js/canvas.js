@@ -478,6 +478,7 @@ export class Canvas {
             this.startTransition(() => {
                 window.game.LevelManager.currentLevel = id
                 this.mode = 0
+                window.game.LevelManager.currentLevel.startCamera()
             }, true, true)
             return
         }
@@ -488,6 +489,7 @@ export class Canvas {
             timer.onfinish = () => {
                 this.startTransition(() => {
                     this.mode = 0
+                    window.game.LevelManager.currentLevel.startCamera()
                 }, false, true)
             }
         }, true, false)

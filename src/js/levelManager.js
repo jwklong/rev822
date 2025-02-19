@@ -63,8 +63,6 @@ export class LevelManager {
             strand.ball1 = this.#currentLevel.getGooballFromRef(strand.ball1.ref)
             strand.ball2 = this.#currentLevel.getGooballFromRef(strand.ball2.ref)
         }
-
-        this.#currentLevel.camera.playKeyframes()
     }
 }
 
@@ -562,6 +560,13 @@ export class Level {
         }
 
         Matter.Engine.update(this.engine, dt * 1000)
+    }
+
+    /**
+     * Plays the camera's keyframes
+     */
+    startCamera() {
+        this.camera.playKeyframes()
     }
 }
 

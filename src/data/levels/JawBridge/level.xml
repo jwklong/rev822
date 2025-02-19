@@ -4,7 +4,11 @@
         <image id="IMAGE_JAWBRIDGE_PILLAR" src="levels/JawBridge/pillar.svg" />
     </resources>
     <head>
-        <camera width="1600" height="1600"></camera>
+        <camera width="1600" height="1600">
+            <keyframe x="-600" y="500" zoom="3" />
+            <keyframe x="450" y="-200" zoom="2" pause="1" duration="3" />
+            <keyframe x="-150" y="100" zoom="1" pause="1" duration="2" />
+        </camera>
         <title>Jaw Bridge</title>
         <desc>involuntary construction work</desc>
         <goal type="balls" target="7" />
