@@ -6,7 +6,7 @@
     <head>
         <camera width="1600" height="1600"></camera>
         <title>Jaw Bridge</title>
-        <desc>voluntary construction work</desc>
+        <desc>involuntary construction work</desc>
         <goal type="balls" target="7" />
     </head>
     <scene>
