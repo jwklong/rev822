@@ -470,10 +470,10 @@ export class Level {
                         strand.ball2.x, strand.ball2.y
                     )
 
-                    strand.ball1.vx = ball.vx * progress / 2
-                    strand.ball1.vy = ball.vy * progress / 2
-                    strand.ball2.vx = ball.vx * (1 - progress) / 2
-                    strand.ball2.vy = ball.vy * (1 - progress) / 2
+                    strand.ball1.vx += ball.vx * progress / 2
+                    strand.ball1.vy += ball.vy * progress / 2
+                    strand.ball2.vx += ball.vx * (1 - progress) / 2
+                    strand.ball2.vy += ball.vy * (1 - progress) / 2
 
                     ball.putOnStrand(strand, progress)
                 }
