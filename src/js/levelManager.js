@@ -116,8 +116,9 @@ export class Level {
     /**
      * conditions to win level
      * @type {Object?}
-     * @property {string} type - "balls" for amount of balls, more soon
+     * @property {string} type - "balls" for amount of balls, "height" for height of structure, more soon
      * @property {number} target
+     * @property {number?} start - for "height", lowest y at where height is measured
      */
     goal
 
@@ -131,6 +132,11 @@ export class Level {
         switch(this.goal.type) {
             case "balls":
                 return this.pipes.reduce((v, p) => v + p.ballsSucked, 0)
+            case "height":
+                return this.balls.reduce((v, b) => 
+                    ((b.y - this.goal.start) / 100 > v &&
+                    this.getStrandsOfBall(b).length > 0)
+                ? (b.y - this.goal.start) / 100 : v , 0)
         }
         
         return 0
@@ -169,6 +175,9 @@ export class Level {
             this.goal = {
                 type: xml.head[0].goal[0].attributes.type,
                 target: xml.head[0].goal[0].attributes.target
+            }
+            if (this.goal.type == "height") {
+                this.goal.start = xml.head[0].goal[0].attributes.start
             }
         }
 

@@ -348,6 +348,8 @@ export class Canvas {
                         switch (level.goal.type) {
                             case "balls":
                                 text = `${level.goalAmount} of ${level.goal.target} balls collected`
+                            case "height":
+                                text = `${level.goalAmount.toFixed(1)} of ${level.goal.target.toFixed(1)} meters`
                         }
                     }
 

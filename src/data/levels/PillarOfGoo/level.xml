@@ -1,0 +1,82 @@
+<level>
+    <resources>
+        <image id="IMAGE_PILLAROFGOO_PILLAR" src="levels/PillarOfGoo/pillar.svg" />
+    </resources>
+    <head>
+        <camera width="1440" height="3000">
+            <keyframe x="0" y="0" zoom="3" />
+            <keyframe x="0" y="-1140" zoom="1" pause="2" duration="4" />
+        </camera>
+        <title>Pillar Of Goo</title>
+        <desc>TBD</desc>
+        <goal type="height" target="20" start="-1240" />
+    </head>
+    <scene>
+        <layer img="IMAGE_MIDNIGHT" x="0" y="0" size="3" z="-1" />
+        <layer img="IMAGE_PILLAROFGOO_PILLAR" x="0" y="-1244" />
+
+        <rect static x="0" y="-1290" width="960" height="100" material="rock" sticky />
+        <rect static x="-390" y="-1440" width="200" height="400" material="rock" /> 
+        <rect static x="390" y="-1440" width="200" height="400" material="rock" /> 
+
+        <ball type="common" x="-240" y="-1220" ref="1" />
+        <ball type="common" x="-80" y="-1220" ref="2" />
+        <ball type="common" x="80" y="-1220" ref="3" />
+        <ball type="common" x="240" y="-1220" ref="4" />
+        <ball type="common" x="-160" y="-1060" ref="5" />
+        <ball type="common" x="0" y="-1060" ref="6" />
+        <ball type="common" x="160" y="-1060" ref="7" />
+    
+        <strand type="common" from="1" to="2" />
+        <strand type="common" from="2" to="3" />
+        <strand type="common" from="3" to="4" />
+        <strand type="common" from="1" to="5" />
+        <strand type="common" from="2" to="5" />
+        <strand type="common" from="2" to="6" />
+        <strand type="common" from="3" to="6" />
+        <strand type="common" from="3" to="7" />
+        <strand type="common" from="4" to="7" />
+        <strand type="common" from="5" to="6" />
+        <strand type="common" from="6" to="7" />
+
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+        <ball type="common" x="-140-140" y="500-1500"/>
+    </scene>
+</level>
