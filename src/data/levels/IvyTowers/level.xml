@@ -1,0 +1,53 @@
+<level>
+    <resources>
+        <image id="IMAGE_IVYTOWERS_GROUND" src="levels/IvyTowers/ground.svg" />
+        <image id="IMAGE_IVYTOWERS_PILLAR" src="levels/IvyTowers/pillar.svg" />
+    </resources>
+    <head>
+        <camera width="1280" height="1800"></camera>
+        <title>Ivy Towers</title>
+        <desc>brace yourself</desc>
+        <goal type="balls" target="2" />
+    </head>
+    <scene>
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="2" z="-1" />
+
+        <layer img="IMAGE_IVYTOWERS_PILLAR" x="-270" y="200" size="1.5,1.5" />
+        <layer img="IMAGE_IVYTOWERS_PILLAR" x="270" y="200" size="-1.5,1.5" />
+        <layer img="IMAGE_IVYTOWERS_GROUND" x="0" y="-700" size="1.3" />
+
+        <rect static x="0" y="-690" width="1280" height="200" material="grass" sticky />
+        <rect static x="240" y="0" width="200" height="2000" rotation="4.5" material="wood" />
+        <rect static x="-240" y="0" width="200" height="2000" rotation="-4.5" material="wood" />
+
+        <ball type="ivy" x="-80" y="-200" ref="1" />
+        <ball type="ivy" x="80" y="-200" ref="2" />
+        <ball type="ivy" x="0" y="-120" ref="3" />
+        <ball type="ivy" x="90" y="-80" ref="4" />
+        <ball type="ivy" x="-90" y="-80" ref="5" />
+        <ball type="ivy" x="0" y="0" ref="6" />
+
+        <strand type="ivy" from="1" to="3" />
+        <strand type="ivy" from="2" to="3" />
+        <strand type="ivy" from="4" to="3" />
+        <strand type="ivy" from="5" to="3" />
+        <strand type="ivy" from="6" to="3" />
+        <strand type="ivy" from="1" to="5" />
+        <strand type="ivy" from="2" to="4" />
+        <strand type="ivy" from="4" to="6" />
+        <strand type="ivy" from="5" to="6" />
+
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
+
+        <pipe type="default" x="0" y="700" direction="0" />
+    </scene>
+</level>

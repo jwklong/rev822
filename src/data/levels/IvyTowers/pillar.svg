@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 1024" width="256" height="1024" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="128" y1="0" x2="128" y2="1024" id="gradient-0">
+      <stop offset="0" style="stop-color: rgb(232, 223, 161);"></stop>
+      <stop offset="1" style="stop-color: rgb(185, 163, 97);"></stop>
+    </linearGradient>
+    <linearGradient gradientUnits="userSpaceOnUse" x1="128" y1="0" x2="128" y2="1024" id="gradient-1">
+      <stop offset="0" style="stop-color: rgb(216, 207, 148);"></stop>
+      <stop offset="1" style="stop-color: rgb(167, 139, 89);"></stop>
+    </linearGradient>
+    <bx:export>
+      <bx:file format="png"></bx:file>
+    </bx:export>
+  </defs>
+  <polygon style="paint-order: stroke; fill: url(#gradient-0); stroke: url(#gradient-1); stroke-width: 48px;" points="24 1024 232 1024 152 0 104 0"></polygon>
+  <path d="M 61.48 811.292 C 119.552 808.345 178.527 801.506 238.028 793.269 L 245.519 889.147 C 186.01 897.312 126.131 904.135 66.344 907.168 C 47.342 908.132 28.166 908.699 8.911 908.789 L 16.411 812.793 C 31.269 812.578 46.278 812.063 61.48 811.292 Z M 151.603 305.413 C 167.532 303.948 183.494 302.168 199.507 300.192 L 206.985 395.913 C 191.65 397.78 176.184 399.502 160.563 400.993 C 124.047 404.356 86.208 406.137 48.13 406.78 L 55.628 310.812 C 88.182 310.085 120.348 308.398 151.603 305.413 Z M 35.514 568.263 C 95.573 563.535 156.493 553.83 218.526 543.636 L 226.016 639.509 C 161.016 649.905 94.717 659.765 28.019 664.202 L 35.514 568.263 Z M 73.623 80.467 C 109.577 82.467 145.931 83.207 182.556 83.227 L 190.039 179.005 C 148.705 179.069 107.329 178.319 66.154 176.082 L 73.623 80.467 Z" style="fill: rgba(0, 0, 0, 0.133);"></path>
+</svg>

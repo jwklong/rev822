@@ -893,8 +893,8 @@ export class Strand {
         let options = window.game.GooballManager.types[this.type].strand
         this.constraint = Matter.Constraint.create({
             length: (options.length + Math.hypot(ball2.x - ball1.x, ball2.y - ball1.y) * 2) / 3,
-            dampening: 0.005,
-            stiffness: 0.04,
+            damping: 0.008,
+            stiffness: 0.15,
             bodyA: ball1.body,
             bodyB: ball2.body
         })
