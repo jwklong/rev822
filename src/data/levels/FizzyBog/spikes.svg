@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 128" width="1024px" height="128px" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <filter id="inner-shadow-filter-0" bx:preset="inner-shadow 1 0 -5 5 0.3 #ffffffb3" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+      <feOffset dx="0" dy="-5"></feOffset>
+      <feGaussianBlur stdDeviation="5"></feGaussianBlur>
+      <feComposite operator="out" in="SourceGraphic"></feComposite>
+      <feComponentTransfer result="choke">
+        <feFuncA type="linear" slope="0.6"></feFuncA>
+      </feComponentTransfer>
+      <feFlood flood-color="#ffffffb3" result="color"></feFlood>
+      <feComposite operator="in" in="color" in2="choke" result="shadow"></feComposite>
+      <feComposite operator="over" in="shadow" in2="SourceGraphic"></feComposite>
+    </filter>
+    <bx:export>
+      <bx:file format="png"></bx:file>
+    </bx:export>
+  </defs>
+  <path style="stroke-width: 96px; paint-order: stroke; fill: rgb(17, 17, 17); filter: url(#inner-shadow-filter-0);" d="M -39.871 -41.938 C 656.868 -402.767 1025.642 -399.921 1066.452 -33.401 C 1073.046 25.821 1058.895 59.023 1024 66.204 C 1006.778 69.748 989.68 72.118 972.708 73.313 L 955.08 115.404 C 954.197 117.511 953.064 117.656 951.68 115.838 L 919.196 73.157 C 903.186 71.918 887.291 69.6 871.511 66.204 C 864.965 64.795 858.435 63.539 851.922 62.435 L 820.185 107.055 C 818.862 108.916 817.724 108.808 816.774 106.731 L 793.853 56.613 C 769.707 55.89 745.787 57.322 722.094 60.911 L 708.621 110.273 C 708.019 112.476 706.914 112.767 705.306 111.145 L 665.784 71.252 C 646.377 74.154 627.103 75.812 607.962 76.226 L 585.902 116.873 C 584.812 118.88 583.671 118.91 582.476 116.963 L 556.32 74.296 C 539.14 72.626 522.069 69.929 505.108 66.204 C 494.86 63.953 484.643 62.056 474.457 60.512 L 443.895 102.672 C 442.555 104.521 441.419 104.403 440.487 102.317 L 419.631 55.606 C 394.477 54.935 369.518 56.468 344.756 60.204 L 329.894 107.158 C 329.205 109.336 328.09 109.582 326.548 107.896 L 290.952 68.963 C 266.986 71.824 243.21 72.8 219.623 71.892 L 190.268 111.04 C 188.898 112.867 187.764 112.731 186.866 110.63 L 168.17 66.874 C 161.654 65.849 155.152 64.677 148.666 63.358 C 131.15 59.796 113.495 57.394 95.7 56.155 L 69.27 101.933 C 68.127 103.911 66.985 103.911 65.843 101.933 L 39.369 56.079 C 18.594 57.447 -2.364 60.348 -23.507 64.781 C -66.551 10.277 -72.006 -25.296 -39.871 -41.938 Z"></path>
+</svg>

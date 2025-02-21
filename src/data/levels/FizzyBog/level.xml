@@ -1,0 +1,22 @@
+<level>
+    <resources>
+        <image id="IMAGE_FIZZYBOG_LEFT" src="levels/FizzyBog/left.svg" />
+        <image id="IMAGE_FIZZYBOG_RIGHT" src="levels/FizzyBog/right.svg" />
+        <image id="IMAGE_FIZZYBOG_SPIKES" src="levels/FizzyBog/spikes.svg" />
+    </resources>
+    <head>
+        <camera width="2160" height="1080"></camera>
+        <title>Fizzy Bog</title>
+        <desc>someone hasn't arrived yet</desc>
+        <goal type="balls" target="4" />
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+
+        <layer img="IMAGE_FIZZYBOG_SPIKES" x="0" y="500" size="2.2" />
+        <layer img="IMAGE_FIZZYBOG_SPIKES" x="0" y="-500" size="2.2" rotation="180" />
+
+        <layer img="IMAGE_FIZZYBOG_LEFT" x="-824" y="0" />
+        <layer img="IMAGE_FIZZYBOG_RIGHT" x="824" y="-200" />
+    </scene>
+</level>
