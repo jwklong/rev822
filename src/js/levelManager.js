@@ -903,7 +903,7 @@ export class Strand {
         this.constraint = Matter.Constraint.create({
             length: (options.length + Math.hypot(ball2.x - ball1.x, ball2.y - ball1.y) * 2) / 3,
             damping: 0.008,
-            stiffness: 0.15,
+            stiffness: 0.1,
             bodyA: ball1.body,
             bodyB: ball2.body
         })

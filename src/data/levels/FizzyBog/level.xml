@@ -5,10 +5,13 @@
         <image id="IMAGE_FIZZYBOG_SPIKES" src="levels/FizzyBog/spikes.svg" />
     </resources>
     <head>
-        <camera width="2160" height="1080"></camera>
+        <camera width="2160" height="1080">
+            <keyframe x="760" y="0" zoom="2" />
+            <keyframe x="-440" y="180" zoom="1" pause="1" duration="3" />
+        </camera>
         <title>Fizzy Bog</title>
         <desc>someone hasn't arrived yet</desc>
-        <goal type="balls" target="4" />
+        <goal type="balls" target="3" />
     </head>
     <scene>
         <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
@@ -17,6 +20,73 @@
         <layer img="IMAGE_FIZZYBOG_SPIKES" x="0" y="-500" size="2.2" rotation="180" />
 
         <layer img="IMAGE_FIZZYBOG_LEFT" x="-824" y="0" />
-        <layer img="IMAGE_FIZZYBOG_RIGHT" x="824" y="-200" />
+        <!--<layer img="IMAGE_FIZZYBOG_RIGHT" x="824" y="-200" />-->
+        
+        <layer img="IMAGE_LEVEL_CLOUD" x="300" y="150" size="1.5" z="1" rotation="10" />
+
+        <rect static x="-1180" y="0" width="200" height="65536" detaches />
+        <rect static x="1180" y="0" width="200" height="65536" detaches />
+
+        <rect static x="0" y="570" width="2160" height="200" deadly />
+        <rect static x="0" y="-570" width="2160" height="200" deadly />
+
+        <rect static x="-1080" y="130" width="60" height="500" material="grass" sticky />
+        <circle static x="-640" y="0" radius="50" material="grass" sticky />
+        <rect static x="-840" y="0" width="400" height="100" material="grass" sticky /> 
+        <rect static x="-1050" y="50" width="50" height="200" rotation="-15" material="grass" sticky /> 
+        <rect static x="-700" y="-30" width="100" height="100" rotation="-30" material="grass" /> 
+        <rect static x="-820" y="-46" width="200" height="100" material="grass" /> 
+        <rect static x="-950" y="-100" width="200" height="100" rotation="-30" material="grass" /> 
+        <rect static x="-1080" y="-250" width="100" height="300" rotation="20" material="grass" /> 
+
+        <!--<circle static x="740" y="-200" radius="100" material="grass" sticky />
+        <rect static x="900" y="-340" width="500" height="100" rotation="30" material="grass" />
+        <rect static x="840" y="-110" width="200" height="100" rotation="-20" material="grass" sticky />
+        <rect static x="1015" y="-80" width="200" height="100" material="grass" sticky />-->
+
+        <ball type="common" x="-700" y="70" ref="1" />
+        <ball type="common" x="-860" y="70" ref="2" />
+        <ball type="common" x="-700" y="230" ref="3" />
+        <ball type="common" x="-860" y="230" ref="4" />
+
+        <strand type="common" from="1" to="2" />
+        <strand type="common" from="2" to="3" />
+        <strand type="common" from="3" to="4" />
+        <strand type="common" from="4" to="2" />
+        <strand type="common" from="3" to="1" />
+        <strand type="common" from="4" to="1" />
+
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        <ball type="common" x="-1000--900" y="100-300" />
+        
+        <ball type="balloon" x="-1000--900" y="100-300" />
+        <ball type="balloon" x="-1000--900" y="100-300" />
+        <ball type="balloon" x="-1000--900" y="100-300" />
+        <ball type="balloon" x="-1000--900" y="100-300" />
+
+        <pipe type="default" x="950" y="0" direction="90" />
     </scene>
 </level>

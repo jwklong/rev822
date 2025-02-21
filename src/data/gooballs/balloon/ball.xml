@@ -1,4 +1,4 @@
-<ball mass="80" splatcolor="#f77" antigrav nobuild noclimb nostick>
+<ball mass="70" splatcolor="#f77" antigrav nobuild noclimb nostick>
     <resources>
         <image id="IMAGE_BALL_BALLOON_BODY" src="gooballs/balloon/body.svg" />
         <image id="IMAGE_BALL_BALLOON_STRAND" src="gooballs/balloon/strand.svg" />
