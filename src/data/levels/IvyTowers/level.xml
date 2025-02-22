@@ -52,6 +52,7 @@
         <ball type="ivy" x="-100-100" y="-50-50" />
         <ball type="ivy" x="-100-100" y="-50-50" />
         <ball type="ivy" x="-100-100" y="-50-50" />
+        <ball type="ivy" x="-100-100" y="-50-50" />
 
         <pipe type="default" x="0" y="700" direction="0" />
     </scene>
