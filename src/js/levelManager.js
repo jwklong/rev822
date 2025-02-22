@@ -151,9 +151,18 @@ export class Level {
 
     /**
      * @type {LevelProfile}
+     * @readonly
      */
     get profileData() {
         return window.game.ProfileManager.currentProfile.getLevel(this.id)
+    }
+
+    /**
+     * @type {Island?}
+     * @readonly
+     */
+    get island() {
+        return window.game.IslandManager.islands[this.id]
     }
 
     /**

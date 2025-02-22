@@ -1,0 +1,5 @@
+<island>
+    <level id="GoingUp" />
+    <level id="EconomicDivide" requires="GoingUp" />
+    <level id="HelpMeUp" requires="EconomicDivide" />
+</island>

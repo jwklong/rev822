@@ -8,6 +8,7 @@ import { MaterialManager, Material } from "./materialManager.js";
 import { AudioManager, Sound } from "./audioManager.js";
 import { GooballManager, Gooball, GooballEye } from "./gooballManager.js";
 import { PipeManager, Pipe } from "./pipeManager.js"
+import { IslandManager, Island, IslandLevel } from "./islandManager.js";
 import { LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand } from "./levelManager.js";
 import { Canvas, CanvasButton } from "./canvas.js";
 import { ProfileManager, Profile, LevelProfile } from "./profileManager.js";
@@ -26,6 +27,7 @@ const fs = require("fs/promises")
  * @property {AudioManager} AudioManager - Play music & SFX
  * @property {GooballManager} GooballManager - Manages gooballs
  * @property {PipeManager} PipeManager - Manages all types of pipes
+ * @property {IslandManager} IslandManager - Manages all islands
  * @property {LevelManager} LevelManager - Handles level data, the core of the game
  * @property {Canvas} Canvas - Manages the drawing canvas
  * @property {ProfileManager} ProfileManager - Contains all the player data and settings
@@ -44,6 +46,7 @@ let game = {
         AudioManager, Sound,
         GooballManager, Gooball, GooballEye,
         PipeManager, Pipe,
+        IslandManager, Island, IslandLevel,
         LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand,
         Canvas, CanvasButton,
         ProfileManager, Profile, LevelProfile
@@ -56,6 +59,7 @@ let game = {
     AudioManager: new AudioManager,
     GooballManager: new GooballManager,
     PipeManager: new PipeManager,
+    IslandManager: new IslandManager,
     LevelManager: new LevelManager,
     Canvas: new Canvas,
     ProfileManager: new ProfileManager,
@@ -82,6 +86,14 @@ window.game = game;
 
     for (const pipeFolder of pipesFolder) {
         await game.PipeManager.addType(path.join(__dirname, "../data/pipes", pipeFolder))
+    }
+
+    //islands
+    var islandsFolder = (await fs.readdir(path.join(__dirname, "../data/islands")))
+        .filter(async (src) => !(await fs.stat(path.join(__dirname, "../data/islands", src))).isDirectory())
+    
+    for (const islandFile of islandsFolder) {
+        await game.IslandManager.addIsland(path.join(__dirname, "../data/islands", islandFile))
     }
 
     //levels
