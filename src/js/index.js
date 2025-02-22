@@ -10,7 +10,7 @@ import { GooballManager, Gooball, GooballEye } from "./gooballManager.js";
 import { PipeManager, Pipe } from "./pipeManager.js"
 import { LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand } from "./levelManager.js";
 import { Canvas, CanvasButton } from "./canvas.js";
-import { ProfileManager, Profile } from "./profileManager.js";
+import { ProfileManager, Profile, LevelProfile } from "./profileManager.js";
 const path = require("path")
 const fs = require("fs/promises")
 
@@ -46,7 +46,7 @@ let game = {
         PipeManager, Pipe,
         LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand,
         Canvas, CanvasButton,
-        ProfileManager, Profile
+        ProfileManager, Profile, LevelProfile
     },
     Utils,
     InputTracker: new InputTracker,

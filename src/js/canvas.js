@@ -369,6 +369,10 @@ export class Canvas {
                     if (level.goal && level.goalCompleted) {
                         let continueButton = new CanvasButton(1280 - 128, 720 - 36, 'continue')
                         continueButton.render(ctx)
+
+                        if (continueButton.clicked) {
+                            level.complete()
+                        }
                     }
                 }
 
@@ -480,7 +484,7 @@ export class Canvas {
     playLevel(id, skip = false) {
         if (skip) {
             this.startTransition(() => {
-                window.game.LevelManager.currentLevel = id
+                window.game.LevelManager.playLevel(id)
                 this.mode = 0
                 window.game.LevelManager.currentLevel.startCamera()
             }, true, true)
@@ -488,7 +492,7 @@ export class Canvas {
         }
         this.startTransition(() => {
             this.mode = 2
-            window.game.LevelManager.currentLevel = id
+            window.game.LevelManager.playLevel(id)
             var timer = window.game.TimeManager.createTimer("LEVELTRANSITION", 8)
             timer.onfinish = () => {
                 this.startTransition(() => {

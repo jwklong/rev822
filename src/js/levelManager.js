@@ -10,8 +10,8 @@ export class LevelManager {
     /** @type {Object<string, Level>} */
     levels = {}
 
-    /** @type {string?} */
-    #currentLevel = null
+    /** @type {Level?} */
+    currentLevel
 
     /** @param {string} src */
     async addLevel(src) {
@@ -34,35 +34,31 @@ export class LevelManager {
     }
 
     /**
-     * To set this value, you MUST use a string of the level ID
-     * @type {Level?}
-     * @returns {Level?}
-     * @example
-     * LevelManager.currentLevel = "Test" // sets with a string
-     * LevelManager.currentLevel // returns a Level
+     * @param {Level | string} v
+     * @returns {Level}
      */
-    get currentLevel() {
-        return this.#currentLevel
-    }
-    set currentLevel(id) {
-        this.#currentLevel = this.levels[id].clone()
+    playLevel(v) {
+        if (v instanceof Level) this.currentLevel = v.clone()
+        else this.currentLevel = this.levels[v].clone()
 
-        this.#currentLevel.engine = Matter.Engine.create()
-        this.#currentLevel.engine.gravity.y = -1
-        for (let body of this.#currentLevel.bodies) {
-            let currentComposite = Matter.Composite.add(this.#currentLevel.engine.world, body.body)
+        this.currentLevel.engine = Matter.Engine.create()
+        this.currentLevel.engine.gravity.y = -1
+        for (let body of this.currentLevel.bodies) {
+            let currentComposite = Matter.Composite.add(this.currentLevel.engine.world, body.body)
             body.body = currentComposite.bodies[currentComposite.bodies.length-1]
         }
-        for (let ball of this.#currentLevel.balls) {
-            let currentComposite = Matter.Composite.add(this.#currentLevel.engine.world, ball.body)
+        for (let ball of this.currentLevel.balls) {
+            let currentComposite = Matter.Composite.add(this.currentLevel.engine.world, ball.body)
             ball.body = currentComposite.bodies[currentComposite.bodies.length-1]
         }
-        for (let strand of this.#currentLevel.strands) {
-            let currentComposite = Matter.Composite.add(this.#currentLevel.engine.world, strand.constraint)
+        for (let strand of this.currentLevel.strands) {
+            let currentComposite = Matter.Composite.add(this.currentLevel.engine.world, strand.constraint)
             strand.constraint = currentComposite.constraints[currentComposite.constraints.length-1]
-            strand.ball1 = this.#currentLevel.getGooballFromRef(strand.ball1.ref)
-            strand.ball2 = this.#currentLevel.getGooballFromRef(strand.ball2.ref)
+            strand.ball1 = this.currentLevel.getGooballFromRef(strand.ball1.ref)
+            strand.ball2 = this.currentLevel.getGooballFromRef(strand.ball2.ref)
         }
+
+        return this.currentLevel
     }
 }
 
@@ -102,16 +98,19 @@ export class Level {
     title
 
     /** @type {string} */
-    desc
+    desc = ""
 
     /** @type {boolean} */
-    debug
+    debug = false
 
     /** @type {number} */
     width
 
     /** @type {number} */
     height
+
+    /** @type {number} */
+    timeSpent = 0
 
     /**
      * conditions to win level
@@ -142,8 +141,19 @@ export class Level {
         return 0
     }
 
+    /**
+     * @type {boolean}
+     * @readonly
+     */
     get goalCompleted() {
         return this.goalAmount >= this.goal.target
+    }
+
+    /**
+     * @type {LevelProfile}
+     */
+    get profileData() {
+        return window.game.ProfileManager.currentProfile.getLevel(this.id)
     }
 
     /**
@@ -378,6 +388,8 @@ export class Level {
 
     /** @param {number} dt */
     tick(dt) {
+        this.timeSpent += dt
+
         if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
             if (100 - window.game.InputTracker.x > 0) {
                 this.camera.props.x -= (100 - window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
@@ -576,6 +588,24 @@ export class Level {
      */
     startCamera() {
         this.camera.playKeyframes()
+    }
+
+    /**
+     * Finish the level
+     */
+    complete() {
+        let data = this.profileData
+        data.completed = true
+        switch (this.goal.type) {
+            case "balls":
+                data.balls = Math.max(data.balls, this.goalAmount)
+                break
+            case "height":
+                data.height = Math.max(data.height, this.goalAmount)
+                break
+        }
+        data.time = Math.min(data.time, this.timeSpent)
+        //TODO: moves
     }
 }
 
