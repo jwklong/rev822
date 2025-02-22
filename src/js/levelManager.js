@@ -174,7 +174,7 @@ export class Level {
         this.id = id
         this.xml = xml
         this.title = xml.head[0].title[0].value
-        this.desc = xml.head[0].desc[0].value
+        if (xml.head[0].desc) this.desc = xml.head[0].desc[0].value
         this.debug = xml.attributes ? xml.attributes.debug : false
 
         this.width = xml.head[0].camera[0].attributes.width

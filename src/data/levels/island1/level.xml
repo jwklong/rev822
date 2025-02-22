@@ -1,0 +1,15 @@
+<level>
+    <resources>
+        <image id="IMAGE_ISLAND1_ISLAND" src="levels/island1/island.svg" />
+    </resources>
+    <head>
+        <camera width="2048" height="2048">
+            <keyframe x="-224" y="-584" zoom="0.8" />
+        </camera>
+        <title>The Goo Filled Hills</title>
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+        <layer img="IMAGE_ISLAND1_ISLAND" x="0" y="0" />
+    </scene>
+</level>
