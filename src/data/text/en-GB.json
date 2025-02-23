@@ -1,0 +1,40 @@
+{
+    "LEVEL_ECONOMICDIVIDE_TITLE": "Economic Divide",
+    "LEVEL_ECONOMICDIVIDE_DESC": "cross the gap",
+
+    "LEVEL_FIZZYBOG_TITLE": "Fizzy Bog",
+    "LEVEL_FIZZYBOG_DESC": "someone hasn't arrived yet",
+    
+    "LEVEL_GOINGUP_TITLE": "Going Up",
+    "LEVEL_GOINGUP_DESC": "welcome home",
+
+    "LEVEL_HANGLOW_TITLE": "Hang Low",
+    "LEVEL_HANGLOW_DESC": "retrieval mission",
+
+    "LEVEL_HELPMEUP_TITLE": "Help Me Up",
+    "LEVEL_HELPMEUP_DESC": "wake up the sleeping goos",
+
+    "LEVEL_HILLBIT_TITLE": "Hill Bit",
+    "LEVEL_HILLBIT_DESC": "terrain generation",
+
+    "LEVEL_IVYTOWERS_TITLE": "Ivy Towers",
+    "LEVEL_IVYTOWERS_DESC": "brace yourself",
+
+    "LEVEL_JAWBRIDGE_TITLE": "Jaw Bridge",
+    "LEVEL_JAWBRIDGE_DESC": "involuntary construction work",
+
+    "LEVEL_PILLAROFGOO_TITLE": "Pillar Of Goo",
+    "LEVEL_PILLAROFGOO_DESC": "higher and higher",
+
+    "LEVEL_ISLAND1_TITLE": "The Goo Filled Hills",
+    "LEVEL_ISLAND1_DESC": "",
+
+
+    "GOAL_BALLS": "%1 of %2 balls",
+    "GOAL_HEIGHT": "%1 of %2 meters",
+
+
+    "BUTTON_CONTINUE": "continue",
+    "BUTTON_RETRY": "retry",
+    "BUTTON_RETURN": "return"
+}
