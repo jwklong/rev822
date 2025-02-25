@@ -225,6 +225,13 @@ export class Canvas {
 
                 level.layers.filter(a => a.z > 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
 
+                level.levelButtons.forEach(x => {
+                    x.render(level, ctx)
+                    if (x.clicked(level) && !this.transition) {
+                        this.playLevel(x.id)
+                    }
+                })
+
                 if (level.debug) {
                     for (var body of level.bodies) {
                         switch (body.type) {

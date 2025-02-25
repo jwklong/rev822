@@ -1,4 +1,4 @@
-<level>
+<level debug>
     <resources>
         <image id="IMAGE_ISLAND1_ISLAND" src="levels/island1/island.svg" />
     </resources>
@@ -11,5 +11,7 @@
     <scene>
         <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
         <layer img="IMAGE_ISLAND1_ISLAND" x="0" y="0" />
+
+        <levelbutton id="GoingUp" x="-224" y="-584" />
     </scene>
 </level>
