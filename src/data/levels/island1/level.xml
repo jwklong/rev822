@@ -12,6 +12,7 @@
         <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
         <layer img="IMAGE_ISLAND1_ISLAND" x="0" y="0" />
 
-        <levelbutton id="GoingUp" x="-224" y="-584" />
+        <levelbutton id="GoingUp" x="-800" y="-400" />
+        <levelbutton id="EconomicDivide" x="-670" y="-600" />
     </scene>
 </level>

@@ -1007,13 +1007,9 @@ export class LevelButton {
      * @param {CanvasRenderingContext2D} ctx
      */
     render(level, ctx) {
+        let image = window.game.ResourceManager.getResource(this.level.profileData.completed ? "IMAGE_LEVELBUTTON_COMPLETED" : "IMAGE_LEVELBUTTON").image
         let {x, y} = this.levelCoords(level)
-        ctx.beginPath();
-        ctx.arc(x, y, 30, 0, 2 * Math.PI);
-        ctx.closePath();
-        ctx.fillStyle = "#0f0";
-        if (this.hovered(level)) ctx.fillStyle = "#f00";
-        ctx.fill();
+        ctx.drawImage(image, x - 30, y - 30, 60, 60)
 
         if (!this.hovered(level)) return
         ctx.font = '36px "FONT_COOKIES"'

@@ -19,4 +19,7 @@
 
     <image id="IMAGE_LEVEL_BUSH" src="images/levelassets/bush.svg" />
     <image id="IMAGE_LEVEL_CLOUD" src="images/levelassets/cloud.svg" />
+
+    <image id="IMAGE_LEVELBUTTON" src="images/levelbutton.svg" />
+    <image id="IMAGE_LEVELBUTTON_COMPLETE" src="images/levelbutton_complete.svg" />
 </resources>
