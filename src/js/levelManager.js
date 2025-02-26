@@ -1007,7 +1007,7 @@ export class LevelButton {
      * @param {CanvasRenderingContext2D} ctx
      */
     render(level, ctx) {
-        let image = window.game.ResourceManager.getResource(this.level.profileData.completed ? "IMAGE_LEVELBUTTON_COMPLETED" : "IMAGE_LEVELBUTTON").image
+        let image = window.game.ResourceManager.getResource(this.level.profileData.completed ? "IMAGE_LEVELBUTTON_COMPLETE" : "IMAGE_LEVELBUTTON").image
         let {x, y} = this.levelCoords(level)
         ctx.drawImage(image, x - 30, y - 30, 60, 60)
 

@@ -1,4 +1,4 @@
-<level debug>
+<level>
     <resources>
         <image id="IMAGE_ISLAND1_ISLAND" src="levels/island1/island.svg" />
     </resources>
@@ -14,5 +14,8 @@
 
         <levelbutton id="GoingUp" x="-800" y="-400" />
         <levelbutton id="EconomicDivide" x="-670" y="-600" />
+        <levelbutton id="HelpMeUp" x="-510" y="-740" />
+        <levelbutton id="ImpaleSticky" x="-280" y="-680" />
+        <levelbutton id="HangLow" x="-320" y="-320" />
     </scene>
 </level>

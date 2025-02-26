@@ -2,4 +2,6 @@
     <level id="GoingUp" />
     <level id="EconomicDivide" requires="GoingUp" />
     <level id="HelpMeUp" requires="EconomicDivide" />
+    <level id="ImpaleSticky" requires="HelpMeUp" />
+    <level id="HangLow" requires="ImpaleSticky" />
 </island>
