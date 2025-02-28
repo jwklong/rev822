@@ -3,6 +3,7 @@ import { Layer } from "./layer.js";
 import { Easing } from "./easing.js";
 import { InputTracker } from "./inputTracker.js";
 import { TimeManager, Timer } from "./timeManager.js";
+import { TextManager } from "./textManager.js";
 import { ResourceManager, GenericResource, ImageResource, AudioResource, FontResource } from "./resourceManager.js";
 import { MaterialManager, Material } from "./materialManager.js";
 import { AudioManager, Sound } from "./audioManager.js";
@@ -22,6 +23,7 @@ const fs = require("fs/promises")
  * @property {Easing} Easing - Provides easing functions
  * @property {InputTracker} InputTracker - Tracks mouse movements
  * @property {TimeManager} TimeManager - Manages time and timers
+ * @property {TextManager} TextManager - Text + translations
  * @property {ResourceManager} ResourceManager - Handles resource loading and management
  * @property {MaterialManager} MaterialManager - Manages materials for physics
  * @property {AudioManager} AudioManager - Play music & SFX
@@ -41,6 +43,7 @@ let game = {
 
         InputTracker,
         TimeManager, Timer,
+        TextManager,
         ResourceManager, GenericResource, ImageResource, AudioResource, FontResource,
         MaterialManager, Material,
         AudioManager, Sound,
@@ -54,6 +57,7 @@ let game = {
     Utils,
     InputTracker: new InputTracker,
     TimeManager: new TimeManager,
+    TextManager: new TextManager,
     ResourceManager: new ResourceManager,
     MaterialManager: new MaterialManager,
     AudioManager: new AudioManager,
@@ -71,6 +75,14 @@ window.game = game;
 (async () => {
     await game.ResourceManager.addXMLFile(path.join(__dirname, "../data/resources.xml"))
     await game.MaterialManager.addXMLFile(path.join(__dirname, "../data/materials.xml"))
+
+    //text
+    var textFolder = (await fs.readdir(path.join(__dirname, "../data/text")))
+        .filter(async (src) => !(await fs.stat(path.join(__dirname, "../data/text", src))).isDirectory())
+
+    for (const textFile of textFolder) {
+        await game.TextManager.importJSON(path.join(__dirname, "../data/text", textFile))
+    }
 
     //balls
     var ballsFolder = (await fs.readdir(path.join(__dirname, "../data/gooballs")))
