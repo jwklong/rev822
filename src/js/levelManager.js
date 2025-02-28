@@ -88,6 +88,9 @@ export class Level {
     /** @type {Strand[]} */
     strands = []
 
+    /** @type {LevelButton[]} */
+    levelButtons = []
+
     /** @type {string} */
     id
 
@@ -259,6 +262,15 @@ export class Level {
                         pipe.length = window.game.Utils.parseAttribute(v.attributes.length, 65535)
                         pipe.ref = String(v.attributes.ref)
                         this.pipes.push(pipe)
+                    }
+                    break
+                case "levelbutton":
+                    for (let v of value) {
+                        let button = new LevelButton()
+                        button.x = window.game.Utils.parseAttribute(v.attributes.x, 0)
+                        button.y = window.game.Utils.parseAttribute(v.attributes.y, 0)
+                        button.id = String(v.attributes.id)
+                        this.levelButtons.push(button)
                     }
                     break
                 default:
@@ -949,5 +961,75 @@ export class Strand {
 
        this.ball1 = ball1
        this.ball2 = ball2
+    }
+}
+
+export class LevelButton {
+    /**
+     * level id
+     * @type {string}
+     */
+    id = ""
+
+    /** @type {number} */
+    x = 0
+
+    /** @type {number} */
+    y = 0
+
+    /**
+     * @param {Level} level 
+     * @param {boolean} zoom
+     * @returns {{x: number, y: number}}
+     */
+    levelCoords(level, zoom = false) {
+        return window.game.Utils.toLevelCanvasPos(this.x, this.y, level, 0, 0, zoom)
+    }
+
+    /**
+     * @type {Level}
+     * @readonly
+     */
+    get level() {
+        return window.game.LevelManager.levels[this.id]
+    }
+
+    /**
+     * @type {string}
+     * @readonly
+     */
+    get title() {
+        return this.level.title
+    }
+
+    /**
+     * @param {Level} level
+     * @param {CanvasRenderingContext2D} ctx
+     */
+    render(level, ctx) {
+        let image = window.game.ResourceManager.getResource(this.level.profileData.completed ? "IMAGE_LEVELBUTTON_COMPLETE" : "IMAGE_LEVELBUTTON").image
+        let {x, y} = this.levelCoords(level)
+        ctx.drawImage(image, x - 30, y - 30, 60, 60)
+
+        if (!this.hovered(level)) return
+        ctx.font = '36px "FONT_COOKIES"'
+        ctx.strokeStyle = 'black'
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.lineWidth = 4
+        ctx.strokeText(this.title, x, y - 56)
+        ctx.lineWidth = 6
+        ctx.strokeText(this.title, x, y - 56)
+        ctx.fillStyle = 'white'
+        ctx.fillText(this.title, x, y - 56)
+    }
+
+    hovered(level) {
+        let {x, y} = this.levelCoords(level, true)
+        return window.game.InputTracker.withinCircle(x, y, 30)
+    }
+
+    clicked(level) {
+        return this.hovered(level) && window.game.InputTracker.leftOnce
     }
 }

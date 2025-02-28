@@ -1,0 +1,104 @@
+<level>
+    <resources>
+        <image id="IMAGE_IMPALESTICKY_TERRAIN" src="levels/ImpaleSticky/terrain.svg" />
+    </resources>
+    <head>
+        <camera width="1536" height="1536">
+            <keyframe x="400" y="400" zoom="2" />
+            <keyframe x="15" y="-150" zoom="0.85" pause="1" duration="3" />
+            <keyframe x="128" y="-230" zoom="1" pause="1" duration="1" />
+        </camera>
+        <title>Impale Sticky</title>
+        <desc>if you get in trouble, just think about what you did</desc>
+        <goal type="balls" target="24" />
+    </head>
+    <scene>
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="2" z="-1" />
+        <layer img="IMAGE_IMPALESTICKY_TERRAIN" x="384" y="0" size="1.5" />
+
+        <rect static x="1124" y="0" width="200" height="65536" detaches />
+
+        <rect static x="570" y="-640" width="1000" height="500" material="grass" sticky />
+        <rect static x="690" y="-370" width="200" height="100" rotation="-45" material="grass" sticky />
+        <rect static x="770" y="-200" width="100" height="300" material="grass" sticky />
+        <rect static x="690" y="-40" width="300" height="100" rotation="45" material="grass" sticky />
+        <rect static x="570" y="70" width="1000" height="140" material="grass" sticky />
+        <rect static x="180" y="10" width="280" height="90" deadly />
+        <rect static x="690" y="180" width="300" height="100" rotation="-45" material="grass" sticky />
+        <rect static x="780" y="370" width="200" height="400" material="grass" sticky />
+        <circle static x="755" y="570" radius="75" material="grass" sticky />
+
+        <ball type="common" x="510" y="-370" ref="1" />
+        <ball type="common" x="350" y="-370" ref="2" />
+        <ball type="common" x="510" y="-210" ref="3" />
+        <ball type="common" x="350" y="-210" ref="4" />
+
+        <strand type="common" from="1" to="2" />
+        <strand type="common" from="2" to="3" />
+        <strand type="common" from="3" to="4" />
+        <strand type="common" from="4" to="2" />
+        <strand type="common" from="3" to="1" />
+        <strand type="common" from="4" to="1" />
+
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+        <ball type="common" x="410-590" y="-50--300" />
+
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+        <ball type="common" x="200-560" y="160" sleeping />
+
+        <pipe type="default" x="400" y="400" />
+    </scene>
+</level>

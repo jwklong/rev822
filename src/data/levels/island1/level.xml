@@ -11,5 +11,11 @@
     <scene>
         <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
         <layer img="IMAGE_ISLAND1_ISLAND" x="0" y="0" />
+
+        <levelbutton id="GoingUp" x="-800" y="-400" />
+        <levelbutton id="EconomicDivide" x="-670" y="-600" />
+        <levelbutton id="HelpMeUp" x="-510" y="-740" />
+        <levelbutton id="ImpaleSticky" x="-280" y="-680" />
+        <levelbutton id="HangLow" x="-320" y="-320" />
     </scene>
 </level>
