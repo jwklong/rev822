@@ -40,7 +40,6 @@ export class TextManager {
         let regex = /%(\d+)[a-z]/g
         let result
         while ((result = regex.exec(string)) !== null) {
-            console.log(result[0])
             string = string.replace(result[0], args[Number(result[1]) - 1] ?? "?")
         }
 
@@ -48,7 +47,7 @@ export class TextManager {
     }
 
     parseText(string) {
-        let regex = /{{[(A-Z_)]}}/g
+        let regex = /{{([A-Z_]+)}}/g
         let result
         while ((result = regex.exec(string)) !== null) {
             string = string.replace(result[0], this.get(result[1]))

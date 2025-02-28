@@ -8,8 +8,8 @@
             <keyframe x="550" y="-50" zoom="1.5" />
             <keyframe x="-350" y="100" zoom="1" pause="3" duration="3" />
         </camera>
-        <title>Economic Divide</title>
-        <desc>TBD</desc>
+        <title>{{LEVEL_ECONOMICDIVIDE_TITLE}}</title>
+        <desc>{{LEVEL_ECONOMICDIVIDE_DESC}}</desc>
         <goal type="balls" target="8" />
     </head>
     <scene>

@@ -9,8 +9,8 @@
             <keyframe x="450" y="-200" zoom="2" pause="1" duration="3" />
             <keyframe x="-150" y="100" zoom="1" pause="1" duration="2" />
         </camera>
-        <title>Jaw Bridge</title>
-        <desc>involuntary construction work</desc>
+        <title>{{LEVEL_JAWBRIDGE_TITLE}}</title>
+        <desc>{{LEVEL_JAWBRIDGE_DESC}}</desc>
         <goal type="balls" target="7" />
     </head>
     <scene>

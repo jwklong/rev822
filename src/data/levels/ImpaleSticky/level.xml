@@ -8,8 +8,8 @@
             <keyframe x="15" y="-150" zoom="0.85" pause="1" duration="3" />
             <keyframe x="128" y="-230" zoom="1" pause="1" duration="1" />
         </camera>
-        <title>Impale Sticky</title>
-        <desc>if you get in trouble, just think about what you did</desc>
+        <title>{{LEVEL_IMPALESTICKY_TITLE}}</title>
+        <desc>{{LEVEL_IMPALESTICKY_DESC}}</desc>
         <goal type="balls" target="24" />
     </head>
     <scene>

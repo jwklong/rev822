@@ -8,8 +8,8 @@
             <keyframe x="0" y="550" zoom="1" />
             <keyframe x="0" y="-400" zoom="1" pause="1" duration="3" />
         </camera>
-        <title>Ivy Towers</title>
-        <desc>brace yourself</desc>
+        <title>{{LEVEL_IVYTOWERS_TITLE}}</title>
+        <desc>{{LEVEL_IVYTOWERS_DESC}}</desc>
         <goal type="balls" target="2" />
     </head>
     <scene>

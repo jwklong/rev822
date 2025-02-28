@@ -53,7 +53,7 @@ export class Canvas {
                     ctx.drawImage(image2, 0, -280, 1280, 1280)
                     ctx.drawImage(image1, 540, 260)
 
-                    let continueButton = new CanvasButton(640, 560, 'continue')
+                    let continueButton = new CanvasButton(640, 560, window.game.TextManager.get("BUTTON_CONTINUE"))
                     continueButton.render(ctx)
 
                     this.renderCursor(ctx)
@@ -340,11 +340,11 @@ export class Canvas {
                     ctx.textBaseline = 'top'
                     ctx.fillText(level.title, 36, 36)
 
-                    let continueButton = new CanvasButton(136, 200, 'continue')
+                    let continueButton = new CanvasButton(136, 200, window.game.TextManager.get("BUTTON_CONTINUE"))
                     continueButton.render(ctx)
                     if (continueButton.clicked) this.togglePause(false)
 
-                    let retryButton = new CanvasButton(136, 256, 'retry')
+                    let retryButton = new CanvasButton(136, 256, window.game.TextManager.get("BUTTON_RETRY"))
                     retryButton.render(ctx)
                     if (retryButton.clicked && !this.transition) this.playLevel(level.id, true)
                 } else if (!level.camera.fixed) {
@@ -355,10 +355,10 @@ export class Canvas {
                     } else if (level.goal) {
                         switch (level.goal.type) {
                             case "balls":
-                                text = `${level.goalAmount} of ${level.goal.target} balls collected`
+                                text = window.game.TextManager.get("GOAL_BALLS", level.goalAmount, level.goal.target)
                                 break
                             case "height":
-                                text = `${level.goalAmount.toFixed(1)} of ${level.goal.target.toFixed(1)} meters`
+                                text = window.game.TextManager.get("GOAL_HEIGHT", level.goalAmount.toFixed(1), level.goal.target.toFixed(1))
                                 break
                         }
                     }
@@ -375,7 +375,7 @@ export class Canvas {
                     ctx.fillText(text, 24, 720 - 16)
 
                     if (level.goal && level.goalCompleted) {
-                        let continueButton = new CanvasButton(1280 - 128, 720 - 36, 'continue')
+                        let continueButton = new CanvasButton(1280 - 128, 720 - 36, window.game.TextManager.get("BUTTON_CONTINUE"))
                         continueButton.render(ctx)
 
                         if (continueButton.clicked) {
