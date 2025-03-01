@@ -61,8 +61,8 @@ export class TextManager {
 
     /**
      * parses text, replacing stuff like {{TEXT_ID}} with the corresponding translation
-     * @param {*} string 
-     * @returns 
+     * @param {string} string 
+     * @returns {string}
      */
     parseText(string) {
         if (this.debug) return string
