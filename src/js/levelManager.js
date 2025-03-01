@@ -176,8 +176,8 @@ export class Level {
     constructor(xml, id, clone = false) {
         this.id = id
         this.xml = xml
-        this.title = xml.head[0].title ? window.game.TextManager.parseText(xml.head[0].title[0].value) : ""
-        this.desc = xml.head[0].desc ? window.game.TextManager.parseText(xml.head[0].desc[0].value) : ""
+        this.title = xml.head[0].title ? xml.head[0].title[0].value : ""
+        this.desc = xml.head[0].desc ? xml.head[0].desc[0].value : ""
         this.debug = xml.attributes ? xml.attributes.debug : false
 
         this.width = xml.head[0].camera[0].attributes.width
@@ -1012,16 +1012,18 @@ export class LevelButton {
         ctx.drawImage(image, x - 30, y - 30, 60, 60)
 
         if (!this.hovered(level)) return
+
+        let text = window.game.TextManager.parseText(this.title)
         ctx.font = '36px "FONT_COOKIES"'
         ctx.strokeStyle = 'black'
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
         ctx.lineWidth = 4
-        ctx.strokeText(this.title, x, y - 56)
+        ctx.strokeText(text, x, y - 56)
         ctx.lineWidth = 6
-        ctx.strokeText(this.title, x, y - 56)
+        ctx.strokeText(text, x, y - 56)
         ctx.fillStyle = 'white'
-        ctx.fillText(this.title, x, y - 56)
+        ctx.fillText(text, x, y - 56)
     }
 
     hovered(level) {

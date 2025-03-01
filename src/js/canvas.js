@@ -429,10 +429,10 @@ export class Canvas {
                 ctx.textBaseline = "top"
                 ctx.font = "48px FONT_COOKIES"
                 ctx.fillStyle = "#fff"
-                ctx.fillText(window.game.LevelManager.currentLevel.title, 24, 24)
+                ctx.fillText(window.game.TextManager.parseText(window.game.LevelManager.currentLevel.title), 24, 24)
                 ctx.font = "24px FONT_COOKIES"
                 ctx.fillStyle = "#aaa"
-                ctx.fillText(window.game.LevelManager.currentLevel.desc, 24, 80)
+                ctx.fillText(window.game.TextManager.parseText(window.game.LevelManager.currentLevel.desc), 24, 80)
 
                 let doubleease = x => Math.abs((x % 2) - 1)
 
