@@ -10,6 +10,11 @@ export class LevelManager {
     /** @type {Object<string, Level>} */
     levels = {}
 
+    /**
+     * @type {string[]}
+     */
+    levelHistory = []
+
     /** @type {Level?} */
     currentLevel
 
@@ -41,6 +46,10 @@ export class LevelManager {
         if (v instanceof Level) this.currentLevel = v.clone()
         else this.currentLevel = this.levels[v].clone()
 
+        let index = this.levelHistory.indexOf(this.currentLevel.id)
+        if (index != -1) this.levelHistory.splice(index, this.levelHistory.length - index)
+        this.levelHistory.push(v)
+
         this.currentLevel.engine = Matter.Engine.create()
         this.currentLevel.engine.gravity.y = -1
         for (let body of this.currentLevel.bodies) {
@@ -60,6 +69,13 @@ export class LevelManager {
 
         return this.currentLevel
     }
+
+    /**
+     * @returns {string}
+     */
+    get previousLevel() {
+        return this.levelHistory[this.levelHistory.length - 2] ?? "MapWorldView" //default
+    }   
 }
 
 export class Level {

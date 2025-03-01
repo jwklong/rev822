@@ -67,7 +67,7 @@ export class Canvas {
                         continueButton.clicked &&
                         !this.transition
                     ) {
-                        this.playLevel("GoingUp")
+                        this.playLevel("MapWorldView", true)
                     }
 
                     break
@@ -338,15 +338,19 @@ export class Canvas {
                     ctx.fillStyle = "#fff"
                     ctx.textAlign = 'left'
                     ctx.textBaseline = 'top'
-                    ctx.fillText(level.title, 36, 36)
+                    ctx.fillText(window.game.TextManager.parseText(level.title), 36, 36)
 
                     let continueButton = new CanvasButton(136, 200, window.game.TextManager.get("BUTTON_CONTINUE"))
                     continueButton.render(ctx)
                     if (continueButton.clicked) this.togglePause(false)
 
-                    let retryButton = new CanvasButton(136, 256, window.game.TextManager.get("BUTTON_RETRY"))
+                    let retryButton = new CanvasButton(136, 200 + 56, window.game.TextManager.get("BUTTON_RETRY"))
                     retryButton.render(ctx)
                     if (retryButton.clicked && !this.transition) this.playLevel(level.id, true)
+
+                    let backButton = new CanvasButton(136, 200 + 56 * 2, window.game.TextManager.get("BUTTON_RETURN"))
+                    backButton.render(ctx)
+                    if (backButton.clicked && !this.transition) this.playLevel(window.game.LevelManager.previousLevel, true)
                 } else if (!level.camera.fixed) {
                     let text = ""
                     if (level.debug) {
@@ -382,6 +386,12 @@ export class Canvas {
                             level.complete()
                         }
                     }
+                }
+
+                if (level.island) {
+                    let backButton = new CanvasButton(128, 720 - 36, window.game.TextManager.get("BUTTON_GOBACK"))
+                    backButton.render(ctx)
+                    if (backButton.clicked && !this.transition) this.playLevel(window.game.LevelManager.previousLevel, true)
                 }
 
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.leftOnce) {
@@ -524,6 +534,7 @@ export class Canvas {
     togglePause(override) {
         if (this.mode != 0 && this.mode != 1) return
         if (window.game.LevelManager.currentLevel.camera.fixed) return
+        if (window.game.LevelManager.currentLevel.island) return
         this.mode = Number(override ?? !this.mode)
     }
 

@@ -1,0 +1,14 @@
+<level>
+    <resources>
+    </resources>
+    <head>
+        <camera width="1280" height="720">
+            <keyframe x="0" y="0" zoom="1" />
+        </camera>
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="1.5" z="-1" />
+
+        <levelbutton id="island1" x="0" y="0" />
+    </scene>
+</level>

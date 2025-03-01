@@ -10,7 +10,7 @@ import { AudioManager, Sound } from "./audioManager.js";
 import { GooballManager, Gooball, GooballEye } from "./gooballManager.js";
 import { PipeManager, Pipe } from "./pipeManager.js"
 import { IslandManager, Island, IslandLevel } from "./islandManager.js";
-import { LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand } from "./levelManager.js";
+import { LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand, LevelButton } from "./levelManager.js";
 import { Canvas, CanvasButton } from "./canvas.js";
 import { ProfileManager, Profile, LevelProfile } from "./profileManager.js";
 const path = require("path")
@@ -50,7 +50,7 @@ let game = {
         GooballManager, Gooball, GooballEye,
         PipeManager, Pipe,
         IslandManager, Island, IslandLevel,
-        LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand,
+        LevelManager, Level, Camera, CameraKeyframe, GenericBody, RectBody, CircleBody, Strand, LevelButton,
         Canvas, CanvasButton,
         ProfileManager, Profile, LevelProfile
     },
