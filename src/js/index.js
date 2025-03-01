@@ -15,7 +15,7 @@ import { Canvas, CanvasButton } from "./canvas.js";
 import { ProfileManager, Profile, LevelProfile } from "./profileManager.js";
 const path = require("path")
 const fs = require("fs/promises")
-
+const args = process.argv
 /**
  * @property {Object} Classes - contains all classes that can be init'd
  * @property {Utils} Utils - Provides utility functions
@@ -68,9 +68,15 @@ let game = {
     Canvas: new Canvas,
     ProfileManager: new ProfileManager,
 
-    timePassed: 0
+    timePassed: 0,
+    arguments: {}
 }
 window.game = game;
+
+require('electron').ipcRenderer.send('get-args');
+require('electron').ipcRenderer.on('args', (event, args) => {
+    game.arguments = args
+});
 
 (async () => {
     await game.ResourceManager.addXMLFile(path.join(__dirname, "../data/resources.xml"))

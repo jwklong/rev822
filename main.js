@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron/main')
+const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('node:path')
 
 function createWindow() {
@@ -20,6 +20,12 @@ function createWindow() {
     }
     win.setMenuBarVisibility(false)
     win.loadFile('src/pages/index.html')
+
+    ipcMain.on('get-args', (event) => {
+        event.reply('args', {
+            level: app.commandLine.getSwitchValue('level')
+        });
+    });
 }
 
 app.whenReady().then(() => {

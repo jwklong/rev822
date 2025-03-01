@@ -67,7 +67,7 @@ export class Canvas {
                         continueButton.clicked &&
                         !this.transition
                     ) {
-                        this.playLevel("MapWorldView", true)
+                        this.playLevel(window.game.arguments.level || "MapWorldView", !window.game.arguments.level)
                     }
 
                     break
