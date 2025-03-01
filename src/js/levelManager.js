@@ -115,6 +115,9 @@ export class Level {
     /** @type {number} */
     timeSpent = 0
 
+    /** @type {number} */
+    moves = 0
+
     /**
      * conditions to win level
      * @type {Object?}
@@ -626,7 +629,7 @@ export class Level {
                 break
         }
         data.time = Math.min(data.time, this.timeSpent)
-        //TODO: moves
+        data.moves = Math.min(data.moves, this.moves)
     }
 }
 

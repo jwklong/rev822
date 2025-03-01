@@ -387,6 +387,10 @@ export class Canvas {
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.leftOnce) {
                     window.game.InputTracker.ball = ballToDrag
 
+                    if (level.getStrandsOfBall(ballToDrag).length > 0) {
+                        level.moves += 1
+                    }
+
                     level.deleteStrands(ballToDrag)
                     ballToDrag.getOffStrand(true)
 
@@ -407,6 +411,7 @@ export class Canvas {
                         }
 
                         level.createSplats(window.game.InputTracker.ball, 3)
+                        level.moves += 1
                     }
 
                     window.game.InputTracker.ball = undefined
