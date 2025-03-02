@@ -12,7 +12,8 @@ function createWindow() {
             contextIsolation: false,
             enableRemoteModule: true,
             enablePreferredSizeMode: false
-        }
+        },
+        icon: path.join(__dirname, 'icon.png')
     })
 
     if (!app.isPackaged) {

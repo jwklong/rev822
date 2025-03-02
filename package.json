@@ -5,6 +5,7 @@
   "build": {
     "appId": "jwklong.rev822",
     "artifactName": "${productName}.${ext}",
+    "icon": "icon.png",
     "win": {
       "target": "zip"
     },
