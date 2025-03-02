@@ -382,8 +382,9 @@ export class Canvas {
                         let continueButton = new CanvasButton(1280 - 128, 720 - 36, window.game.TextManager.get("BUTTON_CONTINUE"))
                         continueButton.render(ctx)
 
-                        if (continueButton.clicked) {
+                        if (continueButton.clicked && !this.transition) {
                             level.complete()
+                            this.playLevel(window.game.LevelManager.previousLevel, true)
                         }
                     }
                 }
