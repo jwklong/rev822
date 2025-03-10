@@ -389,17 +389,23 @@ export class Level {
                 this.strands.splice(i,1)
 
                 for (let ball of [a, b]) {
-                    if (this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
-                        ball.body.collisionFilter.mask = 0b11
-                        Matter.Body.setStatic(ball.body, false)
-
-                        for (let pipe of this.pipes) { //leap bog wog1 thing
-                            if (pipe.ballsInRange([ball], 16).length > 0) {
-                                this.killGooball(ball)
-                                pipe.ballsSucked += 1
-                                break
+                    if (this.getStrandsOfBall(ball).length == 0) {
+                        if (ball !== window.game.InputTracker.ball) {
+                            ball.body.collisionFilter.mask = 0b11
+                            Matter.Body.setStatic(ball.body, false)
+    
+                            for (let pipe of this.pipes) { //leap bog wog1 thing
+                                if (pipe.ballsInRange([ball], 16).length > 0) {
+                                    this.killGooball(ball)
+                                    pipe.ballsSucked += 1
+                                    break
+                                }
                             }
                         }
+
+                        Matter.Composite.allConstraints(this.engine.world).forEach(constraint => {
+                            if (constraint.bodyA === ball.body || constraint.bodyB === ball.body) Matter.Composite.remove(this.engine.world, constraint)
+                        })
                     }
                 }
 
@@ -501,7 +507,20 @@ export class Level {
 
             for (let body of this.bodies) {
                 if (ball != window.game.InputTracker.ball && Matter.Query.collides(body.body, [ball.body]).length > 0) {
-                    if (!ball.nostick && (body.sticky || ball.sticky) && this.getStrandsOfBall(ball).length > 0) Matter.Body.setStatic(ball.body, true)
+                    if (!ball.nostick && (body.sticky || ball.sticky) && this.getStrandsOfBall(ball).length > 0) {
+                        if (!Matter.Composite.allConstraints(this.engine.world).find(v => v.bodyA == ball.body && v.bodyB == body.body)) {
+                            let weld = Matter.Constraint.create({
+                                bodyA: ball.body,
+                                pointA: { x: 0, y: 0 },
+                                bodyB: body.body,
+                                pointB: { x: ball.x - body.x, y: ball.y - body.y },
+                                length: 0,
+                                stiffness: 1,
+                                damping: 0
+                            })
+                            Matter.Composite.add(this.engine.world, weld)
+                        }
+                    }
                     if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
                     if (body.deadly) this.killGooball(ball)
                 }
