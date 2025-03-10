@@ -1,0 +1,22 @@
+<level debug>
+    <resources></resources>
+    <head>
+        <camera width="1280" height="720"></camera>
+        <title>Attachment Test</title>
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2" z="-1" />
+
+        <rect static x="0" y="-460" width="10000" height="200" />
+        <rect static x="0" y="460" width="10000" height="200" />
+        <rect static x="-740" y="0" width="200" height="10000" />
+        <rect static x="740" y="0" width="200" height="10000" />
+
+        <circle x="0" y="0" radius="50" mass="120" />
+
+        <ball type="attachment" x="0" y="20" />
+
+        <ball type="balloon" x="-100" y="0" />
+        <ball type="balloon" x="100" y="0" />
+    </scene>
+</level>

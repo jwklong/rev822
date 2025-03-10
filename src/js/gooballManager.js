@@ -113,10 +113,21 @@ export class Gooball {
     nostick = false
 
     /**
+     * Prevents dragging gooball
+     */
+    nodrag = false
+
+    /**
      * Sticks to all surfaces
      * @type {boolean}
      */
     sticky = false
+
+    /**
+     * Sticks to surfaces at the start of the level & lets gooballs connect strands to it even when it is on its own
+     * @type {boolean}
+     */
+    attachment = false
 
     /**
      * @type {boolean}
@@ -238,7 +249,9 @@ export class Gooball {
             this.nobuild = xml.attributes.nobuild ?? false
             this.noclimb = xml.attributes.noclimb ?? false
             this.nostick = xml.attributes.nostick ?? false
+            this.nodrag = xml.attributes.nodrag ?? false
             this.sticky = xml.attributes.sticky ?? false
+            this.attachment = xml.attributes.attachment ?? false
             this.intelligence = xml.attributes.intelligence ?? 0.9
             this.climbspeed = xml.attributes.climbspeed ?? 45
             this.splatColor = xml.attributes.splatcolor ?? "#fff"

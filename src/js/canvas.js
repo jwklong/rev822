@@ -155,7 +155,7 @@ export class Canvas {
                             if (x === window.game.InputTracker.ball) return
                             if (x.nobuild) return
                             if (x.sleeping) return
-                            if (level.getStrandsOfBall(x).length === 0) return
+                            if (level.getStrandsOfBall(x).length === 0 && !x.attachment) return
                             if (!window.game.InputTracker.shift) {
                                 if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
                             }
@@ -217,8 +217,8 @@ export class Canvas {
                         ball.shape.radius * level.camera.props.zoom + 4
                     ) && (
                         level.getStrandsOfBall(ball).length == 0 ||
-                        ball.strand.detachable
-                    ) && !ball.sleeping && this.mode == 0) {
+                        (ball.strand && ball.strand.detachable)
+                    ) && !ball.sleeping && !ball.nodrag && this.mode == 0) {
                         ballToDrag = ball 
                     }
                 }
@@ -406,7 +406,7 @@ export class Canvas {
                     ballToDrag.getOffStrand(true)
 
                     Matter.Body.setStatic(window.game.InputTracker.ball.body, true)
-                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
+                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b00
                 } else if (window.game.InputTracker.ball !== undefined && (!window.game.InputTracker.left || this.mode == 1)) {
                     Matter.Body.setStatic(window.game.InputTracker.ball.body, false)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b11

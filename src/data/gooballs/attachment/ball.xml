@@ -1,0 +1,8 @@
+<ball mass="10" attachment noclimb nodrag>
+    <resources></resources>
+    <head>
+        <shape type="circle" radius="20" />
+    </head>
+    <body>
+    </body>
+</ball>

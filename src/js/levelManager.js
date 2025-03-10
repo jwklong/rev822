@@ -389,10 +389,9 @@ export class Level {
                 this.strands.splice(i,1)
 
                 for (let ball of [a, b]) {
-                    if (this.getStrandsOfBall(ball).length == 0) {
+                    if (this.getStrandsOfBall(ball).length == 0 && !ball.attachment) {
                         if (ball !== window.game.InputTracker.ball) {
                             ball.body.collisionFilter.mask = 0b11
-                            Matter.Body.setStatic(ball.body, false)
     
                             for (let pipe of this.pipes) { //leap bog wog1 thing
                                 if (pipe.ballsInRange([ball], 16).length > 0) {
@@ -434,8 +433,6 @@ export class Level {
 
     /** @param {number} dt */
     tick(dt) {
-        this.timeSpent += dt
-
         if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
             if (100 - window.game.InputTracker.x > 0) {
                 this.camera.props.x -= (100 - window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
@@ -507,7 +504,12 @@ export class Level {
 
             for (let body of this.bodies) {
                 if (ball != window.game.InputTracker.ball && Matter.Query.collides(body.body, [ball.body]).length > 0) {
-                    if (!ball.nostick && (body.sticky || ball.sticky) && this.getStrandsOfBall(ball).length > 0) {
+                    if (
+                        !ball.nostick &&
+                        (body.sticky || ball.sticky || ball.attachment) &&
+                        ((ball.attachment && this.timeSpent == 0) || this.getStrandsOfBall(ball).length > 0)
+                    ) {
+                        ball.body.collisionFilter.mask = 0b00
                         if (!Matter.Composite.allConstraints(this.engine.world).find(v => v.bodyA == ball.body && v.bodyB == body.body)) {
                             let weld = Matter.Constraint.create({
                                 bodyA: ball.body,
@@ -640,6 +642,7 @@ export class Level {
         }
 
         Matter.Engine.update(this.engine, dt * 1000)
+        this.timeSpent += dt
     }
 
     /**
@@ -864,6 +867,9 @@ export class GenericBody {
         this.rotation = window.game.Utils.parseAttribute(attributes.rotation, 0)
 
         this.static = window.game.Utils.parseAttribute(attributes.static, false)
+
+        let mass = window.game.Utils.parseAttribute(attributes.mass)
+        if (mass) this.mass = mass
 
         this.material = window.game.Utils.parseAttribute(attributes.material, "default")
 
