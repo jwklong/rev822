@@ -1,8 +1,13 @@
 <ball mass="10" attachment noclimb nodrag>
-    <resources></resources>
+    <resources>
+        <image id="IMAGE_BALL_ATTACHMENT_BODY" src="gooballs/attachment/body.svg" />
+        <image id="IMAGE_BALL_ATTACHMENT_INLET" src="gooballs/attachment/inlet.svg" />
+    </resources>
     <head>
         <shape type="circle" radius="20" />
     </head>
     <body>
+        <layer img="IMAGE_BALL_ATTACHMENT_BODY" x="0" y="0" />
+        <layer img="IMAGE_BALL_ATTACHMENT_INLET" x="0" y="0" rotation="0-89" />
     </body>
 </ball>
