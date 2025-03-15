@@ -29,10 +29,10 @@ export let Utils = {
      * @param {Level} level - the level
      * @returns {{x: number, y: number}}
      */
-    toLevelCanvasPos(x, y, level, width = 0, height = 0, fixzoom = false) {
+    toLevelCanvasPos(x, y, level, width = 0, height = 0) {
         return {
-            x: (x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom - width / 2) * (fixzoom ? level.camera.props.zoom : 1),
-            y: (-y + level.camera.props.y + 720 / 2 / level.camera.props.zoom - height / 2) * (fixzoom ? level.camera.props.zoom : 1)
+            x: (x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom - width / 2) * level.camera.props.zoom,
+            y: (-y + level.camera.props.y + 720 / 2 / level.camera.props.zoom - height / 2) * level.camera.props.zoom
         }
     },
     

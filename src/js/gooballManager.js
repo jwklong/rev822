@@ -95,6 +95,12 @@ export class Gooball {
     get isOnStrand() { return this.strandOn !== undefined }
 
     /**
+     * what body it is stuck to
+     * @type {GenericBody?}
+     */
+    stuckTo
+
+    /**
      * Stops gooballs from building on this gooball
      * @type {boolean}
      */
@@ -195,6 +201,10 @@ export class Gooball {
     /** @type {number} */
     get mass() { return this.body.mass }
     set mass(val) { Matter.Body.setMass(this.body, val) }
+
+    /** @type {number} */
+    get rotation() { return -this.body.angle * 180 / Math.PI }
+    set rotation(val) { Matter.Body.setAngle(this.body, -val * Math.PI / 180) }
 
     /**
      * @param {Object} xml 
@@ -322,12 +332,13 @@ export class Gooball {
      * @param {number} oy 
      * @param {number} zoom 
      */
-    render(ctx, ox = 0, oy = 0, zoom = 1) {
-        this.layers.render(ctx, ox - this.x, oy - this.y, 1, 1, zoom)
+    render(ctx, ox = 0, oy = 0) {
+        this.layers.render(ctx, ox - this.x, oy - this.y, 1, 1, this.rotation + (this.stuckTo ? this.stuckTo.rotation : 0))
 
         const level = window.game.LevelManager.currentLevel
+        let zoom = level.camera.props.zoom
 
-        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level, 0, 0, true)
+        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level)
         if (window.game.InputTracker.withinCircle(
             ballOnCanvas.x,
             ballOnCanvas.y,
@@ -339,13 +350,13 @@ export class Gooball {
             for (let eye of this.eyes) {
                 ctx.fillStyle = "#fff"
                 ctx.strokeStyle = "#000"
-                ctx.lineWidth = 1
+                ctx.lineWidth = zoom
 
                 ctx.beginPath()
                 ctx.arc(
                     window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).x,
                     window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).y,
-                    eye.radius, 0, 2 * Math.PI
+                    eye.radius * zoom, 0, 2 * Math.PI
                 )
                 ctx.closePath()
                 ctx.fill()
@@ -357,7 +368,7 @@ export class Gooball {
                 ctx.arc(
                     window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).x,
                     window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).y,
-                    eye.radius / 4, 0, 2 * Math.PI
+                    eye.radius / 4 * zoom, 0, 2 * Math.PI
                 )
                 ctx.closePath()
                 ctx.fill()

@@ -8,7 +8,7 @@
         <strand img="IMAGE_BALL_COMMON_STRAND" length="160" range="50" amount="2" />
     </head>
     <body>
-        <layer img="IMAGE_BALL_COMMON_BODY" x="0" y="0" />
+        <layer staticrot img="IMAGE_BALL_COMMON_BODY" x="0" y="0" />
 
         <eye x="-10" y="7" radius="9" />
         <eye x="10" y="7" radius="9" />

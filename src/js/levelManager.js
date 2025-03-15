@@ -405,6 +405,8 @@ export class Level {
                         Matter.Composite.allConstraints(this.engine.world).forEach(constraint => {
                             if (constraint.bodyA === ball.body || constraint.bodyB === ball.body) Matter.Composite.remove(this.engine.world, constraint)
                         })
+
+                        ball.stuckTo = null
                     }
                 }
 
@@ -426,8 +428,9 @@ export class Level {
     createStrand(type, a, b) {
         let strand = new Strand(type, a, b)
         if (this.engine) Matter.Composite.add(this.engine.world, strand.constraint)
-        a.body.collisionFilter.mask = 0b10
-        b.body.collisionFilter.mask = 0b10
+        for (let ball of [a, b]) {
+            ball.body.collisionFilter.mask = ball.attachment ? 0b00 : 0b10
+        }
         this.strands.push(strand)
     }
 
@@ -505,23 +508,23 @@ export class Level {
             for (let body of this.bodies) {
                 if (ball != window.game.InputTracker.ball && Matter.Query.collides(body.body, [ball.body]).length > 0) {
                     if (
-                        !ball.nostick &&
+                        !ball.nostick && !ball.stuckTo &&
                         (body.sticky || ball.sticky || ball.attachment) &&
                         ((ball.attachment && this.timeSpent == 0) || this.getStrandsOfBall(ball).length > 0)
                     ) {
                         ball.body.collisionFilter.mask = 0b00
-                        if (!Matter.Composite.allConstraints(this.engine.world).find(v => v.bodyA == ball.body && v.bodyB == body.body)) {
-                            let weld = Matter.Constraint.create({
-                                bodyA: ball.body,
-                                pointA: { x: 0, y: 0 },
-                                bodyB: body.body,
-                                pointB: { x: ball.x - body.x, y: ball.y - body.y },
-                                length: 0,
-                                stiffness: 1,
-                                damping: 0
-                            })
-                            Matter.Composite.add(this.engine.world, weld)
-                        }
+                        let weld = Matter.Constraint.create({
+                            bodyA: ball.body,
+                            pointA: { x: 0, y: 0 },
+                            bodyB: body.body,
+                            pointB: { x: ball.x - body.x, y: ball.y - body.y },
+                            length: 0,
+                            stiffness: 1,
+                            damping: 0
+                        })
+                        Matter.Composite.add(this.engine.world, weld)
+
+                        ball.stuckTo = body
                     }
                     if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
                     if (body.deadly) this.killGooball(ball)
@@ -1053,18 +1056,18 @@ export class LevelButton {
     render(level, ctx) {
         let image = window.game.ResourceManager.getResource(this.level.profileData.completed ? "IMAGE_LEVELBUTTON_COMPLETE" : "IMAGE_LEVELBUTTON").image
         let {x, y} = this.levelCoords(level)
-        ctx.drawImage(image, x - 30, y - 30, 60, 60)
+        ctx.drawImage(image, x - 30, y - 30, 60 * level.camera.props.zoom, 60 * level.camera.props.zoom)
 
         if (!this.hovered(level)) return
 
         let text = window.game.TextManager.parseText(this.title)
-        ctx.font = '36px "FONT_COOKIES"'
+        ctx.font = `${36 * level.camera.props.zoom}px "FONT_COOKIES"`
         ctx.strokeStyle = 'black'
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
-        ctx.lineWidth = 4
+        ctx.lineWidth = 4 * level.camera.props.zoom
         ctx.strokeText(text, x, y - 56)
-        ctx.lineWidth = 6
+        ctx.lineWidth = 6 * level.camera.props.zoom
         ctx.strokeText(text, x, y - 56)
         ctx.fillStyle = 'white'
         ctx.fillText(text, x, y - 56)
@@ -1072,7 +1075,7 @@ export class LevelButton {
 
     hovered(level) {
         let {x, y} = this.levelCoords(level, true)
-        return window.game.InputTracker.withinCircle(x, y, 30)
+        return window.game.InputTracker.withinCircle(x, y, 30 * level.camera.props.zoom)
     }
 
     clicked(level) {

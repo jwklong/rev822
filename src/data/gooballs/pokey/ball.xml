@@ -8,7 +8,7 @@
         <strand img="IMAGE_BALL_POKEY_STRAND" length="180" range="60" amount="3" detachable />
     </head>
     <body>
-        <layer img="IMAGE_BALL_POKEY_BODY" x="0" y="0" />
+        <layer staticrot img="IMAGE_BALL_POKEY_BODY" x="0" y="0" />
 
         <eye x="-13" y="9" radius="9" />
         <eye x="13" y="9" radius="9" />

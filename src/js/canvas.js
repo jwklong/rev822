@@ -81,16 +81,15 @@ export class Canvas {
             case 0: //level
             case 1: //pause
                 let level = window.game.LevelManager.currentLevel
-                ctx.scale(level.camera.props.zoom, level.camera.props.zoom)
 
-                level.layers.filter(a => a.z < 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
+                level.layers.filter(a => a.z < 0).render(ctx)
                 
                 function renderPipe(pipe, state, stretch = 0) {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
                     var w = image.width
-                    var h = image.height
-                    var x = pipe.x + 1280 / 2 / level.camera.props.zoom - w / 2 - level.camera.props.x
-                    var y = -pipe.y + 720 / 2 / level.camera.props.zoom - h / 2 + level.camera.props.y
+                    var h = image.height * level.camera.props.zoom
+                    var {x, y} = toLevelCanvasPos(pipe.x, pipe.y, level, w, 0)
+                    w *= level.camera.props.zoom
                     var rotation = pipe.direction * Math.PI / 180
                     ctx.translate(x + w / 2, y + h / 2)
 
@@ -107,7 +106,7 @@ export class Canvas {
                     renderPipe(pipe, pipe.isActive(level) ? "capopen" : "cap")
                 }
 
-                level.layers.filter(a => a.z == 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
+                level.layers.filter(a => a.z == 0).render(ctx)
 
                 //gooballs here
                 function drawStrand(type, ball1, ball2, ghost = false) {
@@ -127,7 +126,7 @@ export class Canvas {
                     if (ghost) ctx.globalAlpha = 0.5
                     if (applicableStrand == level.strands.find(v => v.ball1 == ball1 && v.ball2 == ball2)) ctx.filter = "brightness(1.5)"
 
-                    ctx.drawImage(image, 0, -image.height / 2, distance, image.height)
+                    ctx.drawImage(image, 0, -image.height / 2 * level.camera.props.zoom, distance, image.height * level.camera.props.zoom)
                     
                     ctx.restore()
                     if (ghost) ctx.globalAlpha = 1
@@ -212,8 +211,8 @@ export class Canvas {
                     ball.render(ctx, 0, 0, level.camera.props.zoom)
 
                     if (window.game.InputTracker.withinCircle(
-                        toLevelCanvasPos(ball.x, ball.y, level, 0, 0, true).x,
-                        toLevelCanvasPos(ball.x, ball.y, level, 0, 0, true).y,
+                        toLevelCanvasPos(ball.x, ball.y, level).x,
+                        toLevelCanvasPos(ball.x, ball.y, level).y,
                         ball.shape.radius * level.camera.props.zoom + 4
                     ) && (
                         level.getStrandsOfBall(ball).length == 0 ||
@@ -223,7 +222,7 @@ export class Canvas {
                     }
                 }
 
-                level.layers.filter(a => a.z > 0).render(ctx, 0, 0, 1, 1, level.camera.props.zoom)
+                level.layers.filter(a => a.z > 0).render(ctx)
 
                 level.levelButtons.forEach(x => {
                     if (level.island && !window.game.IslandManager.levelUnlocked(x.id)) return
@@ -562,8 +561,8 @@ export class Canvas {
             let y
             let dist
             if (window.game.InputTracker.ball == undefined) {
-                x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level, 0, 0, true).x
-                y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level, 0, 0, true).y
+                x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).x
+                y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).y
                 dist = ballToDrag.shape.radius * level.camera.props.zoom + 8
             } else {
                 x = window.game.InputTracker.x

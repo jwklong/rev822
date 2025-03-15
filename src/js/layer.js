@@ -31,6 +31,12 @@ export class Layer {
     /** @type {number} */
     rotation = 0
 
+    /**
+     * When true rotation is not affected by the parent
+     * @type {boolean}
+     */
+    staticrot = false
+
     /** @type {number} */
     rotspeed = 0
 
@@ -66,6 +72,7 @@ export class Layer {
         }
         layer.z = window.game.Utils.parseAttribute(xml.z, 0)
         layer.rotation = window.game.Utils.parseAttribute(xml.rotation, 0)
+        layer.staticrot = Boolean(xml.staticrot)
         layer.rotspeed = window.game.Utils.parseAttribute(xml.rotspeed, 0)
         layer.transparency = window.game.Utils.parseAttribute(xml.transparency, 0)
         layer.color = window.game.Utils.parseAttribute(xml.color)
@@ -93,19 +100,22 @@ export class Layer {
      * @param {number?} oy
      * @param {number?} osx
      * @param {number?} osy
-     * @param {number?} zoom
      */
-    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, zoom = 1) {
+    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
         let image = window.game.ResourceManager.getResource(this.img).image
-        const w = image.width * this.size.x * osx
-        const h = image.height * this.size.y * osy
+        let w = image.width * this.size.x * osx
+        let h = image.height * this.size.y * osy
         let {x, y} = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, window.game.LevelManager.currentLevel, w, h)
-        const rotation = this.rotation * Math.PI / 180
+        let rotation = this.rotation * Math.PI / 180
+        if (!this.staticrot) rotation += rot * Math.PI / 180
+        let zoom = window.game.LevelManager.currentLevel.camera.props.zoom
+        w *= zoom
+        h *= zoom
 
         if (this.color) {
             let tempCanvas = document.createElement('canvas')
             tempCanvas.width = image.width
-            tempCanvas.height = image.height
+            tempCanvas.height = image.height 
             let tempCtx = tempCanvas.getContext('2d')
             tempCtx.drawImage(image, 0, 0)
             tempCtx.globalCompositeOperation = 'multiply'
@@ -156,6 +166,9 @@ export class LayerGroup {
 
     /** @type {number} */
     z = 0
+
+    /** @type {number} */
+    rotation = 0
 
     /**
      * @type {Object}
@@ -218,13 +231,14 @@ export class LayerGroup {
      * @param {number?} oy
      * @param {number?} osx
      * @param {number?} osy
-     * @param {number?} zoom
+     * @param {number?} rot
      */
-    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, zoom = 1) {
+    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
         for (let child of this.children.sort((a, b) => a.z - b.z)) {
             child.render(ctx,
                 ox + this.x, oy + this.y,
-                osx * this.size.x, osy * this.size.y, zoom
+                osx * this.size.x, osy * this.size.y,
+                rot + this.rotation
             )
         }
     }
