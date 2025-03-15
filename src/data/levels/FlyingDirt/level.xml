@@ -5,9 +5,78 @@
     </resources>
     <head>
         <camera width="1280" height="1920"></camera>
-        <title>Flying Dirt</title>
+        <title>{{LEVEL_FLYINGDIRT_TITLE}}</title>
+        <desc>{{LEVEL_FLYINGDIRT_DESC}}</desc>
+        <goal type="balls" target="2" />
     </head>
     <scene>
         <layer img="IMAGE_SUNSETTER" x="0" y="0" size="2" z="-1" />
+
+        <layer img="IMAGE_FLYINGDIRT_GROUND" x="0" y="-600" size="1.25" />
+
+        <rect static x="-740" y="0" width="200" height="65536" detaches />
+        <rect static x="740" y="0" width="200" height="65536" detaches />
+
+        <rect static x="0" y="-960" width="1280" height="200" material="grass" />
+        <rect static x="200" y="-850" width="300" height="100" rotation="-30" material="grass" />
+        <rect static x="-200" y="-850" width="300" height="100" rotation="30" material="grass" />
+        <rect static x="330" y="-580" width="100" height="500" rotation="10" material="grass" />
+        <rect static x="-330" y="-580" width="100" height="500" rotation="-10" material="grass" />
+        <circle static x="373" y="-335" radius="50" material="grass" />
+        <circle static x="-373" y="-335" radius="50" material="grass" />
+        <rect static x="520" y="-282" width="300" height="100" rotation="-20" material="grass" />
+        <rect static x="-520" y="-282" width="300" height="100" rotation="20" material="grass" />
+
+        <circle x="300" y="0" radius="170" material="grass" mass="120">
+            <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
+        </circle>
+        <ball type="attachment" x="300" y="110" />
+
+        <circle x="-200" y="200" radius="170" material="grass" mass="120">
+            <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
+        </circle>
+        <ball type="attachment" x="-200" y="310" />
+        
+        <circle x="200" y="400" radius="170" material="grass" mass="120">
+            <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
+        </circle>
+        <ball type="attachment" x="200" y="510" />
+
+        <circle x="-300" y="600" radius="170" material="grass" mass="120">
+            <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
+        </circle>
+        <ball type="attachment" x="-300" y="710" />
+
+        <ball type="common" x="80" y="-850" ref="1" />
+        <ball type="common" x="-80" y="-850" ref="2" />
+        <ball type="common" x="80" y="-690" ref="3" />
+        <ball type="common" x="-80" y="-690" ref="4" />
+
+        <strand type="common" from="1" to="2" />
+        <strand type="common" from="2" to="3" />
+        <strand type="common" from="3" to="4" />
+        <strand type="common" from="4" to="2" />
+        <strand type="common" from="3" to="1" />
+        <strand type="common" from="4" to="1" />
+
+        <ball type="common" x="-150-150" y="-500--400" />
+        <ball type="common" x="-150-150" y="-500--400" />
+        <ball type="common" x="-150-150" y="-500--400" />
+        <ball type="common" x="-150-150" y="-500--400" />
+        <ball type="common" x="-150-150" y="-500--400" />
+
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-600-600" y="800-900" />
+
+        <pipe type="default" x="0" y="800" />
     </scene>
 </level>
