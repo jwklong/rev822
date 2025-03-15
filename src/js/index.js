@@ -1,5 +1,5 @@
 import { Utils } from "./utils.js";
-import { Layer } from "./layer.js";
+import { Layer, LayerGroup } from "./layer.js";
 import { Easing } from "./easing.js";
 import { InputTracker } from "./inputTracker.js";
 import { TimeManager, Timer } from "./timeManager.js";
@@ -38,7 +38,7 @@ const args = process.argv
  */
 let game = {
     Classes: {
-        Layer,
+        Layer, LayerGroup,
         Easing,
 
         InputTracker,

@@ -40,7 +40,7 @@ export class Gooball {
     ref
 
     /** @type {LayerGroup} */
-    layers = new window.game.Classes.Layer.Group
+    layers = new window.game.Classes.LayerGroup
 
     /** @type {GooballEye[]} */
     eyes = []

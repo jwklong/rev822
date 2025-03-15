@@ -108,6 +108,8 @@ export class Canvas {
 
                 level.layers.filter(a => a.z == 0).render(ctx)
 
+                level.bodies.forEach(b => b.render(ctx))
+
                 //gooballs here
                 function drawStrand(type, ball1, ball2, ghost = false) {
                     let ball = window.game.GooballManager.types[type]

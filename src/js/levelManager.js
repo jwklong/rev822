@@ -80,7 +80,7 @@ export class LevelManager {
 
 export class Level {
     /** @type {LayerGroup} */
-    layers = new window.game.Classes.Layer.Group
+    layers = new window.game.Classes.LayerGroup
 
     /** @type {Camera} */
     camera = new Camera
@@ -245,12 +245,20 @@ export class Level {
                     break
                 case "rect":
                     for (let v of value) {
-                        this.bodies.push(new RectBody(v.attributes))
+                        let body = new RectBody(v.attributes)
+                        for (let w of v.layer || []) {
+                            body.layers.push(window.game.Classes.Layer.fromXML(w.attributes))
+                        }
+                        this.bodies.push(body)
                     }
                     break
                 case "circle":
                     for (let v of value) {
-                        this.bodies.push(new CircleBody(v.attributes))
+                        let body = new CircleBody(v.attributes)
+                        for (let w of v.layer || []) {
+                            body.layers.push(window.game.Classes.Layer.fromXML(w.attributes))
+                        }
+                        this.bodies.push(body)
                     }
                     break
                 case "ball":
@@ -856,6 +864,9 @@ export class GenericBody {
         Matter.Body.setVertices(this.body, x)
     }
 
+    /** @type {LayerGroup} */
+    layers = new window.game.Classes.LayerGroup
+
     /** @param {Object} attributes */
     constructor(attributes, body) {
         this.body = body || Matter.Body.Create()
@@ -897,6 +908,10 @@ export class GenericBody {
      */
     clickedOn() {
         return this.pointInsideBody(window.game.InputTracker.x, window.game.InputTracker.y) && window.game.InputTracker.leftOnce
+    }
+
+    render(ctx) {
+        this.layers.render(ctx, -this.x, -this.y, 1, 1, this.rotation)
     }
 }
 

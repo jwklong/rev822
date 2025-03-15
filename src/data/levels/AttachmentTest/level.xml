@@ -1,5 +1,7 @@
-<level debug>
-    <resources></resources>
+<level>
+    <resources>
+        <image id="IMAGE_ATTACHMENTTEST_CIRCLE" src="levels/AttachmentTest/circle.svg" />
+    </resources>
     <head>
         <camera width="1280" height="720"></camera>
         <title>Attachment Test</title>
@@ -12,7 +14,9 @@
         <rect static x="-740" y="0" width="200" height="10000" />
         <rect static x="740" y="0" width="200" height="10000" />
 
-        <circle x="0" y="0" radius="50" mass="120" />
+        <circle x="0" y="0" radius="50" mass="120">
+            <layer img="IMAGE_ATTACHMENTTEST_CIRCLE" x="0" y="0" />
+        </circle>
 
         <ball type="attachment" x="0" y="20" />
 
