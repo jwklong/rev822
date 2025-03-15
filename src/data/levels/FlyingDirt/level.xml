@@ -1,0 +1,13 @@
+<level>
+    <resources>
+        <image id="IMAGE_FLYINGDIRT_GROUND" src="levels/FlyingDirt/ground.svg" />
+        <image id="IMAGE_FLYINGDIRT_BOULDER" src="levels/FlyingDirt/boulder.svg" />
+    </resources>
+    <head>
+        <camera width="1280" height="1920"></camera>
+        <title>Flying Dirt</title>
+    </head>
+    <scene>
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="2" z="-1" />
+    </scene>
+</level>

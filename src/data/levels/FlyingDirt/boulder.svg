@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192px" height="192px" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="96" cy="96" r="81.11" id="gradient-0">
+      <stop offset="0" style="stop-color: rgb(178, 105, 43);"></stop>
+      <stop offset="1" style="stop-color: rgb(145, 70, 29);"></stop>
+    </radialGradient>
+  </defs>
+  <path d="M 177.11 96 C 177.11 118.04 171.093 140.801 156.827 155.419 C 142.097 170.513 118.479 175.445 95.723 175.445 C 74.041 175.445 51.849 167.771 37.297 153.912 C 21.784 139.138 14.89 119.114 14.89 96 C 14.89 72.886 25.113 54.249 40.626 39.475 C 55.178 25.616 74.318 14.89 96 14.89 C 126.257 14.89 148.483 29.515 162.424 54.073 C 169.123 65.874 177.11 81.461 177.11 96 Z" style="fill: url(#gradient-0); stroke-width: 16px; stroke: rgb(123, 197, 77);"></path>
+</svg>
