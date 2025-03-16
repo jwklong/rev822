@@ -87,9 +87,10 @@ export class Canvas {
                 function renderPipe(pipe, state, stretch = 0) {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
                     var w = image.width
-                    var h = image.height * level.camera.props.zoom
-                    var {x, y} = toLevelCanvasPos(pipe.x, pipe.y, level, w, 0)
+                    var h = image.height
+                    var {x, y} = toLevelCanvasPos(pipe.x, pipe.y, level, w, h)
                     w *= level.camera.props.zoom
+                    h *= level.camera.props.zoom
                     var rotation = pipe.direction * Math.PI / 180
                     ctx.translate(x + w / 2, y + h / 2)
 
