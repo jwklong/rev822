@@ -4,7 +4,10 @@
         <image id="IMAGE_FLYINGDIRT_BOULDER" src="levels/FlyingDirt/boulder.svg" />
     </resources>
     <head>
-        <camera width="1280" height="1920"></camera>
+        <camera width="1280" height="1920">
+            <keyframe x="0" y="800" zoom="2" />
+            <keyframe x="0" y="-500" zoom="1" pause="2" duration="3" />
+        </camera>
         <title>{{LEVEL_FLYINGDIRT_TITLE}}</title>
         <desc>{{LEVEL_FLYINGDIRT_DESC}}</desc>
         <goal type="balls" target="2" />
@@ -65,17 +68,17 @@
         <ball type="common" x="-150-150" y="-500--400" />
         <ball type="common" x="-150-150" y="-500--400" />
 
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
-        <ball type="balloon" x="-600-600" y="800-900" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
+        <ball type="balloon" x="-400-400" y="1100-1700" />
 
         <pipe type="default" x="0" y="800" />
     </scene>
