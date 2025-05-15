@@ -1,0 +1,7 @@
+{
+    "yoreadmebro": "this file is for the vscode type inference !!",
+    "include": [
+        "./src/js/globals.d.ts",
+        "./src/js/**/*"
+    ]
+}
