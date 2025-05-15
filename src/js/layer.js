@@ -207,7 +207,10 @@ export class LayerGroup {
 
     /**
      * @typedef {function} LayerGroupFilterInput
-     * @param {Layer | LayerGroup} v
+     * @param {Layer | LayerGroup} value
+     * @param {number} index
+     * @param {Array<(Layer | LayerGroup)>} array
+     * @returns {boolean}
      */
 
     /**
