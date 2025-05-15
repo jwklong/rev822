@@ -64,7 +64,7 @@ declare global {
 
                 Canvas: typeof Canvas,
                 CanvasButton: typeof CanvasButton,
-                
+
                 ProfileManager: typeof ProfileManager,
                 Profile: typeof Profile,
                 LevelProfile: typeof LevelProfile
@@ -84,7 +84,9 @@ declare global {
             ProfileManager: ProfileManager,
 
             timePassed: number,
-            arguments: {}
+            arguments: {
+                level: string?
+            }
         }
     }
 }
