@@ -1,6 +1,7 @@
 import type { Utils } from "./utils.js";
 import type { Layer, LayerGroup } from "./layer.js";
 import type { Easing } from "./easing.js";
+import type { Event, EventHandler } from "./event.js";
 import type { InputTracker } from "./inputTracker.js";
 import type { TimeManager, Timer } from "./timeManager.js";
 import type { TextManager } from "./textManager.js";
@@ -21,6 +22,8 @@ declare global {
                 Layer: typeof Layer,
                 LayerGroup: typeof LayerGroup,
                 Easing: typeof Easing,
+                Event: typeof Event,
+                EventHandler: typeof EventHandler,
 
                 InputTracker: typeof InputTracker,
 

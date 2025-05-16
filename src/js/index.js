@@ -1,6 +1,7 @@
 import { Utils } from "./utils.js";
 import { Layer, LayerGroup } from "./layer.js";
 import { Easing } from "./easing.js";
+import { Event, EventHandler } from "./event.js";
 import { InputTracker } from "./inputTracker.js";
 import { TimeManager, Timer } from "./timeManager.js";
 import { TextManager } from "./textManager.js";
@@ -40,6 +41,7 @@ let game = {
     Classes: {
         Layer, LayerGroup,
         Easing,
+        Event, EventHandler,
 
         InputTracker,
         TimeManager, Timer,
