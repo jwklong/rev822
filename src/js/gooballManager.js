@@ -401,6 +401,7 @@ export class Gooball {
         particle.size = {x: 0.5, y: 0.5}
         particle.transparency = 1
         particle.rotation = Math.random() * 40 - 20
+	particle.staticrot = true
 
         const xMovement = 5 + Math.random() * 5
         const yMovement = 5 + Math.random() * 5
