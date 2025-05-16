@@ -1,0 +1,13 @@
+<ball mass="10" attachment noclimb nodrag>
+    <resources>
+        <image id="IMAGE_BALL_ATTACHMENTWOODEN_BODY" src="gooballs/attachmentWooden/body.svg" />
+        <image id="IMAGE_BALL_ATTACHMENTWOODEN_INLET" src="gooballs/attachmentWooden/inlet.svg" />
+    </resources>
+    <head>
+        <shape type="circle" radius="20" />
+    </head>
+    <body>
+        <layer staticrot img="IMAGE_BALL_ATTACHMENTWOODEN_BODY" x="0" y="0" />
+        <layer img="IMAGE_BALL_ATTACHMENTWOODEN_INLET" x="0" y="0" rotation="0-89" />
+    </body>
+</ball>

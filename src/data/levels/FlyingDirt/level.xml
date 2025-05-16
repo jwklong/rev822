@@ -33,22 +33,22 @@
         <circle x="300" y="0" radius="170" material="grass" mass="120">
             <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
         </circle>
-        <ball type="attachment" x="300" y="110" />
+        <ball type="attachmentWooden" x="300" y="110" />
 
         <circle x="-200" y="200" radius="170" material="grass" mass="120">
             <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
         </circle>
-        <ball type="attachment" x="-200" y="310" />
+        <ball type="attachmentWooden" x="-200" y="310" />
         
         <circle x="200" y="400" radius="170" material="grass" mass="120">
             <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
         </circle>
-        <ball type="attachment" x="200" y="510" />
+        <ball type="attachmentWooden" x="200" y="510" />
 
         <circle x="-300" y="600" radius="170" material="grass" mass="120">
             <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
         </circle>
-        <ball type="attachment" x="-300" y="710" />
+        <ball type="attachmentWooden" x="-300" y="710" />
 
         <ball type="common" x="80" y="-850" ref="1" />
         <ball type="common" x="-80" y="-850" ref="2" />
