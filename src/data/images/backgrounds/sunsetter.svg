@@ -1,17 +1,18 @@
-<svg viewBox="0 0 64 64" width="1024px" height="1024px" xmlns="http://www.w3.org/2000/svg" xmlns:bx="https://boxy-svg.com">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024px" height="1024px" xmlns:bx="https://boxy-svg.com">
   <defs>
-    <linearGradient gradientUnits="userSpaceOnUse" x1="32" y1="0" x2="32" y2="64" id="gradient-0" gradientTransform="matrix(0.882344, 0.470605, -0.539928, 1, 20.432739, -15.059357)">
-      <stop offset="0" style="stop-color: rgb(255, 219, 135);"></stop>
-      <stop offset="1" style="stop-color: rgb(199, 127, 49);"></stop>
-    </linearGradient>
-    <linearGradient gradientUnits="userSpaceOnUse" x1="26.272" y1="-10.481" x2="26.272" y2="73.42" id="gradient-1" gradientTransform="matrix(0, -0.71581, 0.71581, 0, 5.096771, 45.222059)">
-      <stop offset="0" style="stop-color: rgb(0% 0% 0% / 0.133)"></stop>
-      <stop offset="1" style="stop-color: rgba(0, 0, 0, 0.067);"></stop>
-    </linearGradient>
-    <filter id="gaussian-blur-filter-0" bx:preset="gaussian-blur 1 0.1" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="0.1 0.1" edgeMode="none"></feGaussianBlur>
-    </filter>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="2035.998" cy="-2161.598" r="512" id="gradient-0" gradientTransform="matrix(0, -2.277523, 2.277523, 0, 5434.186213, 5516.308428)">
+      <stop offset="0" style="stop-color: rgb(255, 178, 76);"></stop>
+      <stop offset="0.273" style="stop-color: rgb(250, 174, 74);"></stop>
+      <stop offset="1" style="stop-color: rgb(127, 74, 29);"></stop>
+    </radialGradient>
+    <bx:export>
+      <bx:file format="png"></bx:file>
+    </bx:export>
   </defs>
-  <rect width="64" height="64" style="fill: url(#gradient-0);"></rect>
-  <path style="fill-rule: evenodd; stroke-linecap: round; stroke-linejoin: round; stroke-width: 8px; fill: none; stroke: url(#gradient-1); filter: url(#gaussian-blur-filter-0);" d="M -21.002 64.393 C 4.371 93.319 25.698 41.318 69.257 65.488 M -6.582 54.497 C 31.913 57.837 17.91 31.709 73.547 52.307 M -6.582 37.288 C 26.598 44.99 44.817 8.813 73.547 35.098 M -6.582 16.326 C 18.009 36.711 37.818 -6.135 73.547 14.136 M -6.582 -3.597 C 18.824 25.348 37.866 -25.554 73.547 -5.787"></path>
+  <rect x="0" width="1024" height="1024" style="fill: url(#gradient-0);"></rect>
+  <ellipse style="fill: rgb(255, 221, 132); filter: blur(64px);" cx="512" cy="1043.41" rx="388.001" ry="388.001"></ellipse>
+  <path style="fill: none; stroke: rgb(0, 0, 0); stroke-opacity: 0.1; stroke-width: 96px;" d="M -155.22 -144.96 C -118.06 -172.82 -92.488 -214.88 -53.099 -239.95 C 99.894 -337.31 180.459 -75.479 286.508 -35.711 C 361.14 -7.724 436.71 -118.34 519.246 -104.58 C 613.81 -88.822 721.903 17.329 785.233 80.658 C 802.115 97.54 807.905 121.503 832.73 130.531 C 905.099 156.846 957.167 90.6 1025.1 99.657 C 1088.64 108.13 1138.02 175.617 1174.71 220.776 C 1223.37 280.667 1288.62 343.014 1350.45 389.392"></path>
+  <path style="fill: none; stroke: rgb(0, 0, 0); stroke-opacity: 0.1; stroke-width: 96px;" d="M -155.22 297.602 C -97.19 239.572 24.5 116.341 110.766 202.607 C 143.47 235.311 182.831 316.847 229.51 330.851 C 289.98 348.992 354.512 236.971 426.625 242.98 C 518.242 250.615 551.794 383.898 647.488 392.597 C 722.087 399.379 788.918 326.751 865.977 340.35 C 979.296 360.348 1024.36 520.455 1108.21 584.962 C 1165.91 629.344 1259.84 598.602 1326.7 613.461"></path>
+  <path style="fill: none; stroke: rgb(0, 0, 0); stroke-opacity: 0.1; stroke-width: 96px;" d="M -270.71 546.676 C -178.89 528.312 -89.902 458.478 2.402 501.553 C 69.426 532.832 84.171 655.548 159.144 663.045 C 223.871 669.518 275.517 601.615 342.009 606.048 C 444.262 612.865 502.655 741.275 603.246 758.04 C 671.541 769.423 742.465 717.577 814.61 724.792 C 959.168 739.248 1083.44 885.095 1187.47 971.779"></path>
+  <path style="fill: none; stroke: rgb(0, 0, 0); stroke-opacity: 0.1; stroke-width: 96px;" d="M -361.64 867.038 C -273.17 849.343 -193.65 798.33 -105.15 852.788 C -53.953 884.295 -21.401 954.66 32.592 978.657 C 89.087 1003.77 144.482 934.688 201.208 950.158 C 258.706 965.84 289.002 1021.62 343.7 1038.03 C 406.771 1056.95 470.797 1022.6 536.066 1035.65 C 602.292 1048.9 624.684 1117.32 678.558 1149.65 C 728.951 1179.88 793.508 1153.61 837.675 1178.15 C 876.484 1199.71 935.244 1281.32 961.168 1315.89"></path>
 </svg>
