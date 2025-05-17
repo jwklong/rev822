@@ -10,7 +10,8 @@ export class ResourceManager {
     /**
      * @param {string} type 
      * @param {string} id 
-     * @param {string} src 
+     * @param {string} src
+     * @returns {AnyResource}
      */
     addResource(type, id, src) {
         switch (type) {
@@ -26,6 +27,7 @@ export class ResourceManager {
             default:
                 this.resources[id] = new GenericResource(id, src)
         }
+        return this.resources[id]
     }
 
     /**
@@ -66,12 +68,16 @@ export class ResourceManager {
 
     /**
      * @param {string} id
-     * @returns {GenericResource?}
+     * @returns {AnyResource?}
      */
     getResource(id) {
         return this.resources[id]
     }
 }
+
+/**
+ * @typedef {GenericResource | ImageResource | AudioResource | FontResource} AnyResource - type for a resource that could be any form of media
+ */
 
 export class GenericResource {
     /** @type {boolean} */
