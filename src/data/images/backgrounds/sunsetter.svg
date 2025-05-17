@@ -8,8 +8,8 @@
     <bx:export>
       <bx:file format="png"></bx:file>
     </bx:export>
-    <filter id="gaussian-blur-filter-0" bx:preset="gaussian-blur 1 8" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="8 8" edgeMode="none"></feGaussianBlur>
+    <filter id="gaussian-blur-filter-0" bx:preset="gaussian-blur 1 4" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4 4" edgeMode="none"></feGaussianBlur>
     </filter>
   </defs>
   <rect x="-0.001" width="1024" height="1024" style="fill: url(#gradient-0); stroke-width: 1;" y="-0.004"></rect>
