@@ -487,7 +487,7 @@ export class Canvas {
             this.transitionType = 0
             var timer = window.game.TimeManager.createTimer("TRANSITION", 1)
             await new Promise((resolve) => {
-                timer.onfinish = resolve
+                timer.finish.on(resolve)
             })
         }
         callback()
@@ -496,7 +496,7 @@ export class Canvas {
             this.transitionType = 1
             var timer = window.game.TimeManager.createTimer("TRANSITION", 1)
             await new Promise((resolve) => {
-                timer.onfinish = resolve
+                timer.finish.on(resolve)
             })
         }
         this.transition = false
@@ -520,12 +520,12 @@ export class Canvas {
             this.mode = 2
             window.game.LevelManager.playLevel(id)
             var timer = window.game.TimeManager.createTimer("LEVELTRANSITION", 8)
-            timer.onfinish = () => {
+            timer.finish.on(() => {
                 this.startTransition(() => {
                     this.mode = 0
                     window.game.LevelManager.currentLevel.startCamera()
                 }, false, true)
-            }
+            })
         }, true, false)
     }
 

@@ -729,7 +729,7 @@ export class Camera {
 
         this.fixed = true
 
-        timer.while = (timePassed) => {
+        timer.while.on((timePassed) => {
             let progress = Math.min((timePassed - keyframe.pause) / keyframe.duration, 1)
             if (progress > 0) {
                 this.props = {
@@ -738,8 +738,8 @@ export class Camera {
                     zoom: keyframe.easing.from(progress) * (keyframe.zoom - originalProps.zoom) + originalProps.zoom
                 }
             }
-        }
-        timer.onfinish = () => { this.fixed = false }
+        })
+        timer.finish.on(() => { this.fixed = false })
 
         return timer
     }
@@ -756,9 +756,9 @@ export class Camera {
             let timer = this.playKeyframe(keyframe)
 
             if (i < keyframes.length - 1) {
-                timer.onfinish = () => {
+                timer.finish.on(() => {
                     doKeyframe(i + 1)
-                }
+                })
             }
         }
 

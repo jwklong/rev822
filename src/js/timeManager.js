@@ -43,23 +43,16 @@ export class Timer {
     timePassed = 0
 
     /**
-     * @function
-     * @description
-     * Runs when the timer is finished
-     * 
-     * Intended to be overriden
+     * Fires when the timer is finished
+     * @type {Event<function(): void>}
      */
-    onfinish = () => {}
+    finish = new window.game.Classes.Event
 
     /**
-     * @function
-     * @param {number} timePassed
-     * @description
      * Runs every tick
-     * 
-     * Intended to be overriden
+     * @type {Event<function(number): void>}
      */
-    while = (timePassed) => {}
+    while = new window.game.Classes.Event
 
     /** @param {number} length */
     constructor(length) {
@@ -76,8 +69,8 @@ export class Timer {
         this.timePassed += dt
         this.timePassed = Math.min(this.timePassed, this.length)
 
-        this.while(this.timePassed)
+        this.while.fire(this.timePassed)
 
-        if (this.finished) this.onfinish()
+        if (this.finished) this.finish.fire()
     }
 }

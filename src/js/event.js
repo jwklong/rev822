@@ -1,5 +1,5 @@
 
-/** @template {() => {}} H */
+/** @template {function(): void} H */
 export class Event {
     /** @type {Array<EventHandler<H>>} */
     handlers = []
@@ -31,7 +31,7 @@ export class Event {
     timesFired = 0
 }
 
-/** @template {() => {}} R */
+/** @template {function(): void} R */
 export class EventHandler {
     /**
      * @type {Event<R>}
