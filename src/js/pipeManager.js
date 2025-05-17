@@ -113,7 +113,7 @@ export class Pipe {
     isActive(level) {
         return this.ballsInRange(level.balls).filter(ball => 
             level.getStrandsOfBall(ball).length > 0 &&
-            ball.noclimb
+            !ball.noclimb
         ).length > 0
     }
 }
