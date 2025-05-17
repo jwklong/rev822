@@ -111,6 +111,9 @@ export class Pipe {
      * @returns {boolean}
      */
     isActive(level) {
-        return this.ballsInRange(level.balls).filter(ball => level.getStrandsOfBall(ball).length > 0).length > 0
+        return this.ballsInRange(level.balls).filter(ball => 
+            level.getStrandsOfBall(ball).length > 0 &&
+            ball.noclimb
+        ).length > 0
     }
 }

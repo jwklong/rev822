@@ -583,7 +583,7 @@ export class Level {
                 if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {
                     let choiceball = ball.strandOn.progress <= 0 ? ball.strandOn.strand.ball1 : ball.strandOn.strand.ball2
                     let choicestrands = this.getStrandsOfBall(choiceball).filter(v =>
-                        !(v.ball1.noclimb || v.ball2.noclimb)
+                        !window.game.GooballManager.types[v.type].noclimb
                     )
 
                     let choicestrand = choicestrands[Math.floor(Math.random() * choicestrands.length)]
@@ -629,6 +629,7 @@ export class Level {
 
             for (let pipe of this.pipes.filter(pipe => pipe.isActive(this))) {
                 if (pipe.ballsInRange([ball]).length == 0) continue
+                if (ball.noclimb) continue
 
                 if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
                     this.killGooball(ball)
@@ -646,8 +647,8 @@ export class Level {
                 directionToPipe.y /= distance
 
                 Matter.Body.applyForce(ball.body, ball.body.position, Matter.Vector.create(
-                    directionToPipe.x * ball.body.mass * 0.004,
-                    directionToPipe.y * ball.body.mass * 0.004
+                    directionToPipe.x * Math.abs(ball.body.mass) * 0.004,
+                    directionToPipe.y * Math.abs(ball.body.mass) * 0.004
                 ))
             }
         }
