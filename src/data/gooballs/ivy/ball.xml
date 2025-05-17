@@ -10,9 +10,9 @@
     </head>
     <body>
         <layer staticrot img="IMAGE_BALL_IVY_BODY" x="0" y="0" />
-        <layer staticrot img="IMAGE_BALL_IVY_LEAF" x="0" y="14" z="1" />
+        <layer staticrot img="IMAGE_BALL_IVY_LEAF" x="0" y="14" z="1" rotation="-10-10" />
 
-        <eye x="-10" y="7" radius="9" />
-        <eye x="10" y="7" radius="9" />
+        <eye x="-12--8" y="-5-5" radius="8-10" />
+        <eye x="8-12" y="-5-5" radius="8-10" />
     </body>
 </ball>

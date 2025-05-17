@@ -267,6 +267,8 @@ export class Gooball {
             this.splatColor = xml.attributes.splatcolor ?? "#fff"
         }
 
+        this.blinkCycle = [Math.random() * 1 + 1, Math.random() * 0.2 + 0.1]
+
         for (const [key, value] of Object.entries(xml.body)) {
             switch (key) {
                 case "layer":
@@ -321,6 +323,7 @@ export class Gooball {
         this.strandOn = null
 
         Matter.Body.setStatic(this.body, false)
+        Matter.Body.setAngularSpeed(this.body, 0)
         this.body.collisionFilter.mask = 0b11  
 
         return true
@@ -348,16 +351,22 @@ export class Gooball {
             (this.strand && this.strand.detachable)
         ) && !this.sleeping) {
             for (let eye of this.eyes) {
+                if (this.timeSpent % (this.blinkCycle[0] + this.blinkCycle[1]) > this.blinkCycle[0]) continue
+                
                 ctx.fillStyle = "#fff"
                 ctx.strokeStyle = "#000"
                 ctx.lineWidth = zoom
 
+                let [bx, by] = Object.values(window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level))
+                let [ex, ey] = Object.values(window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level))
+
+                ctx.save()
+                ctx.translate(bx, by)
+                ctx.rotate((this.rotation + (this.stuckTo ? this.stuckTo.rotation : 0)) * Math.PI / 180)
+                ctx.translate(-bx, -by)
+
                 ctx.beginPath()
-                ctx.arc(
-                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).x,
-                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).y,
-                    eye.radius * zoom, 0, 2 * Math.PI
-                )
+                ctx.arc(ex, ey, eye.radius * zoom, 0, 2 * Math.PI)
                 ctx.closePath()
                 ctx.fill()
                 ctx.stroke()
@@ -365,14 +374,12 @@ export class Gooball {
                 ctx.fillStyle = "#000"
                 
                 ctx.beginPath()
-                ctx.arc(
-                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).x,
-                    window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level).y,
-                    eye.radius / 4 * zoom, 0, 2 * Math.PI
-                )
+                ctx.arc(ex, ey, eye.radius / 4 * zoom, 0, 2 * Math.PI)
                 ctx.closePath()
                 ctx.fill()
                 ctx.stroke()
+
+                ctx.restore()
             }
         }
     }
@@ -453,6 +460,12 @@ export class Gooball {
 
         return splat
     }
+
+    /**
+     * First number is non-blinking, second is blinking
+     * @type {[number, number]}
+     */
+    blinkCycle = [0, 0]
 }
 
 /** @class */
@@ -467,8 +480,8 @@ export class GooballEye {
     radius
 
     constructor(xml) {
-        this.x = xml.attributes.x
-        this.y = xml.attributes.y
-        this.radius = xml.attributes.radius
+        this.x = window.game.Utils.parseAttribute(xml.attributes.x)
+        this.y = window.game.Utils.parseAttribute(xml.attributes.y)
+        this.radius = window.game.Utils.parseAttribute(xml.attributes.radius)
     }
 }

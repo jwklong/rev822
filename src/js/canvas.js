@@ -411,6 +411,7 @@ export class Canvas {
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b00
                 } else if (window.game.InputTracker.ball !== undefined && (!window.game.InputTracker.left || this.mode == 1)) {
                     Matter.Body.setStatic(window.game.InputTracker.ball.body, false)
+                    Matter.Body.setAngularSpeed(window.game.InputTracker.ball.body, 0)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
 
                     if (canBuild) {

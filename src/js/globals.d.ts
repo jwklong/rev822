@@ -72,7 +72,7 @@ declare global {
                 Profile: typeof Profile,
                 LevelProfile: typeof LevelProfile
             },
-            Utils,
+            Utils: typeof Utils,
             InputTracker: InputTracker,
             TimeManager: TimeManager,
             TextManager: TextManager,

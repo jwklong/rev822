@@ -10,7 +10,7 @@
     <body>
         <layer staticrot img="IMAGE_BALL_POKEY_BODY" x="0" y="0" />
 
-        <eye x="-13" y="9" radius="9" />
-        <eye x="13" y="9" radius="9" />
+        <eye x="-15--10" y="-5-5" radius="9-12" />
+        <eye x="10-15" y="-5-5" radius="9-12" />
     </body>
 </ball>

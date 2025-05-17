@@ -10,6 +10,6 @@
     <body>
         <layer staticrot img="IMAGE_BALL_BALLOON_BODY" x="0" y="0" />
 
-        <eye x="0" y="0" radius="16" />
+        <eye x="-3-3" y="-3-3" radius="14-18" />
     </body>
 </ball>
