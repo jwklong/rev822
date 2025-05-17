@@ -463,7 +463,7 @@ export class Gooball {
 
     /**
      * First number is non-blinking, second is blinking
-     * @type {[number, number]}
+     * @type {number[]}
      */
     blinkCycle = [0, 0]
 }

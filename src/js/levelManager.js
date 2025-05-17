@@ -535,7 +535,7 @@ export class Level {
                         ball.stuckTo = body
                     }
                     if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
-                    if (body.deadly) this.killGooball(ball)
+                    if (body.deadly && !ball.strandOn) this.killGooball(ball)
                 }
             }
 

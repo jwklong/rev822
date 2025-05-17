@@ -23,7 +23,7 @@
         <rect static x="770" y="-200" width="100" height="300" material="grass" sticky />
         <rect static x="690" y="-40" width="300" height="100" rotation="45" material="grass" sticky />
         <rect static x="570" y="70" width="1000" height="140" material="grass" sticky />
-        <rect static x="180" y="10" width="280" height="90" deadly />
+        <rect static x="180" y="20" width="280" height="80" deadly />
         <rect static x="690" y="180" width="300" height="100" rotation="-45" material="grass" sticky />
         <rect static x="780" y="370" width="200" height="400" material="grass" sticky />
         <circle static x="755" y="570" radius="75" material="grass" sticky />
