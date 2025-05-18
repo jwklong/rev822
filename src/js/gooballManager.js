@@ -344,11 +344,11 @@ export class Gooball {
         let zoom = (canvas.screenshotMode ? 1 : level.camera.props.zoom)
 
         let ballOnCanvas = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level)
-        if (window.game.InputTracker.withinCircle(
+        if ((window.game.InputTracker.withinCircle(
             ballOnCanvas.x,
             ballOnCanvas.y,
             280 * zoom + this.shape.radius
-        ) && (
+        ) || canvas.screenshotMode) && (
             level.getStrandsOfBall(this).length == 0 ||
             (this.strand && this.strand.detachable)
         ) && !this.sleeping) {
