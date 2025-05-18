@@ -95,17 +95,20 @@ export class Layer {
     effect(dt) {}
 
     /**
-     * @param {CanvasRenderingContext2D} ctx
+     * @param {Canvas} canvas
      * @param {number?} ox
      * @param {number?} oy
      * @param {number?} osx
      * @param {number?} osy
+     * @param {number?} rot
      */
-    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
+    render(canvas, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
+        let ctx = canvas.ctx
+
         let image = window.game.ResourceManager.getResource(this.img).image
         let w = image.width * this.size.x * osx
         let h = image.height * this.size.y * osy
-        let {x, y} = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, window.game.LevelManager.currentLevel, w, h)
+        let {x, y} = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, window.game.LevelManager.currentLevel, w, h)
         let rotation = this.rotation * Math.PI / 180
         if (!this.staticrot) rotation += rot * Math.PI / 180
         let zoom = window.game.LevelManager.currentLevel.camera.props.zoom
@@ -221,16 +224,16 @@ export class LayerGroup {
     }
 
     /**
-     * @param {CanvasRenderingContext2D} ctx
+     * @param {Canvas} canvas
      * @param {number?} ox
      * @param {number?} oy
      * @param {number?} osx
      * @param {number?} osy
      * @param {number?} rot
      */
-    render(ctx, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
+    render(canvas, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
         for (let child of this.children.sort((a, b) => a.z - b.z)) {
-            child.render(ctx,
+            child.render(canvas,
                 ox + this.x, oy + this.y,
                 osx * this.size.x, osy * this.size.y,
                 rot + this.rotation

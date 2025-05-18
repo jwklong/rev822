@@ -9,12 +9,12 @@ export class InputTracker {
      * @type {number}
      * @readonly
      */
-    get levelX() { return window.game.Utils.fromLevelCanvasPos(this.x, this.y, window.game.LevelManager.currentLevel).x }
+    get levelX() { return window.game.Canvas.fromLevelCanvasPos(this.x, this.y, window.game.LevelManager.currentLevel).x }
     /**
      * @type {number}
      * @readonly
      */
-    get levelY() { return window.game.Utils.fromLevelCanvasPos(this.x, this.y, window.game.LevelManager.currentLevel).y }
+    get levelY() { return window.game.Canvas.fromLevelCanvasPos(this.x, this.y, window.game.LevelManager.currentLevel).y }
 
     /** @type {boolean} */
     left = false
@@ -42,8 +42,8 @@ export class InputTracker {
 
         /** @param {MouseEvent} event */
         function mouseHandler(event, buttonRelated = false) {
-            the.x = clamp(0, event.pageX, 1280)
-            the.y = clamp(0, event.pageY, 720)
+            the.x = clamp(0, event.pageX, innerWidth)
+            the.y = clamp(0, event.pageY, innerHeight)
     
             the.leftOnce = !the.left && buttonRelated
             the.left = event.buttons % 2 >= 1

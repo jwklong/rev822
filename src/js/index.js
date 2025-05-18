@@ -81,6 +81,8 @@ require('electron').ipcRenderer.on('args', (event, args) => {
 });
 
 (async () => {
+    document.body.appendChild(game.Canvas.element)
+
     await game.ResourceManager.addXMLFile(path.join(__dirname, "../data/resources.xml"))
     await game.MaterialManager.addXMLFile(path.join(__dirname, "../data/materials.xml"))
 

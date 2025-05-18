@@ -330,18 +330,20 @@ export class Gooball {
     }
 
     /**
-     * @param {CanvasRenderingContext2D} ctx 
+     * @param {Canvas} canvas
      * @param {number} ox 
      * @param {number} oy 
      * @param {number} zoom 
      */
-    render(ctx, ox = 0, oy = 0) {
-        this.layers.render(ctx, ox - this.x, oy - this.y, 1, 1, this.rotation + (this.stuckTo ? this.stuckTo.rotation : 0))
+    render(canvas, ox = 0, oy = 0) {
+        let ctx = canvas.ctx
+
+        this.layers.render(canvas, ox - this.x, oy - this.y, 1, 1, this.rotation + (this.stuckTo ? this.stuckTo.rotation : 0))
 
         const level = window.game.LevelManager.currentLevel
         let zoom = level.camera.props.zoom
 
-        let ballOnCanvas = window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level)
+        let ballOnCanvas = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level)
         if (window.game.InputTracker.withinCircle(
             ballOnCanvas.x,
             ballOnCanvas.y,
@@ -357,8 +359,8 @@ export class Gooball {
                 ctx.strokeStyle = "#000"
                 ctx.lineWidth = zoom
 
-                let [bx, by] = Object.values(window.game.Utils.toLevelCanvasPos(this.x - ox, this.y - oy, level))
-                let [ex, ey] = Object.values(window.game.Utils.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level))
+                let [bx, by] = Object.values(canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level))
+                let [ex, ey] = Object.values(canvas.toLevelCanvasPos(this.x + eye.x - ox, this.y + eye.y - oy, level))
 
                 ctx.save()
                 ctx.translate(bx, by)

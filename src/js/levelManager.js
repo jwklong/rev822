@@ -449,36 +449,36 @@ export class Level {
         if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
             if (100 - window.game.InputTracker.x > 0) {
                 this.camera.props.x -= (100 - window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
-            } else if (-1180 + window.game.InputTracker.x > 0) {
-                this.camera.props.x += (-1180 + window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
+            } else if (-(window.game.Canvas.width - 100) + window.game.InputTracker.x > 0) {
+                this.camera.props.x += (-(window.game.Canvas.width - 100) + window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
             }
 
             if (100 - window.game.InputTracker.y > 0) {
                 this.camera.props.y += (100 - window.game.InputTracker.y) * dt * 12 / this.camera.props.zoom
-            } else if (-620 + window.game.InputTracker.y > 0) {
-                this.camera.props.y -= (-620 + window.game.InputTracker.y) * dt * 12 / this.camera.props.zoom
+            } else if (-(window.game.Canvas.height - 100) + window.game.InputTracker.y > 0) {
+                this.camera.props.y -= (-(window.game.Canvas.height - 100) + window.game.InputTracker.y) * dt * 12 / this.camera.props.zoom
             }
         }
 
         const clamp = (a, b, c) => Math.min(c, Math.max(b, a))
 
         this.camera.props.x = clamp(
-            -((this.width - 1280 / this.camera.props.zoom) / 2),
+            -((this.width - window.game.Canvas.width / this.camera.props.zoom) / 2),
             this.camera.props.x,
-            (this.width - 1280 / this.camera.props.zoom) / 2
+            (this.width - window.game.Canvas.width / this.camera.props.zoom) / 2
         )
 
         this.camera.props.y = clamp(
-            -((this.height - 720/ this.camera.props.zoom) / 2),
+            -((this.height - window.game.Canvas.height / this.camera.props.zoom) / 2),
             this.camera.props.y,
-            (this.height - 720 / this.camera.props.zoom) / 2
+            (this.height - window.game.Canvas.height / this.camera.props.zoom) / 2
         )
 
         this.layers.tick(dt)
 
         if (window.game.InputTracker.ball != undefined) {
-            let nextx = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).x
-            let nexty = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).y
+            let nextx = window.game.Canvas.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).x
+            let nexty = window.game.Canvas.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).y
 
             window.game.InputTracker.ball.vx = nextx - window.game.InputTracker.ball.x
             window.game.InputTracker.ball.vy = nexty - window.game.InputTracker.ball.y
@@ -917,8 +917,12 @@ export class GenericBody {
         return this.pointInsideBody(window.game.InputTracker.x, window.game.InputTracker.y) && window.game.InputTracker.leftOnce
     }
 
-    render(ctx) {
-        this.layers.render(ctx, -this.x, -this.y, 1, 1, this.rotation)
+    /**
+     * Renders the body
+     * @param {Canvas} canvas
+     */
+    render(canvas) {
+        this.layers.render(canvas, -this.x, -this.y, 1, 1, this.rotation)
     }
 }
 
@@ -1052,7 +1056,7 @@ export class LevelButton {
      * @returns {{x: number, y: number}}
      */
     levelCoords(level, zoom = false) {
-        return window.game.Utils.toLevelCanvasPos(this.x, this.y, level, 0, 0, zoom)
+        return window.game.Canvas.toLevelCanvasPos(this.x, this.y, level, 0, 0, zoom)
     }
 
     /**

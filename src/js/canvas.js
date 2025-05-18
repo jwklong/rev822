@@ -25,19 +25,46 @@ export class Canvas {
     /**
      * @type {HTMLCanvasElement}
      */
-    element = document.querySelector('canvas')
+    element = document.createElement('canvas')
 
+    /**
+     * Width of the canvas
+     * @type {number}
+     */
+    get width() { return this.element.width }
+    set width(val) { this.element.width = val }
+
+    /**
+     * Height of the canvas
+     * @type {number}
+     */
+    get height() { return this.element.height }
+    set height(val) { this.element.height = val }
+
+
+    /**
+     * @param {number} [width=720] - The width of the canvas.
+     * @param {number} [height=1280] - The height of the canvas.
+     * @param {boolean} [screenshotMode=false] - Screenshot mode
+     */
+    constructor(width = 1280, height = 720, screenshotMode = false) {
+        this.width = width
+        this.height = height
+    }
+
+    /**
+     * @type {CanvasRenderingContext2D}
+     * @readonly
+     */
     get ctx() { return this.element.getContext('2d') }
 
     /** @param {number} dt */
     tick(dt) {
         let ctx = this.ctx
-        ctx.clearRect(0, 0, 1280, 720)
+        ctx.clearRect(0, 0, this.width, this.height)
         ctx.globalAlpha = 1
         ctx.resetTransform()
         ctx.lineJoin = 'round'
-
-        let { toCanvasPos, toLevelCanvasPos } = window.game.Utils
 
         switch(this.mode) {
             case -1: //begin
@@ -50,7 +77,7 @@ export class Canvas {
                     
                     const image2 = window.game.ResourceManager.getResource('IMAGE_BLUE_SKIES').image
 
-                    ctx.drawImage(image2, 0, -280, 1280, 1280)
+                    ctx.drawImage(image2, 0, -280, this.width, this.width)
                     ctx.drawImage(image1, 540, 260)
 
                     let continueButton = new CanvasButton(640, 560, window.game.TextManager.get("BUTTON_CONTINUE"))
@@ -60,7 +87,7 @@ export class Canvas {
 
                     ctx.globalAlpha = Math.max(1-window.game.TimeManager.getTimer('POSTLOADING').timePassed, 0)
                     ctx.fillStyle = 'white'
-                    ctx.fillRect(0, 0, 1280, 720)
+                    ctx.fillRect(0, 0, this.width, this.height)
 
                     if (
                         window.game.TimeManager.getTimer('POSTLOADING').finished &&
@@ -82,13 +109,13 @@ export class Canvas {
             case 1: //pause
                 let level = window.game.LevelManager.currentLevel
 
-                level.layers.filter(a => a.z < 0).render(ctx)
+                level.layers.filter(a => a.z < 0).render(this)
                 
-                function renderPipe(pipe, state, stretch = 0) {
+                const renderPipe = (pipe, state, stretch = 0) => {
                     var image = window.game.ResourceManager.getResource(pipe.states[state]).image
                     var w = image.width
                     var h = image.height
-                    var {x, y} = toLevelCanvasPos(pipe.x, pipe.y, level, w, h)
+                    var {x, y} = this.toLevelCanvasPos(pipe.x, pipe.y, level, w, h)
                     w *= level.camera.props.zoom
                     h *= level.camera.props.zoom
                     var rotation = pipe.direction * Math.PI / 180
@@ -107,18 +134,18 @@ export class Canvas {
                     renderPipe(pipe, pipe.isActive(level) ? "capopen" : "cap")
                 }
 
-                level.layers.filter(a => a.z == 0).render(ctx)
+                level.layers.filter(a => a.z == 0).render(this)
 
-                level.bodies.forEach(b => b.render(ctx))
+                level.bodies.forEach(b => b.render(this))
 
                 //gooballs here
-                function drawStrand(type, ball1, ball2, ghost = false) {
+                const drawStrand = (type, ball1, ball2, ghost = false) => {
                     let ball = window.game.GooballManager.types[type]
 
                     var image = window.game.ResourceManager.getResource(ball.strand.img).image
 
-                    let b1 = toLevelCanvasPos(ball1.x, ball1.y, level)
-                    let b2 = toLevelCanvasPos(ball2.x, ball2.y, level)
+                    let b1 = this.toLevelCanvasPos(ball1.x, ball1.y, level)
+                    let b2 = this.toLevelCanvasPos(ball2.x, ball2.y, level)
 
                     let distance = Math.hypot(b2.x - b1.x, b2.y - b1.y)
                     let angle = Math.atan2(b2.y - b1.y, b2.x - b1.x)
@@ -211,11 +238,11 @@ export class Canvas {
                     .sort((a, b) => !b.strandOn - !a.strandOn)
                     .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
                 ) {
-                    ball.render(ctx, 0, 0, level.camera.props.zoom)
+                    ball.render(this, 0, 0, level.camera.props.zoom)
 
                     if (window.game.InputTracker.withinCircle(
-                        toLevelCanvasPos(ball.x, ball.y, level).x,
-                        toLevelCanvasPos(ball.x, ball.y, level).y,
+                        this.toLevelCanvasPos(ball.x, ball.y, level).x,
+                        this.toLevelCanvasPos(ball.x, ball.y, level).y,
                         ball.shape.radius * level.camera.props.zoom + 4
                     ) && (
                         level.getStrandsOfBall(ball).length == 0 ||
@@ -225,7 +252,7 @@ export class Canvas {
                     }
                 }
 
-                level.layers.filter(a => a.z > 0).render(ctx)
+                level.layers.filter(a => a.z > 0).render(this)
 
                 level.levelButtons.forEach(x => {
                     if (level.island && !window.game.IslandManager.levelUnlocked(x.id)) return
@@ -356,7 +383,7 @@ export class Canvas {
                 } else if (!level.camera.fixed) {
                     let text = ""
                     if (level.debug) {
-                        let mousePos = window.game.Utils.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, level)
+                        let mousePos = this.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, level)
                         text = `${window.game.InputTracker.x}, ${window.game.InputTracker.y} => ${mousePos.x.toFixed()}, ${mousePos.y.toFixed()}`
                     } else if (level.goal) {
                         switch (level.goal.type) {
@@ -374,14 +401,14 @@ export class Canvas {
                     ctx.textAlign = 'left'
                     ctx.textBaseline = 'bottom'
                     ctx.lineWidth = 4
-                    ctx.strokeText(text, 24, 720 - 16)
+                    ctx.strokeText(text, 24, this.height - 16)
                     ctx.lineWidth = 6
-                    ctx.strokeText(text, 24, 720 - 16)
+                    ctx.strokeText(text, 24, this.height - 16)
                     ctx.fillStyle = 'white'
-                    ctx.fillText(text, 24, 720 - 16)
+                    ctx.fillText(text, 24, this.height - 16)
 
                     if (level.goal && level.goalCompleted) {
-                        let continueButton = new CanvasButton(1280 - 128, 720 - 36, window.game.TextManager.get("BUTTON_CONTINUE"))
+                        let continueButton = new CanvasButton(this.width - 128, this.height - 36, window.game.TextManager.get("BUTTON_CONTINUE"))
                         continueButton.render(ctx)
 
                         if (continueButton.clicked && !this.transition) {
@@ -392,7 +419,7 @@ export class Canvas {
                 }
 
                 if (level.island) {
-                    let backButton = new CanvasButton(128, 720 - 36, window.game.TextManager.get("BUTTON_GOBACK"))
+                    let backButton = new CanvasButton(128, this.height - 36, window.game.TextManager.get("BUTTON_GOBACK"))
                     backButton.render(ctx)
                     if (backButton.clicked && !this.transition) this.playLevel(window.game.LevelManager.previousLevel, true)
                 }
@@ -436,7 +463,7 @@ export class Canvas {
                 break
             case 2: //level transition
                 ctx.fillStyle = "black"
-                ctx.fillRect(0, 0, 1280, 720)
+                ctx.fillRect(0, 0, this.width, this.height)
 
                 if (window.game.TimeManager.getTimer('LEVELTRANSITION').timePassed < 1.5) {
                     ctx.globalAlpha = window.game.TimeManager.getTimer('LEVELTRANSITION').timePassed / 1.5
@@ -457,7 +484,7 @@ export class Canvas {
 
                 for (let i = 0; i < 20; i++) {
                     var x = (((window.game.timePassed * 1.3 / 2) % 2) + (i - 2)) * 72
-                    var y = 720 - (36 + window.game.Classes.Easing.easeOut.from(doubleease(window.game.timePassed * 1.3 + i % 2)) * 96)
+                    var y = this.height - (36 + window.game.Classes.Easing.easeOut.from(doubleease(window.game.timePassed * 1.3 + i % 2)) * 96)
                     ctx.beginPath()
                     ctx.arc(x, y, 12, 0, 2 * Math.PI)
                     ctx.closePath()
@@ -471,7 +498,7 @@ export class Canvas {
         if (this.transition) {
             ctx.globalAlpha = 1
             ctx.fillStyle = "#000"
-            ctx.fillRect(1 - (window.game.Classes.Easing.easeInOut.from(window.game.TimeManager.getTimer("TRANSITION").timePassed) + this.transitionType - 1) * 1300 - 10, 0, 1300, 720)
+            ctx.fillRect(1 - (window.game.Classes.Easing.easeInOut.from(window.game.TimeManager.getTimer("TRANSITION").timePassed) + this.transitionType - 1) * 1300 - 10, 0, 1300, this.height)
         }
     }
 
@@ -548,7 +575,6 @@ export class Canvas {
      * @param {Gooball?} ballToDrag - gooball hovered over
      */
     renderCursor(ctx, ballToDrag = null) {
-        let { toCanvasPos, toLevelCanvasPos } = window.game.Utils
         let level = window.game.LevelManager.currentLevel
 
         if (ballToDrag === null && window.game.InputTracker.ball == undefined) {
@@ -565,8 +591,8 @@ export class Canvas {
             let y
             let dist
             if (window.game.InputTracker.ball == undefined) {
-                x = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).x
-                y = toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).y
+                x = this.toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).x
+                y = this.toLevelCanvasPos(ballToDrag.x, ballToDrag.y, level).y
                 dist = ballToDrag.shape.radius * level.camera.props.zoom + 8
             } else {
                 x = window.game.InputTracker.x
@@ -589,6 +615,64 @@ export class Canvas {
             makeCircle(x + dist, y - dist)
             makeCircle(x - dist, y + dist)
             makeCircle(x + dist, y + dist)
+        }
+    }
+
+    /**
+     * converts a position in the level to a position on the canvas, taking account of the camera
+     * @param {number} x - the x position in the level
+     * @param {number} y - the y position in the level
+     * @param {number} width - the width of the object (for centering)
+     * @param {number} height - the height of the object (for centering)
+     * @param {Level} level - the level
+     * @returns {{x: number, y: number}}
+     */
+    toLevelCanvasPos(x, y, level, width = 0, height = 0) {
+        return {
+            x: (x - level.camera.props.x + this.width / 2 / level.camera.props.zoom - width / 2) * level.camera.props.zoom,
+            y: (-y + level.camera.props.y + this.height / 2 / level.camera.props.zoom - height / 2) * level.camera.props.zoom
+        }
+    }
+    
+    /**
+     * converts a position of the object to a position on the canvas
+     * @param {number} x - the x position of the object
+     * @param {number} y - the y position of the object
+     * @param {number} width - the width of the object (for centering)
+     * @param {number} height - the height of the object (for centering)
+     * @param {number} zoom - the zoom
+     * @returns {{x: number, y: number}}
+     */
+    toCanvasPos(x, y, width = 0, height = 0, zoom = 1) {
+        return {
+            x: x + this.width / 2 / zoom - width / 2,
+            y: -y + this.height / 2 / zoom - height / 2
+        }
+    }
+
+    /**
+     * converts a position on the canvas to a position in the level, taking account of the camera
+     * @param {number} x - the x position on the canvas
+     * @param {number} y - the y position on the canvas
+     * @param {Level} level - the level
+     * @returns {{x: number, y: number}}
+     */
+    fromLevelCanvasPos(x, y, level) {
+        let zoom = level.camera.props.zoom
+        return this.fromCanvasPos(x / zoom + level.camera.props.x, y / zoom - level.camera.props.y, zoom)
+    }
+
+    /**
+     * converts a position on the canvas to a position in the level
+     * @param {number} x - the x position on the canvas
+     * @param {number} y - the y position on the canvas
+     * @param {number} zoom - the zoom
+     * @returns {{x: number, y: number}}
+     */
+    fromCanvasPos(x, y, zoom = 1) {
+        return {
+            x: x - this.width / 2 / zoom,
+            y: -(y - this.height / 2 / zoom)
         }
     }
 }
