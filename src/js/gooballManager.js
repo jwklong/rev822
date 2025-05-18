@@ -341,7 +341,7 @@ export class Gooball {
         this.layers.render(canvas, ox - this.x, oy - this.y, 1, 1, this.rotation + (this.stuckTo ? this.stuckTo.rotation : 0))
 
         const level = window.game.LevelManager.currentLevel
-        let zoom = level.camera.props.zoom
+        let zoom = (canvas.screenshotMode ? 1 : level.camera.props.zoom)
 
         let ballOnCanvas = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level)
         if (window.game.InputTracker.withinCircle(

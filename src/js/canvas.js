@@ -1,4 +1,5 @@
 const Matter = require("matter-js")
+const FileSaver = require("file-saver")
 
 /** @class */
 export class Canvas {
@@ -119,8 +120,8 @@ export class Canvas {
                     var w = image.width
                     var h = image.height
                     var {x, y} = this.toLevelCanvasPos(pipe.x, pipe.y, level, w, h)
-                    w *= level.camera.props.zoom
-                    h *= level.camera.props.zoom
+                    w *= (this.screenshotMode ? 1 : level.camera.props.zoom)
+                    h *= (this.screenshotMode ? 1 : level.camera.props.zoom)
                     var rotation = pipe.direction * Math.PI / 180
                     ctx.translate(x + w / 2, y + h / 2)
 
@@ -159,7 +160,7 @@ export class Canvas {
                     if (ghost) ctx.globalAlpha = 0.5
                     if (applicableStrand == level.strands.find(v => v.ball1 == ball1 && v.ball2 == ball2)) ctx.filter = "brightness(1.5)"
 
-                    ctx.drawImage(image, 0, -image.height / 2 * level.camera.props.zoom, distance, image.height * level.camera.props.zoom)
+                    ctx.drawImage(image, 0, -image.height / 2 * (this.screenshotMode ? 1 : level.camera.props.zoom), distance, image.height * (this.screenshotMode ? 1 : level.camera.props.zoom))
                     
                     ctx.restore()
                     if (ghost) ctx.globalAlpha = 1
@@ -241,7 +242,7 @@ export class Canvas {
                     .sort((a, b) => !b.strandOn - !a.strandOn)
                     .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
                 ) {
-                    ball.render(this, 0, 0, level.camera.props.zoom)
+                    ball.render(this, 0, 0, (this.screenshotMode ? 1 : level.camera.props.zoom))
 
                     if (window.game.InputTracker.withinCircle(
                         this.toLevelCanvasPos(ball.x, ball.y, level).x,
@@ -632,9 +633,10 @@ export class Canvas {
      * @returns {{x: number, y: number}}
      */
     toLevelCanvasPos(x, y, level, width = 0, height = 0) {
+        let zoom = (this.screenshotMode ? 1 : level.camera.props.zoom)
         return {
-            x: (x - (this.screenshotMode ? 0 : level.camera.props.x) + this.width / 2 / level.camera.props.zoom - width / 2) * (this.screenshotMode ? 1 : level.camera.props.zoom),
-            y: (-y + (this.screenshotMode ? 0 : level.camera.props.y) + this.height / 2 / level.camera.props.zoom - height / 2) * (this.screenshotMode ? 1 : level.camera.props.zoom)
+            x: (x - (this.screenshotMode ? 0 : level.camera.props.x) + this.width / 2 / zoom - width / 2) * zoom,
+            y: (-y + (this.screenshotMode ? 0 : level.camera.props.y) + this.height / 2 / zoom - height / 2) * zoom
         }
     }
     
@@ -680,6 +682,7 @@ export class Canvas {
         }
     }
 
+    /** Downloads a screenshot of the current level */
     takeScreenshot() {
         let level = window.game.LevelManager.currentLevel
         let screenshotCanvas = new Canvas(level.width, level.height, true)
@@ -689,10 +692,9 @@ export class Canvas {
         let date = new Date(Date.now())
         let filename = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.png`
 
-        const el = document.createElement("a")
-        el.href = screenshotCanvas.element.toDataURL("image/png")
-        el.download = filename
-        el.click()
+        screenshotCanvas.element.toBlob(blob => {
+            FileSaver.saveAs(blob, filename)
+        })
     }
 }
 

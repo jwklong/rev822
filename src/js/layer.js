@@ -104,14 +104,14 @@ export class Layer {
      */
     render(canvas, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
         let ctx = canvas.ctx
-
+        const level = window.game.LevelManager.currentLevel
         let image = window.game.ResourceManager.getResource(this.img).image
         let w = image.width * this.size.x * osx
         let h = image.height * this.size.y * osy
-        let {x, y} = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, window.game.LevelManager.currentLevel, w, h)
+        let {x, y} = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level, w, h)
         let rotation = this.rotation * Math.PI / 180
         if (!this.staticrot) rotation += rot * Math.PI / 180
-        let zoom = window.game.LevelManager.currentLevel.camera.props.zoom
+        let zoom = (canvas.screenshotMode ? 1 : level.camera.props.zoom)
         w *= zoom
         h *= zoom
 
