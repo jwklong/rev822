@@ -179,7 +179,7 @@ export class Level {
     constructor(xml, id, clone = false) {
         this.id = id
         this.xml = xml
-        this.title = xml.head[0].title ? xml.head[0].title[0].value : ""
+        this.title = xml.head[0].title ? xml.head[0].title[0].value : id
         this.desc = xml.head[0].desc ? xml.head[0].desc[0].value : ""
         this.debug = xml.attributes ? xml.attributes.debug : false
 

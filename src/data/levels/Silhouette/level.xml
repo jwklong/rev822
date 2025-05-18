@@ -1,0 +1,43 @@
+<level>
+    <resources>
+        <image id="IMAGE_SILHOUETTE" src="levels/Silhouette/level.svg" />
+    </resources>
+    <head>
+        <camera width="1600" height="1600">
+            <keyframe x="0" y="-300" zoom="1" />
+        </camera>
+    </head>
+    <scene>
+        <layer img="IMAGE_SILHOUETTE" x="0" y="0" z="-1" />
+
+        <rect static x="0" y="-800" width="790" height="790" material="grass" sticky />
+
+        <ball type="silhouette" x="-80" y="-380" ref="0" />
+        <ball type="silhouette" x="80" y="-380" ref="1" />
+        <ball type="silhouette" x="0" y="-220" ref="2" />
+        <strand type="silhouette" from="0" to="1" />
+        <strand type="silhouette" from="1" to="2" />
+        <strand type="silhouette" from="2" to="0" />
+
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+        <ball type="silhouette" x="-150-150" y="0-600"/>
+    </scene>
+</level>

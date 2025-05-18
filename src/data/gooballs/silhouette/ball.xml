@@ -1,0 +1,13 @@
+<ball mass="30" splatcolor="#fff">
+    <resources>
+        <image id="IMAGE_BALL_SILHOUETTE_BODY" src="gooballs/silhouette/body.svg" />
+        <image id="IMAGE_BALL_SILHOUETTE_STRAND" src="gooballs/silhouette/strand.svg" />
+    </resources>
+    <head>
+        <shape type="circle" radius="20" />
+        <strand img="IMAGE_BALL_SILHOUETTE_STRAND" length="160" range="50" amount="2" detachable />
+    </head>
+    <body>
+        <layer staticrot img="IMAGE_BALL_SILHOUETTE_BODY" x="0" y="0" />
+    </body>
+</ball>
