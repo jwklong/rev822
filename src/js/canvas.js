@@ -41,6 +41,8 @@ export class Canvas {
     get height() { return this.element.height }
     set height(val) { this.element.height = val }
 
+    /** @type {boolean} */
+    screenshotMode = false
 
     /**
      * @param {number} [width=720] - The width of the canvas.
@@ -50,6 +52,7 @@ export class Canvas {
     constructor(width = 1280, height = 720, screenshotMode = false) {
         this.width = width
         this.height = height
+        this.screenshotMode = screenshotMode
     }
 
     /**
@@ -353,7 +356,7 @@ export class Canvas {
 
                 ctx.resetTransform()
                 
-                if (this.mode === 1) {
+                if (this.mode === 1 && !this.screenshotMode) {
                     ctx.translate(1280 / 2, 720 / 2)
                     ctx.rotate(-0.1)
 
@@ -575,6 +578,7 @@ export class Canvas {
      * @param {Gooball?} ballToDrag - gooball hovered over
      */
     renderCursor(ctx, ballToDrag = null) {
+        if (this.screenshotMode) return
         let level = window.game.LevelManager.currentLevel
 
         if (ballToDrag === null && window.game.InputTracker.ball == undefined) {
@@ -629,8 +633,8 @@ export class Canvas {
      */
     toLevelCanvasPos(x, y, level, width = 0, height = 0) {
         return {
-            x: (x - level.camera.props.x + this.width / 2 / level.camera.props.zoom - width / 2) * level.camera.props.zoom,
-            y: (-y + level.camera.props.y + this.height / 2 / level.camera.props.zoom - height / 2) * level.camera.props.zoom
+            x: (x - (this.screenshotMode ? 0 : level.camera.props.x) + this.width / 2 / level.camera.props.zoom - width / 2) * (this.screenshotMode ? 1 : level.camera.props.zoom),
+            y: (-y + (this.screenshotMode ? 0 : level.camera.props.y) + this.height / 2 / level.camera.props.zoom - height / 2) * (this.screenshotMode ? 1 : level.camera.props.zoom)
         }
     }
     
@@ -658,8 +662,8 @@ export class Canvas {
      * @returns {{x: number, y: number}}
      */
     fromLevelCanvasPos(x, y, level) {
-        let zoom = level.camera.props.zoom
-        return this.fromCanvasPos(x / zoom + level.camera.props.x, y / zoom - level.camera.props.y, zoom)
+        let zoom = (this.screenshotMode ? 1 : level.camera.props.zoom)
+        return this.fromCanvasPos(x / zoom + (this.screenshotMode ? 0 : level.camera.props.x), y / zoom - (this.screenshotMode ? 0 : level.camera.props.y), zoom)
     }
 
     /**
@@ -674,6 +678,21 @@ export class Canvas {
             x: x - this.width / 2 / zoom,
             y: -(y - this.height / 2 / zoom)
         }
+    }
+
+    takeScreenshot() {
+        let level = window.game.LevelManager.currentLevel
+        let screenshotCanvas = new Canvas(level.width, level.height, true)
+        screenshotCanvas.mode = 0
+        screenshotCanvas.tick()
+        
+        let date = new Date(Date.now())
+        let filename = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}-${date.getHours()}-${date.getMinutes()}-${date.getSeconds()}.png`
+
+        const el = document.createElement("a")
+        el.href = screenshotCanvas.element.toDataURL("image/png")
+        el.download = filename
+        el.click()
     }
 }
 
