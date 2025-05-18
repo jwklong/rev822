@@ -50,23 +50,6 @@ export class LevelManager {
         if (index != -1) this.levelHistory.splice(index, this.levelHistory.length - index)
         this.levelHistory.push(v)
 
-        this.currentLevel.engine = Matter.Engine.create()
-        this.currentLevel.engine.gravity.y = -1
-        for (let body of this.currentLevel.bodies) {
-            let currentComposite = Matter.Composite.add(this.currentLevel.engine.world, body.body)
-            body.body = currentComposite.bodies[currentComposite.bodies.length-1]
-        }
-        for (let ball of this.currentLevel.balls) {
-            let currentComposite = Matter.Composite.add(this.currentLevel.engine.world, ball.body)
-            ball.body = currentComposite.bodies[currentComposite.bodies.length-1]
-        }
-        for (let strand of this.currentLevel.strands) {
-            let currentComposite = Matter.Composite.add(this.currentLevel.engine.world, strand.constraint)
-            strand.constraint = currentComposite.constraints[currentComposite.constraints.length-1]
-            strand.ball1 = this.currentLevel.getGooballFromRef(strand.ball1.ref)
-            strand.ball2 = this.currentLevel.getGooballFromRef(strand.ball2.ref)
-        }
-
         return this.currentLevel
     }
 
@@ -86,13 +69,14 @@ export class Level {
     camera = new Camera
 
     /**
-     * This is only available when the level is being played
      * @type {Matter.Engine}
      * @see {@link https://brm.io/matter-js/docs/classes/Engine.html|Matter.Engine}
      */
-    engine
+    engine = Matter.Engine.create({
+        gravity: { x: 0, y: -1 }
+    })
 
-    /** @type {GenericBody[]} */
+    /** @type {AnyBody[]} */
     bodies = []
 
     /** @type {Gooball[]} */
@@ -249,7 +233,7 @@ export class Level {
                         for (let w of v.layer || []) {
                             body.layers.push(window.game.Classes.Layer.fromXML(w.attributes))
                         }
-                        this.bodies.push(body)
+                        this.addBody(body)
                     }
                     break
                 case "circle":
@@ -258,7 +242,7 @@ export class Level {
                         for (let w of v.layer || []) {
                             body.layers.push(window.game.Classes.Layer.fromXML(w.attributes))
                         }
-                        this.bodies.push(body)
+                        this.addBody(body)
                     }
                     break
                 case "ball":
@@ -268,7 +252,7 @@ export class Level {
                         ball.y = window.game.Utils.parseAttribute(v.attributes.y)
                         ball.ref = String(v.attributes.ref)
                         ball.sleeping = v.attributes.sleeping ?? false
-                        this.balls.push(ball)
+                        this.addGooball(ball)
                     }
                     break
                 case "strand":
@@ -324,7 +308,7 @@ export class Level {
 
     /**
      * @param {string} ref
-     * @returns {GenericBody?}
+     * @returns {AnyBody?}
      */
     getBodyFromRef(ref) {
         return this.bodies.find(body => body.ref === ref)
@@ -435,11 +419,29 @@ export class Level {
      */
     createStrand(type, a, b) {
         let strand = new Strand(type, a, b)
-        if (this.engine) Matter.Composite.add(this.engine.world, strand.constraint)
+        Matter.Composite.add(this.engine.world, strand.constraint)
         for (let ball of [a, b]) {
             ball.body.collisionFilter.mask = ball.attachment ? 0b00 : 0b10
         }
         this.strands.push(strand)
+    }
+
+    /**
+     * Adds a body to the level and the matter.js engine
+     * @param {AnyBody} body 
+     */
+    addBody(body) {
+        Matter.Composite.add(this.engine.world, body.body)
+        this.bodies.push(body)
+    }
+
+    /**
+     * Adds a gooball to the level and the matter.js engine
+     * @param {Gooball} ball 
+     */
+    addGooball(ball) {
+        Matter.Composite.add(this.engine.world, ball.body)
+        this.balls.push(ball)
     }
 
     /** @param {number} dt */
@@ -794,6 +796,10 @@ export class CameraKeyframe {
         this.easing = window.game.Classes.Easing.easeInOut //default
     }
 }
+
+/**
+ * @typedef {GenericBody | RectBody | CircleBody} AnyBody
+ */
 
 export class GenericBody {
     /**
