@@ -43,5 +43,6 @@
     "BUTTON_CONTINUE": "continue",
     "BUTTON_RETRY": "retry",
     "BUTTON_RETURN": "return",
-    "BUTTON_GOBACK": "go back"
+    "BUTTON_GOBACK": "go back",
+    "BUTTON_SCREENSHOT": "screenshot"
 }

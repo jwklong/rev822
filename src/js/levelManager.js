@@ -1052,11 +1052,11 @@ export class LevelButton {
 
     /**
      * @param {Level} level 
-     * @param {boolean} zoom
+     * @param {Canvas} canvas
      * @returns {{x: number, y: number}}
      */
-    levelCoords(level, zoom = false) {
-        return window.game.Canvas.toLevelCanvasPos(this.x, this.y, level, 0, 0, zoom)
+    levelCoords(level, canvas) {
+        return canvas.toLevelCanvasPos(this.x, this.y, level)
     }
 
     /**
@@ -1077,14 +1077,16 @@ export class LevelButton {
 
     /**
      * @param {Level} level
-     * @param {CanvasRenderingContext2D} ctx
+     * @param {Canvas} canvas
      */
-    render(level, ctx) {
-        let image = window.game.ResourceManager.getResource(this.level.profileData.completed ? "IMAGE_LEVELBUTTON_COMPLETE" : "IMAGE_LEVELBUTTON").image
-        let {x, y} = this.levelCoords(level)
-        ctx.drawImage(image, x - 30, y - 30, 60 * level.camera.props.zoom, 60 * level.camera.props.zoom)
+    render(level, canvas) {
+        let ctx = canvas.ctx
 
-        if (!this.hovered(level)) return
+        let image = window.game.ResourceManager.getResource(this.level.profileData.completed ? "IMAGE_LEVELBUTTON_COMPLETE" : "IMAGE_LEVELBUTTON").image
+        let {x, y} = this.levelCoords(level, canvas)
+        ctx.drawImage(image, x - 30, y - 30, 60 * (canvas.screenshotMode ? 1 : level.camera.props.zoom), 60 * (canvas.screenshotMode ? 1 : level.camera.props.zoom))
+
+        if (!this.hovered(level, canvas)) return
 
         let text = window.game.TextManager.parseText(this.title)
         ctx.font = `${36 * level.camera.props.zoom}px "FONT_COOKIES"`
@@ -1099,12 +1101,12 @@ export class LevelButton {
         ctx.fillText(text, x, y - 56)
     }
 
-    hovered(level) {
-        let {x, y} = this.levelCoords(level, true)
+    hovered(level, canvas) {
+        let {x, y} = this.levelCoords(level, canvas)
         return window.game.InputTracker.withinCircle(x, y, 30 * level.camera.props.zoom)
     }
 
-    clicked(level) {
-        return this.hovered(level) && window.game.InputTracker.leftOnce
+    clicked(level, canvas) {
+        return this.hovered(level, canvas) && window.game.InputTracker.leftOnce
     }
 }

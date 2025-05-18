@@ -260,8 +260,8 @@ export class Canvas {
 
                 level.levelButtons.forEach(x => {
                     if (level.island && !window.game.IslandManager.levelUnlocked(x.id)) return
-                    x.render(level, ctx)
-                    if (x.clicked(level) && !this.transition) {
+                    x.render(level, this)
+                    if (x.clicked(level, this) && !this.transition) {
                         this.playLevel(x.id)
                     }
                 })
@@ -375,16 +375,20 @@ export class Canvas {
 
                     let continueButton = new CanvasButton(136, 200, window.game.TextManager.get("BUTTON_CONTINUE"))
                     continueButton.render(ctx)
-                    if (continueButton.clicked) this.togglePause(false)
+                    if (continueButton.clicked && !this.transition) this.togglePause(false)
 
                     let retryButton = new CanvasButton(136, 200 + 56, window.game.TextManager.get("BUTTON_RETRY"))
                     retryButton.render(ctx)
                     if (retryButton.clicked && !this.transition) this.playLevel(level.id, true)
 
-                    let backButton = new CanvasButton(136, 200 + 56 * 2, window.game.TextManager.get("BUTTON_RETURN"))
+                    let screenshotButton = new CanvasButton(136, 200 + 56 * 2, window.game.TextManager.get("BUTTON_SCREENSHOT"))
+                    screenshotButton.render(ctx)
+                    if (screenshotButton.clicked && !this.transition) this.takeScreenshot()
+
+                    let backButton = new CanvasButton(136, 200 + 56 * 3, window.game.TextManager.get("BUTTON_RETURN"))
                     backButton.render(ctx)
                     if (backButton.clicked && !this.transition) this.playLevel(window.game.LevelManager.previousLevel, true)
-                } else if (!level.camera.fixed) {
+                } else if (!level.camera.fixed || this.screenshotMode) {
                     let text = ""
                     if (level.debug) {
                         let mousePos = this.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, level)
@@ -411,7 +415,7 @@ export class Canvas {
                     ctx.fillStyle = 'white'
                     ctx.fillText(text, 24, this.height - 16)
 
-                    if (level.goal && level.goalCompleted) {
+                    if (level.goal && level.goalCompleted && !this.screenshotMode) {
                         let continueButton = new CanvasButton(this.width - 128, this.height - 36, window.game.TextManager.get("BUTTON_CONTINUE"))
                         continueButton.render(ctx)
 
@@ -421,8 +425,8 @@ export class Canvas {
                         }
                     }
                 }
-
-                if (level.island) {
+                
+                if (level.island && !this.screenshotMode) {
                     let backButton = new CanvasButton(128, this.height - 36, window.game.TextManager.get("BUTTON_GOBACK"))
                     backButton.render(ctx)
                     if (backButton.clicked && !this.transition) this.playLevel(window.game.LevelManager.previousLevel, true)
