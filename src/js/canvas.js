@@ -442,12 +442,22 @@ export class Canvas {
                     level.deleteStrands(ballToDrag)
                     ballToDrag.getOffStrand(true)
 
-                    Matter.Body.setStatic(window.game.InputTracker.ball.body, true)
-                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b00
+                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
+                    window.game.InputTracker.ballConstraint = Matter.Constraint.create({
+                        pointA: {
+                            x: window.game.InputTracker.levelX,
+                            y: window.game.InputTracker.levelY
+                        },
+                        bodyB: window.game.InputTracker.ball.body,
+                        stiffness: 0.1,
+                        length: 0,
+                        damping: 0.01
+                    })
+                    Matter.Composite.add(window.game.LevelManager.currentLevel.engine.world, window.game.InputTracker.ballConstraint)
                 } else if (window.game.InputTracker.ball !== undefined && (!window.game.InputTracker.left || this.mode == 1)) {
-                    Matter.Body.setStatic(window.game.InputTracker.ball.body, false)
-                    Matter.Body.setAngularSpeed(window.game.InputTracker.ball.body, 0)
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
+                    Matter.Composite.remove(window.game.LevelManager.currentLevel.engine.world, window.game.InputTracker.ballConstraint)
+                    window.game.InputTracker.ballConstraint = undefined
 
                     if (canBuild) {
                         if (window.game.InputTracker.shift) {

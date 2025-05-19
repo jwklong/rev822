@@ -477,14 +477,18 @@ export class Level {
         this.layers.tick(dt)
 
         if (window.game.InputTracker.ball != undefined) {
-            let nextx = window.game.Canvas.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).x
-            let nexty = window.game.Canvas.fromLevelCanvasPos(window.game.InputTracker.x, window.game.InputTracker.y, this).y
-
-            window.game.InputTracker.ball.vx = nextx - window.game.InputTracker.ball.x
-            window.game.InputTracker.ball.vy = nexty - window.game.InputTracker.ball.y
-
-            window.game.InputTracker.ball.x = nextx
-            window.game.InputTracker.ball.y = nexty
+            let constraint = window.game.InputTracker.ballConstraint
+            let distanceTo = window.game.Utils.distanceTo(
+                window.game.InputTracker.levelX,
+                window.game.InputTracker.levelY,
+                window.game.InputTracker.ball.x,
+                window.game.InputTracker.ball.y
+            )
+            let mul = Math.min(1, 48 / distanceTo)
+            constraint.pointA = {
+                x: window.game.InputTracker.levelX * mul + window.game.InputTracker.ball.x * (1 - mul),
+                y: window.game.InputTracker.levelY * mul + window.game.InputTracker.ball.y * (1 - mul)
+            }
         }
 
         for (let ball of this.balls) {

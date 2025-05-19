@@ -35,6 +35,13 @@ export class InputTracker {
     /** @type {Gooball?} */
     ball
 
+    /** 
+     * constraint that controls the ball when dragging
+     * @type {Matter.Constraint?}
+     * @see {@link https://brm.io/matter-js/docs/classes/Constraint.html|Matter.Constraint}
+     */
+    ballConstraint
+
     constructor() {
         const clamp = (a, b, c) => Math.min(c, Math.max(b, a))
 
