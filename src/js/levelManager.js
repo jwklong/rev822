@@ -447,16 +447,19 @@ export class Level {
     /** @param {number} dt */
     tick(dt) {
         if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
-            if (100 - window.game.InputTracker.x > 0) {
-                this.camera.props.x -= (100 - window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
-            } else if (-(window.game.Canvas.width - 100) + window.game.InputTracker.x > 0) {
-                this.camera.props.x += (-(window.game.Canvas.width - 100) + window.game.InputTracker.x) * dt * 12 / this.camera.props.zoom
+            var {x, y} = window.game.InputTracker
+            if (window.game.InputTracker.ball) var {x, y} = window.game.Canvas.toLevelCanvasPos(window.game.InputTracker.ball.x, window.game.InputTracker.ball.y, this)
+
+            if (100 - x > 0) {
+                this.camera.props.x -= (100 - x) * dt * 12 / this.camera.props.zoom
+            } else if (-(window.game.Canvas.width - 100) + x > 0) {
+                this.camera.props.x += (-(window.game.Canvas.width - 100) + x) * dt * 12 / this.camera.props.zoom
             }
 
-            if (100 - window.game.InputTracker.y > 0) {
-                this.camera.props.y += (100 - window.game.InputTracker.y) * dt * 12 / this.camera.props.zoom
-            } else if (-(window.game.Canvas.height - 100) + window.game.InputTracker.y > 0) {
-                this.camera.props.y -= (-(window.game.Canvas.height - 100) + window.game.InputTracker.y) * dt * 12 / this.camera.props.zoom
+            if (100 - y > 0) {
+                this.camera.props.y += (100 - y) * dt * 12 / this.camera.props.zoom
+            } else if (-(window.game.Canvas.height - 100) + y > 0) {
+                this.camera.props.y -= (-(window.game.Canvas.height - 100) + y) * dt * 12 / this.camera.props.zoom
             }
         }
 
