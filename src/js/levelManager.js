@@ -488,6 +488,7 @@ export class Level {
                 window.game.InputTracker.ball.y
             )
             let mul = Math.min(1, 48 / distanceTo)
+            if (Matter.Query.collides(window.game.InputTracker.ball.body, this.bodies.map(v => v.body)).length == 0) mul = 1
             constraint.pointA = {
                 x: window.game.InputTracker.levelX * mul + window.game.InputTracker.ball.x * (1 - mul),
                 y: window.game.InputTracker.levelY * mul + window.game.InputTracker.ball.y * (1 - mul)

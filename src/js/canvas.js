@@ -449,7 +449,7 @@ export class Canvas {
                             y: window.game.InputTracker.levelY
                         },
                         bodyB: window.game.InputTracker.ball.body,
-                        stiffness: 0.1,
+                        stiffness: 0.2,
                         length: 0,
                         damping: 0.01
                     })
