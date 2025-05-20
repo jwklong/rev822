@@ -385,6 +385,33 @@ export class Gooball {
             }
         }
     }
+    
+    /**
+     * Renders the debug view of the ball
+     * @param {Canvas} canvas
+     */
+    renderDebug(canvas) {
+        let ctx = canvas.ctx
+        ctx.beginPath()
+        ctx.moveTo(...Object.values(canvas.toLevelCanvasPos(this.body.vertices[0].x, this.body.vertices[0].y, window.game.LevelManager.currentLevel)))
+        for (let i = 1; i < this.body.vertices.length; i++) {
+            ctx.lineTo(...Object.values(canvas.toLevelCanvasPos(this.body.vertices[i].x, this.body.vertices[i].y, window.game.LevelManager.currentLevel)))
+        }
+        ctx.closePath()
+        ctx.fillStyle = "#3338"
+        ctx.strokeStyle = "#333"
+        if (this == window.game.InputTracker.ball) {
+            ctx.fillStyle = "#0f08"
+            ctx.strokeStyle = "#0f0"
+        }
+        ctx.lineWidth = 4
+        ctx.save()
+        ctx.clip()
+        ctx.lineWidth *= 2
+        ctx.fill()
+        ctx.stroke()
+        ctx.restore()
+    }
 
     /** @param {number} dt */
     tick(dt) {

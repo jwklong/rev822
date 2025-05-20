@@ -487,8 +487,8 @@ export class Level {
                 window.game.InputTracker.ball.x,
                 window.game.InputTracker.ball.y
             )
-            let mul = Math.min(1, 48 / distanceTo)
-            if (Matter.Query.collides(window.game.InputTracker.ball.body, this.bodies.map(v => v.body)).length == 0) mul = 1
+            let mul = Math.min(1, 24 / distanceTo)
+            if (Matter.Query.collides(window.game.InputTracker.ball.body, this.bodies.map(v => v.body)).length == 0) mul = Math.min(1, 128 / distanceTo)
             constraint.pointA = {
                 x: window.game.InputTracker.levelX * mul + window.game.InputTracker.ball.x * (1 - mul),
                 y: window.game.InputTracker.levelY * mul + window.game.InputTracker.ball.y * (1 - mul)
@@ -931,6 +931,29 @@ export class GenericBody {
      */
     render(canvas) {
         this.layers.render(canvas, -this.x, -this.y, 1, 1, this.rotation)
+    }
+
+    /**
+     * Renders the debug view of the body
+     * @param {Canvas} canvas
+     */
+    renderDebug(canvas) {
+        let ctx = canvas.ctx
+        ctx.beginPath()
+        ctx.moveTo(...Object.values(canvas.toLevelCanvasPos(this.vertices[0].x, this.vertices[0].y, window.game.LevelManager.currentLevel)))
+        for (let i = 1; i < this.vertices.length; i++) {
+            ctx.lineTo(...Object.values(canvas.toLevelCanvasPos(this.vertices[i].x, this.vertices[i].y, window.game.LevelManager.currentLevel)))
+        }
+        ctx.closePath()
+        ctx.fillStyle = "#00f8"
+        ctx.strokeStyle = "#00f"
+        ctx.lineWidth = 4
+        ctx.save()
+        ctx.clip()
+        ctx.lineWidth *= 2
+        ctx.fill()
+        ctx.stroke()
+        ctx.restore()
     }
 }
 

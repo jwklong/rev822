@@ -268,79 +268,19 @@ export class Canvas {
 
                 if (level.debug) {
                     for (var body of level.bodies) {
-                        switch (body.type) {
-                            case "rect":
-                                ctx.beginPath()
-                                for (var vertex of body.body.vertices) {
-                                    if (vertex.index == 0) {
-                                        ctx.moveTo(
-                                            vertex.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
-                                            -vertex.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom
-                                        )
-                                    }
-                                    ctx.lineTo(
-                                        vertex.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
-                                        -vertex.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom
-                                    )
-                                }
-                                ctx.closePath()
-                                break
-                            case "circle":
-                                ctx.beginPath()
-                                ctx.arc(
-                                    body.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
-                                    -body.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom,
-                                    body.radius, 0, 2 * Math.PI
-                                )
-                                ctx.closePath()
-                                break
-                        }
-                        ctx.fillStyle = "#00f8"
-                        ctx.strokeStyle = "#00f"
-                        ctx.lineWidth = 4
-                        ctx.save()
-                        ctx.clip()
-                        ctx.lineWidth *= 2
-                        ctx.fill()
-                        ctx.stroke()
-                        ctx.restore()
+                        body.renderDebug(this)
                     }
 
                     for (var ball of level.balls) {
-                        let selected = false
-                        switch (ball.shape.type) {
-                            case "circle":
-                                ctx.beginPath()
-                                ctx.arc(
-                                    ball.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
-                                    -ball.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom,
-                                    ball.shape.radius, 0, 2 * Math.PI
-                                )
-                                ctx.closePath()
-
-                                break
-                        }
-                        ctx.fillStyle = "#3338"
-                        ctx.strokeStyle = "#333"
-                        if (ball == window.game.InputTracker.ball || ball == ballToDrag) {
-                            ctx.fillStyle = "#0f08"
-                            ctx.strokeStyle = "#0f0"
-                        }
-                        ctx.lineWidth = 4
-                        ctx.save()
-                        ctx.clip()
-                        ctx.lineWidth *= 2
-                        ctx.fill()
-                        ctx.stroke()
-                        ctx.restore()
+                        ball.renderDebug(this)
                     }
 
                     for (var pipe of level.pipes) {
                         ctx.beginPath()
                         ctx.arc(
-                            pipe.x - level.camera.props.x + 1280 / 2 / level.camera.props.zoom,
-                            -pipe.y + level.camera.props.y + 720 / 2 / level.camera.props.zoom,
-                            pipe.radius, 0, 2 * Math.PI
+                            this.toLevelCanvasPos(pipe.x, pipe.y, level).x,
+                            this.toLevelCanvasPos(pipe.x, pipe.y, level).y,
+                            pipe.radius * level.camera.props.zoom, 0, 2 * Math.PI
                         )
                         ctx.closePath()
                         ctx.fillStyle = "#0f08"
@@ -449,7 +389,7 @@ export class Canvas {
                             y: window.game.InputTracker.levelY
                         },
                         bodyB: window.game.InputTracker.ball.body,
-                        stiffness: 0.2,
+                        stiffness: 0.1,
                         length: 0,
                         damping: 0.01
                     })
