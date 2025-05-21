@@ -4,4 +4,10 @@
     <level id="HelpMeUp" requires="EconomicDivide" />
     <level id="ImpaleSticky" requires="HelpMeUp" />
     <level id="HangLow" requires="ImpaleSticky" />
+    <level id="FlyingDirt" requires="HangLow" />
+
+    <level id="FizzyBog" requires="FlyingDirt" /> <!-- extra level -->
+
+    <level id="IvyTowers" requires="FlyingDirt" />
+    <level id="JawBridge" requires="IvyTowers" />
 </island>

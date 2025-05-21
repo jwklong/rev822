@@ -14,9 +14,15 @@
         <layer img="IMAGE_ISLAND1_ISLAND" x="0" y="0" />
 
         <levelbutton id="GoingUp" x="-800" y="-400" />
-        <levelbutton id="EconomicDivide" x="-670" y="-600" />
-        <levelbutton id="HelpMeUp" x="-510" y="-740" />
-        <levelbutton id="ImpaleSticky" x="-280" y="-680" />
+        <levelbutton id="EconomicDivide" x="-700" y="-600" />
+        <levelbutton id="HelpMeUp" x="-560" y="-760" />
+        <levelbutton id="ImpaleSticky" x="-360" y="-680" />
         <levelbutton id="HangLow" x="-320" y="-320" />
+        <levelbutton id="FlyingDirt" x="-420" y="-70" />
+
+        <levelbutton id="FizzyBog" x="-690" y="0" />
+
+        <levelbutton id="IvyTowers" x="-530" y="100" />
+        <levelbutton id="JawBridge" x="-460" y="330" />
     </scene>
 </level>
