@@ -352,7 +352,7 @@ export class Level {
         this.deleteStrands(gooball)
         this.balls = this.balls.filter(v => v !== gooball)
         Matter.Composite.remove(this.engine.world, gooball.body)
-        this.createSplats(gooball, 5)
+        this.createSplats(gooball, 3)
     }
 
     /**
