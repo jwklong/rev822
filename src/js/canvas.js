@@ -401,7 +401,7 @@ export class Canvas {
 
                     if (canBuild) {
                         if (window.game.InputTracker.shift) {
-                            level.createStrand(window.game.InputTracker.ball.type, applicableBalls[0], applicableBalls[1])
+                            level.createStrand(window.game.InputTracker.ball.type, applicableBalls[0], applicableBalls[1], true)
                             level.killGooball(window.game.InputTracker.ball)
                         } else {
                             for (let applicableBall of applicableBalls) {

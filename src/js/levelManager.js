@@ -380,6 +380,16 @@ export class Level {
                 this.getBallsOnStrand(strand).forEach(v => v.getOffStrand())
                 this.strands.splice(i,1)
 
+                if (strand.contains) {
+                    let x = (a.x + b.x) / 2
+                    let y = (a.y + b.y) / 2
+
+                    let newBall = window.game.GooballManager.types[strand.type].clone()
+                    newBall.x = x
+                    newBall.y = y
+                    this.addGooball(newBall)
+                }
+
                 for (let ball of [a, b]) {
                     if (this.getStrandsOfBall(ball).length == 0 && !ball.attachment) {
                         if (ball !== window.game.InputTracker.ball) {
@@ -416,9 +426,10 @@ export class Level {
      * @param {string} type
      * @param {Gooball} a
      * @param {Gooball} b
+     * @param {boolean} [contains=false] is the strand made of a extra gooball
      */
-    createStrand(type, a, b) {
-        let strand = new Strand(type, a, b)
+    createStrand(type, a, b, contains = false) {
+        let strand = new Strand(type, a, b, contains)
         Matter.Composite.add(this.engine.world, strand.constraint)
         for (let ball of [a, b]) {
             ball.body.collisionFilter.mask = ball.attachment ? 0b00 : 0b10
@@ -1031,6 +1042,12 @@ export class Strand {
         this.constraint.bodyB = this.#ball2.body
     }
 
+    /**
+     * is the strand made of a extra gooball
+     * @type {boolean}
+     */
+    contains = false
+
     /** 
      * distance between the two balls
      * @type {number}
@@ -1056,8 +1073,9 @@ export class Strand {
      * @param {string} type
      * @param {Gooball} ball1
      * @param {Gooball} ball2
+     * @param {boolean} [contains=false] is the strand made of a extra gooball
      */
-    constructor(type, ball1, ball2) {
+    constructor(type, ball1, ball2, contains = false) {
         this.type = type
         let options = window.game.GooballManager.types[this.type].strand
         this.constraint = Matter.Constraint.create({
@@ -1070,6 +1088,7 @@ export class Strand {
 
        this.ball1 = ball1
        this.ball2 = ball2
+       this.contains = contains
     }
 }
 
