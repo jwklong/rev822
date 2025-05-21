@@ -14,6 +14,10 @@
         <layer img="IMAGE_ASCENTDESCENT_TERRAIN" x="0" y="0" z="0" />
         <layer img="IMAGE_ASCENTDESCENT_TERRAINBG" x="0" y="0" z="-0.5" />
 
+        <rect static x="-40" y="-10" width="550" height="200" rotation="7" material="grass" />
+        <rect static x="330" y="30" width="200" height="100" rotation="-10" material="grass" />
+        <circle static x="430" y="190" radius="200" material="grass" />
+
         <pipe type="default" x="0" y="-250" length="300"/>
     </scene>
 </level>
