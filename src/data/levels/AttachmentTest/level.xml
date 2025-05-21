@@ -7,7 +7,7 @@
         <title>Attachment Test</title>
     </head>
     <scene>
-        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2" z="-1" />
+        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="2" z="-1" />
 
         <rect static x="0" y="-460" width="10000" height="200" />
         <rect static x="0" y="460" width="10000" height="200" />

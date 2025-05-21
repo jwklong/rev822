@@ -9,7 +9,7 @@
 
     <image id="IMAGE_LOGO" src="images/logo.svg" />
 
-    <image id="IMAGE_BLUE_SKIES" src="images/backgrounds/blueskies.svg" />
+    <image id="IMAGE_BLUESKIES" src="images/backgrounds/blueskies.svg" />
     <image id="IMAGE_SUNSETTER" src="images/backgrounds/sunsetter.svg" />
     <image id="IMAGE_MIDNIGHT" src="images/backgrounds/midnight.svg" />
     <image id="IMAGE_CAVED" src="images/backgrounds/caved.svg" />

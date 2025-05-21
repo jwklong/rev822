@@ -12,7 +12,7 @@
         <goal type="balls" target="4" />
     </head>
     <scene>
-        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="2.5" z="-1" />
         <layer img="IMAGE_LEVEL_BUSH" x="490" y="-540" rotation="25" />
         <layer img="IMAGE_LEVEL_CLOUD" x="-400" y="-100" rotation="-20" />
         <layer img="IMAGE_GOINGUP_HILL" x="0" y="-800" />

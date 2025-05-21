@@ -10,7 +10,7 @@
     </head>
     <scene>
         <layer img="IMAGE_LOGO" x="0" y="0" size="0.5" rotation="0" rotspeed="45" />
-        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2" z="-1" />
+        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="2" z="-1" />
 
         <rect static x="0" y="-200" width="200" height="50" material="grass" rotation="15" ref="test" />
         <circle x="0" y="0" radius="25" />

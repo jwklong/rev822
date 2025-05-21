@@ -79,7 +79,7 @@ export class Canvas {
 
                     const image1 = window.game.ResourceManager.getResource('IMAGE_LOADFINISHED').image
                     
-                    const image2 = window.game.ResourceManager.getResource('IMAGE_BLUE_SKIES').image
+                    const image2 = window.game.ResourceManager.getResource('IMAGE_BLUESKIES').image
 
                     ctx.drawImage(image2, 0, -280, this.width, this.width)
                     ctx.drawImage(image1, 540, 260)

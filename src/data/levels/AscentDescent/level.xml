@@ -1,0 +1,19 @@
+<level debug>
+    <resources>
+        <image id="IMAGE_ASCENTDESCENT_TERRAIN" src="levels/AscentDescent/terrain.svg" />
+        <image id="IMAGE_ASCENTDESCENT_TERRAINBG" src="levels/AscentDescent/terrainbg.svg" />
+    </resources>
+    <head>
+        <camera width="2048" height="2048">
+            <keyframe x="0" y="-1000" zoom="1.5" />
+            <keyframe x="0" y="500" zoom="1" pause="1" duration="3" />
+        </camera>
+    </head>
+    <scene>
+        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="3" z="-1" />
+        <layer img="IMAGE_ASCENTDESCENT_TERRAIN" x="0" y="0" z="0" />
+        <layer img="IMAGE_ASCENTDESCENT_TERRAINBG" x="0" y="0" z="-0.5" />
+
+        <pipe type="default" x="0" y="-250" length="300"/>
+    </scene>
+</level>

@@ -14,7 +14,7 @@
         <goal type="balls" target="3" />
     </head>
     <scene>
-        <layer img="IMAGE_BLUE_SKIES" x="0" y="0" size="2.5" z="-1" />
+        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="2.5" z="-1" />
 
         <layer img="IMAGE_FIZZYBOG_SPIKES" x="0" y="500" size="2.2" />
         <layer img="IMAGE_FIZZYBOG_SPIKES" x="0" y="-500" size="2.2" rotation="180" />
