@@ -138,7 +138,7 @@ require('electron').ipcRenderer.on('args', (event, args) => {
         totalDT = dt
         dt = totalDT - lastDT
         dt /= 1000
-        dt = Math.min(1/60, dt)
+        dt = Math.min(1/30, dt)
         game.timePassed = totalDT / 1000
 
         game.TimeManager.tick(dt)

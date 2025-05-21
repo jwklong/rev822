@@ -389,9 +389,9 @@ export class Canvas {
                             y: window.game.InputTracker.levelY
                         },
                         bodyB: window.game.InputTracker.ball.body,
-                        stiffness: 0.1,
+                        stiffness: 0.15,
                         length: 0,
-                        damping: 0.01
+                        damping: 0.02
                     })
                     Matter.Composite.add(window.game.LevelManager.currentLevel.engine.world, window.game.InputTracker.ballConstraint)
                 } else if (window.game.InputTracker.ball !== undefined && (!window.game.InputTracker.left || this.mode == 1)) {

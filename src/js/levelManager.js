@@ -446,225 +446,230 @@ export class Level {
 
     /** @param {number} dt */
     tick(dt) {
-        if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
-            var {x, y} = window.game.InputTracker
-            if (window.game.InputTracker.ball) var {x, y} = window.game.Canvas.toLevelCanvasPos(window.game.InputTracker.ball.x, window.game.InputTracker.ball.y, this)
+        let loops = 2
+        dt /= loops
+        for (let loop = 0; loop < loops; loop++) {
+            if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
+                var {x, y} = window.game.InputTracker
+                if (window.game.InputTracker.ball) var {x, y} = window.game.Canvas.toLevelCanvasPos(window.game.InputTracker.ball.x, window.game.InputTracker.ball.y, this)
 
-            if (100 - x > 0) {
-                this.camera.props.x -= (100 - x) * dt * 12 / this.camera.props.zoom
-            } else if (-(window.game.Canvas.width - 100) + x > 0) {
-                this.camera.props.x += (-(window.game.Canvas.width - 100) + x) * dt * 12 / this.camera.props.zoom
+                if (100 - x > 0) {
+                    this.camera.props.x -= (100 - x) * dt * 12 / this.camera.props.zoom
+                } else if (-(window.game.Canvas.width - 100) + x > 0) {
+                    this.camera.props.x += (-(window.game.Canvas.width - 100) + x) * dt * 12 / this.camera.props.zoom
+                }
+
+                if (100 - y > 0) {
+                    this.camera.props.y += (100 - y) * dt * 12 / this.camera.props.zoom
+                } else if (-(window.game.Canvas.height - 100) + y > 0) {
+                    this.camera.props.y -= (-(window.game.Canvas.height - 100) + y) * dt * 12 / this.camera.props.zoom
+                }
             }
 
-            if (100 - y > 0) {
-                this.camera.props.y += (100 - y) * dt * 12 / this.camera.props.zoom
-            } else if (-(window.game.Canvas.height - 100) + y > 0) {
-                this.camera.props.y -= (-(window.game.Canvas.height - 100) + y) * dt * 12 / this.camera.props.zoom
-            }
-        }
+            const clamp = (a, b, c) => Math.min(c, Math.max(b, a))
 
-        const clamp = (a, b, c) => Math.min(c, Math.max(b, a))
-
-        this.camera.props.x = clamp(
-            -((this.width - window.game.Canvas.width / this.camera.props.zoom) / 2),
-            this.camera.props.x,
-            (this.width - window.game.Canvas.width / this.camera.props.zoom) / 2
-        )
-
-        this.camera.props.y = clamp(
-            -((this.height - window.game.Canvas.height / this.camera.props.zoom) / 2),
-            this.camera.props.y,
-            (this.height - window.game.Canvas.height / this.camera.props.zoom) / 2
-        )
-
-        this.layers.tick(dt)
-
-        if (window.game.InputTracker.ball != undefined) {
-            let constraint = window.game.InputTracker.ballConstraint
-            let distanceTo = window.game.Utils.distanceTo(
-                window.game.InputTracker.levelX,
-                window.game.InputTracker.levelY,
-                window.game.InputTracker.ball.x,
-                window.game.InputTracker.ball.y
+            this.camera.props.x = clamp(
+                -((this.width - window.game.Canvas.width / this.camera.props.zoom) / 2),
+                this.camera.props.x,
+                (this.width - window.game.Canvas.width / this.camera.props.zoom) / 2
             )
-            let mul = Math.min(1, 24 / distanceTo)
-            if (Matter.Query.collides(window.game.InputTracker.ball.body, this.bodies.map(v => v.body)).length == 0) mul = Math.min(1, 128 / distanceTo)
-            constraint.pointA = {
-                x: window.game.InputTracker.levelX * mul + window.game.InputTracker.ball.x * (1 - mul),
-                y: window.game.InputTracker.levelY * mul + window.game.InputTracker.ball.y * (1 - mul)
-            }
-        }
 
-        for (let ball of this.balls) {
-            ball.tick(dt)
+            this.camera.props.y = clamp(
+                -((this.height - window.game.Canvas.height / this.camera.props.zoom) / 2),
+                this.camera.props.y,
+                (this.height - window.game.Canvas.height / this.camera.props.zoom) / 2
+            )
 
-            if (ball.antigrav) ball.body.gravityScale = this.getStrandsOfBall(ball).length > 0 ? -1 : 1
+            this.layers.tick(dt)
 
-            if (ball.sleeping) {
-                for (let ball2 of this.balls) {
-                    if (
-                        ball2 != ball &&
-                        !ball2.sleeping &&
-                        this.getStrandsOfBall(ball2).length > 0 &&
-                        window.game.Utils.withinCircle(
-                            ball.x, ball.y,
-                            ball2.x, ball2.y,
-                            ball2.strand.length
-                        )
-                    ) {
-                        ball.sleeping = false
-                    }
-                }
-
-                if (this.balls.find(
-                    v => v !== ball &&
-                    this.getStrandFromBalls(ball, v) !== undefined &&
-                    !v.sleeping
-                )) ball.sleeping = false
-            }
-
-            for (let body of this.bodies) {
-                if (ball != window.game.InputTracker.ball && Matter.Query.collides(body.body, [ball.body]).length > 0) {
-                    if (
-                        !ball.nostick && !ball.stuckTo &&
-                        (body.sticky || ball.sticky || ball.attachment) &&
-                        ((ball.attachment && this.timeSpent == 0) || this.getStrandsOfBall(ball).length > 0)
-                    ) {
-                        ball.body.collisionFilter.mask = 0b00
-                        let weld = Matter.Constraint.create({
-                            bodyA: ball.body,
-                            pointA: { x: 0, y: 0 },
-                            bodyB: body.body,
-                            pointB: { x: ball.x - body.x, y: ball.y - body.y },
-                            length: 0,
-                            stiffness: 1,
-                            damping: 0
-                        })
-                        Matter.Composite.add(this.engine.world, weld)
-
-                        ball.stuckTo = body
-                    }
-                    if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
-                    if (body.deadly && !ball.strandOn) this.killGooball(ball)
-                }
-            }
-
-            for (let strand of this.strands) {
-                if (
-                    window.game.Utils.intersectsLine(
-                        ball.x, ball.y,
-                        strand.ball1.x, strand.ball1.y,
-                        strand.ball2.x, strand.ball2.y,
-                        ball.shape.radius / 1.5
-                    ) &&
-                    !ball.strandOn &&
-                    !window.game.GooballManager.types[strand.type].noclimb &&
-                    window.game.InputTracker.ball != ball &&
-                    this.getStrandsOfBall(ball).length == 0 &&
-                    this.pipes.filter(v => v.isActive(this)).reduce((p, v) => {
-                        return p && v.ballsInRange([ball]).length == 0
-                    }, true)
-                ) {
-                    let progress = window.game.Utils.intersectsLineProgress(
-                        ball.x, ball.y,
-                        strand.ball1.x, strand.ball1.y,
-                        strand.ball2.x, strand.ball2.y
-                    )
-
-                    strand.ball1.vx += ball.vx * progress / 2
-                    strand.ball1.vy += ball.vy * progress / 2
-                    strand.ball2.vx += ball.vx * (1 - progress) / 2
-                    strand.ball2.vy += ball.vy * (1 - progress) / 2
-
-                    ball.putOnStrand(strand, progress)
-                }
-            }
-
-            if (ball.strandOn) {
-                ball.strandOn.progress += (
-                    ball.climbspeed *
-                    dt /
-                    ball.strandOn.strand.length *
-                    (ball.strandOn.reverse ? -1 : 1) *
-                    (this.pipes.find(pipe => pipe.isActive(this)) ? 4 : 1) *
-                    !ball.sleeping
+            if (window.game.InputTracker.ball != undefined) {
+                let constraint = window.game.InputTracker.ballConstraint
+                let distanceTo = window.game.Utils.distanceTo(
+                    window.game.InputTracker.levelX,
+                    window.game.InputTracker.levelY,
+                    window.game.InputTracker.ball.x,
+                    window.game.InputTracker.ball.y
                 )
+                let mul = Math.min(1, 24 / distanceTo)
+                if (Matter.Query.collides(window.game.InputTracker.ball.body, this.bodies.map(v => v.body)).length == 0) mul = Math.min(1, 128 / distanceTo)
+                constraint.pointA = {
+                    x: window.game.InputTracker.levelX * mul + window.game.InputTracker.ball.x * (1 - mul),
+                    y: window.game.InputTracker.levelY * mul + window.game.InputTracker.ball.y * (1 - mul)
+                }
+            }
 
-                if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {
-                    let choiceball = ball.strandOn.progress <= 0 ? ball.strandOn.strand.ball1 : ball.strandOn.strand.ball2
-                    let choicestrands = this.getStrandsOfBall(choiceball).filter(v =>
-                        !window.game.GooballManager.types[v.type].noclimb
-                    )
+            for (let ball of this.balls) {
+                ball.tick(dt)
 
-                    let choicestrand = choicestrands[Math.floor(Math.random() * choicestrands.length)]
+                if (ball.antigrav) ball.body.gravityScale = this.getStrandsOfBall(ball).length > 0 ? -1 : 1
 
-                    if (Math.random() < ball.intelligence) {
-                        let newchoicestrand = choicestrands.sort((a, b) => {
-                            let ballA = choiceball == a.ball1 ? a.ball2 : a.ball1
-                            let ballB = choiceball == b.ball1 ? b.ball2 : b.ball1
-
-                            let activePipes = this.pipes.filter(pipe => pipe.isActive(this))
-                                .sort((a, b) => {
-                                    return Math.hypot(a.x - ballA.x, a.y - ballA.y) - Math.hypot(b.x - ballA.x, b.y - ballA.y)
-                                })
-
-                            if (activePipes[0]) {
-                                return Math.hypot(activePipes[0].x - ballA.x, activePipes[0].y - ballA.y) - Math.hypot(activePipes[0].x - ballB.x, activePipes[0].y - ballB.y)
-                            } 
-
-                            return this.camera.distanceFromCamera(ballA.x, ballA.y) - this.camera.distanceFromCamera(ballB.x, ballB.y)
-                        })[0]
-
-                        if (newchoicestrand != ball.strandOn.strand) choicestrand = newchoicestrand
+                if (ball.sleeping) {
+                    for (let ball2 of this.balls) {
+                        if (
+                            ball2 != ball &&
+                            !ball2.sleeping &&
+                            this.getStrandsOfBall(ball2).length > 0 &&
+                            window.game.Utils.withinCircle(
+                                ball.x, ball.y,
+                                ball2.x, ball2.y,
+                                ball2.strand.length
+                            )
+                        ) {
+                            ball.sleeping = false
+                        }
                     }
 
-                    let choiceIsFirst = choiceball == choicestrand.ball1
-                    let diffProgress = ball.strandOn.progress <= 0 ? -ball.strandOn.progress : 1 - ball.strandOn.progress
-
-                    ball.putOnStrand(choicestrand, (!choiceIsFirst ? 1 - diffProgress : diffProgress), !choiceIsFirst)
+                    if (this.balls.find(
+                        v => v !== ball &&
+                        this.getStrandFromBalls(ball, v) !== undefined &&
+                        !v.sleeping
+                    )) ball.sleeping = false
                 }
 
-                let point = ball.strandOn.strand.pointOnStrand(ball.strandOn.progress)
+                for (let body of this.bodies) {
+                    if (ball != window.game.InputTracker.ball && Matter.Query.collides(body.body, [ball.body]).length > 0) {
+                        if (
+                            !ball.nostick && !ball.stuckTo &&
+                            (body.sticky || ball.sticky || ball.attachment) &&
+                            ((ball.attachment && this.timeSpent == 0) || this.getStrandsOfBall(ball).length > 0)
+                        ) {
+                            ball.body.collisionFilter.mask = 0b00
+                            let weld = Matter.Constraint.create({
+                                bodyA: ball.body,
+                                pointA: { x: 0, y: 0 },
+                                bodyB: body.body,
+                                pointB: { x: ball.x - body.x, y: ball.y - body.y },
+                                length: 0,
+                                stiffness: 1,
+                                damping: 0
+                            })
+                            Matter.Composite.add(this.engine.world, weld)
 
-                Matter.Body.setPosition(ball.body, Matter.Vector.create(point.x, point.y))
+                            ball.stuckTo = body
+                        }
+                        if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
+                        if (body.deadly && !ball.strandOn) this.killGooball(ball)
+                    }
+                }
 
-                if (
-                    !this.pipes.filter(v => v.isActive(this)).reduce((p, v) => {
-                        return p && v.ballsInRange([ball]).length == 0
-                    }, true)
-                ) {
-                    ball.getOffStrand()
+                for (let strand of this.strands) {
+                    if (
+                        window.game.Utils.intersectsLine(
+                            ball.x, ball.y,
+                            strand.ball1.x, strand.ball1.y,
+                            strand.ball2.x, strand.ball2.y,
+                            ball.shape.radius / 1.5
+                        ) &&
+                        !ball.strandOn &&
+                        !window.game.GooballManager.types[strand.type].noclimb &&
+                        window.game.InputTracker.ball != ball &&
+                        this.getStrandsOfBall(ball).length == 0 &&
+                        this.pipes.filter(v => v.isActive(this)).reduce((p, v) => {
+                            return p && v.ballsInRange([ball]).length == 0
+                        }, true)
+                    ) {
+                        let progress = window.game.Utils.intersectsLineProgress(
+                            ball.x, ball.y,
+                            strand.ball1.x, strand.ball1.y,
+                            strand.ball2.x, strand.ball2.y
+                        )
+
+                        strand.ball1.vx += ball.vx * progress / 2
+                        strand.ball1.vy += ball.vy * progress / 2
+                        strand.ball2.vx += ball.vx * (1 - progress) / 2
+                        strand.ball2.vy += ball.vy * (1 - progress) / 2
+
+                        ball.putOnStrand(strand, progress)
+                    }
+                }
+
+                if (ball.strandOn) {
+                    ball.strandOn.progress += (
+                        ball.climbspeed *
+                        dt /
+                        ball.strandOn.strand.length *
+                        (ball.strandOn.reverse ? -1 : 1) *
+                        (this.pipes.find(pipe => pipe.isActive(this)) ? 4 : 1) *
+                        !ball.sleeping
+                    )
+
+                    if (ball.strandOn.progress <= 0 || ball.strandOn.progress >= 1) {
+                        let choiceball = ball.strandOn.progress <= 0 ? ball.strandOn.strand.ball1 : ball.strandOn.strand.ball2
+                        let choicestrands = this.getStrandsOfBall(choiceball).filter(v =>
+                            !window.game.GooballManager.types[v.type].noclimb
+                        )
+
+                        let choicestrand = choicestrands[Math.floor(Math.random() * choicestrands.length)]
+
+                        if (Math.random() < ball.intelligence) {
+                            let newchoicestrand = choicestrands.sort((a, b) => {
+                                let ballA = choiceball == a.ball1 ? a.ball2 : a.ball1
+                                let ballB = choiceball == b.ball1 ? b.ball2 : b.ball1
+
+                                let activePipes = this.pipes.filter(pipe => pipe.isActive(this))
+                                    .sort((a, b) => {
+                                        return Math.hypot(a.x - ballA.x, a.y - ballA.y) - Math.hypot(b.x - ballA.x, b.y - ballA.y)
+                                    })
+
+                                if (activePipes[0]) {
+                                    return Math.hypot(activePipes[0].x - ballA.x, activePipes[0].y - ballA.y) - Math.hypot(activePipes[0].x - ballB.x, activePipes[0].y - ballB.y)
+                                } 
+
+                                return this.camera.distanceFromCamera(ballA.x, ballA.y) - this.camera.distanceFromCamera(ballB.x, ballB.y)
+                            })[0]
+
+                            if (newchoicestrand != ball.strandOn.strand) choicestrand = newchoicestrand
+                        }
+
+                        let choiceIsFirst = choiceball == choicestrand.ball1
+                        let diffProgress = ball.strandOn.progress <= 0 ? -ball.strandOn.progress : 1 - ball.strandOn.progress
+
+                        ball.putOnStrand(choicestrand, (!choiceIsFirst ? 1 - diffProgress : diffProgress), !choiceIsFirst)
+                    }
+
+                    let point = ball.strandOn.strand.pointOnStrand(ball.strandOn.progress)
+
+                    Matter.Body.setPosition(ball.body, Matter.Vector.create(point.x, point.y))
+
+                    if (
+                        !this.pipes.filter(v => v.isActive(this)).reduce((p, v) => {
+                            return p && v.ballsInRange([ball]).length == 0
+                        }, true)
+                    ) {
+                        ball.getOffStrand()
+                    }
+                }
+
+                for (let pipe of this.pipes.filter(pipe => pipe.isActive(this))) {
+                    if (pipe.ballsInRange([ball]).length == 0) continue
+                    if (ball.noclimb) continue
+
+                    if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
+                        this.killGooball(ball)
+                        pipe.ballsSucked += 1
+                        continue
+                    }
+
+                    let directionToPipe = {
+                        x: pipe.x - ball.x,
+                        y: pipe.y - ball.y
+                    }
+
+                    let distance = Math.hypot(directionToPipe.x, directionToPipe.y)
+                    directionToPipe.x /= distance
+                    directionToPipe.y /= distance
+
+                    Matter.Body.applyForce(ball.body, ball.body.position, Matter.Vector.create(
+                        directionToPipe.x * Math.abs(ball.body.mass) * 0.004,
+                        directionToPipe.y * Math.abs(ball.body.mass) * 0.004
+                    ))
                 }
             }
 
-            for (let pipe of this.pipes.filter(pipe => pipe.isActive(this))) {
-                if (pipe.ballsInRange([ball]).length == 0) continue
-                if (ball.noclimb) continue
-
-                if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
-                    this.killGooball(ball)
-                    pipe.ballsSucked += 1
-                    continue
-                }
-
-                let directionToPipe = {
-                    x: pipe.x - ball.x,
-                    y: pipe.y - ball.y
-                }
-
-                let distance = Math.hypot(directionToPipe.x, directionToPipe.y)
-                directionToPipe.x /= distance
-                directionToPipe.y /= distance
-
-                Matter.Body.applyForce(ball.body, ball.body.position, Matter.Vector.create(
-                    directionToPipe.x * Math.abs(ball.body.mass) * 0.004,
-                    directionToPipe.y * Math.abs(ball.body.mass) * 0.004
-                ))
-            }
+            Matter.Engine.update(this.engine, dt * 1000)
         }
 
-        Matter.Engine.update(this.engine, dt * 1000)
-        this.timeSpent += dt
+        this.timeSpent += dt * loops
     }
 
     /**
