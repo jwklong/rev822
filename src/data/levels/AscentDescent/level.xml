@@ -15,8 +15,15 @@
         <layer img="IMAGE_ASCENTDESCENT_TERRAINBG" x="0" y="0" z="-0.5" />
 
         <rect static x="-40" y="-10" width="550" height="200" rotation="7" material="grass" />
-        <rect static x="330" y="30" width="200" height="100" rotation="-10" material="grass" />
-        <circle static x="430" y="190" radius="200" material="grass" />
+        <rect static x="280" y="0" width="100" height="300" rotation="40" material="grass" />
+        <rect static x="345" y="25" width="300" height="100" rotation="-15" material="grass" />
+        <circle static x="450" y="140" radius="150" material="grass" />
+        <circle static x="470" y="250" radius="150" material="grass" sticky />
+        <rect static x="300" y="390" width="400" height="100" rotation="12" material="grass" sticky />
+        <rect static x="15" y="430" width="200" height="100" material="grass" sticky />
+        <rect static x="-260" y="380" width="400" height="100" rotation="-15" material="grass" sticky />
+        <circle static x="-450" y="225" radius="150" material="grass" sticky />
+        <circle static x="-510" y="60" radius="100" material="grass" />
 
         <pipe type="default" x="0" y="-250" length="300"/>
     </scene>
