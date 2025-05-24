@@ -8,6 +8,9 @@
             <keyframe x="0" y="-1000" zoom="1.5" />
             <keyframe x="0" y="500" zoom="1" pause="1" duration="3" />
         </camera>
+        <title>{{LEVEL_ASCENTDESCENT_TITLE}}</title>
+        <desc>{{LEVEL_ASCENTDESCENT_DESC}}</desc>
+        <goal type="balls" target="10" />
     </head>
     <scene>
         <layer img="IMAGE_BLUESKIES" x="0" y="0" size="3" z="-1" />
@@ -39,47 +42,50 @@
         <strand type="common" from="0" to="2" />
         <strand type="common" from="1" to="3" />
 
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
-        <ball type="common" x="-65-95" y="700-1200" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
+        <ball type="common" x="-40-70" y="700-2000" />
 
-        <pipe type="default" x="0" y="-250" length="300"/>
+        <ball type="balloon" x="-40-70" y="700-2000" />
+        <ball type="balloon" x="-40-70" y="700-2000" />
+
+        <pipe type="default" x="0" y="-300" length="300"/>
     </scene>
 </level>

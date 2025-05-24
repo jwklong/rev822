@@ -653,7 +653,6 @@ export class Level {
 
                 for (let pipe of this.pipes.filter(pipe => pipe.isActive(this))) {
                     if (pipe.ballsInRange([ball]).length == 0) continue
-                    if (ball.noclimb) continue
 
                     if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
                         this.killGooball(ball)
