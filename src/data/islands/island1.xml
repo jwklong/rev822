@@ -10,4 +10,6 @@
 
     <level id="IvyTowers" requires="FlyingDirt" />
     <level id="JawBridge" requires="IvyTowers" />
+
+    <level id="AscentDescent" requires="FlyingDirt" />
 </island>
