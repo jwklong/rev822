@@ -184,6 +184,8 @@ export class Canvas {
 
                     (() => {
                         if (applicableStrand) return
+                        if (window.game.InputTracker.ball.velocity > 20) return
+
                         level.balls.forEach(x => {
                             if (x === window.game.InputTracker.ball) return
                             if (x.nobuild) return

@@ -189,7 +189,6 @@ export class Gooball {
     get vy() { return this.body.velocity.y }
     set vy(val) { Matter.Body.setVelocity(this.body, Matter.Vector.create(this.vx, val)) }
 
-
     /**
      * total velocity
      * modify vx and vy instead of this
