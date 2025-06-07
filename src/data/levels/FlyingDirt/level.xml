@@ -30,6 +30,9 @@
         <rect static x="520" y="-282" width="300" height="100" rotation="-20" material="grass" />
         <rect static x="-520" y="-282" width="300" height="100" rotation="20" material="grass" />
 
+        <rect static force="5,0" x="-600" y="0" width="600" height="2000" rotation="5" />
+        <rect static force="-5,0" x="600" y="0" width="600" height="2000" rotation="5" />
+
         <circle x="300" y="0" radius="170" material="grass" mass="120">
             <layer img="IMAGE_FLYINGDIRT_BOULDER" x="0" y="0" rotation="0-359" size="2" />
         </circle>

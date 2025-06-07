@@ -542,6 +542,7 @@ export class Level {
                         if (
                             !ball.nostick && !ball.stuckTo &&
                             (body.sticky || ball.sticky || ball.attachment) &&
+                            !body.force &&
                             ((ball.attachment && this.timeSpent == 0) || this.getStrandsOfBall(ball).length > 0)
                         ) {
                             ball.body.collisionFilter.mask = 0b00
@@ -560,6 +561,10 @@ export class Level {
                         }
                         if (body.detaches && this.getStrandsOfBall(ball).length > 0) this.deleteStrands(ball)
                         if (body.deadly && !ball.strandOn) this.killGooball(ball)
+                        if (body.force) Matter.Body.applyForce(ball.body, ball.body.position, {
+                            x: body.force.x * dt / loops / ball.body.gravityScale,
+                            y: body.force.y * dt / loops / ball.body.gravityScale
+                        })
                     }
                 }
 
@@ -888,6 +893,15 @@ export class GenericBody {
         this.body.restitution = this.#material.bounciness
     }
 
+    /** @type {{x: number, y: number}?} */
+    #force
+    /** @type {{x: number, y: number}?} */
+    get force() { return this.#force }
+    set force(val) {
+        this.#force = val
+        this.body.collisionFilter.mask = val ? 0b00 : 0b11
+    }
+
     /** @type {Array<{x: number, y: number}>} */
     get vertices() { return this.body.vertices }
     set vertices(x) {
@@ -920,6 +934,8 @@ export class GenericBody {
         this.sticky = window.game.Utils.parseAttribute(attributes.sticky, false)
         this.detaches = window.game.Utils.parseAttribute(attributes.detaches, false)
         this.deadly = window.game.Utils.parseAttribute(attributes.deadly, false)
+
+        if (attributes.force) this.force = {x: Number(attributes.force.split(",")[0]), y: Number(attributes.force.split(",")[1])}
     }
 
     /**
@@ -960,8 +976,8 @@ export class GenericBody {
             ctx.lineTo(...Object.values(canvas.toLevelCanvasPos(this.vertices[i].x, this.vertices[i].y, window.game.LevelManager.currentLevel)))
         }
         ctx.closePath()
-        ctx.fillStyle = "#00f8"
-        ctx.strokeStyle = "#00f"
+        ctx.fillStyle = this.force ? "#80f8" : "#00f8"
+        ctx.strokeStyle = this.force ? "#80f" : "#00f"
         ctx.lineWidth = 4
         ctx.save()
         ctx.clip()
