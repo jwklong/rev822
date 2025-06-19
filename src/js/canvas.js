@@ -385,6 +385,7 @@ export class Canvas {
                     ballToDrag.getOffStrand(true)
 
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
+                    Matter.Body.setMass(window.game.InputTracker.ball.body, window.game.InputTracker.ball.body.mass / 1000)
                     window.game.InputTracker.ballConstraint = Matter.Constraint.create({
                         pointA: {
                             x: window.game.InputTracker.levelX,
@@ -400,6 +401,7 @@ export class Canvas {
                     window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
                     Matter.Composite.remove(window.game.LevelManager.currentLevel.engine.world, window.game.InputTracker.ballConstraint)
                     window.game.InputTracker.ballConstraint = undefined
+                    Matter.Body.setMass(window.game.InputTracker.ball.body, window.game.InputTracker.ball.body.mass * 1000)
 
                     if (canBuild) {
                         if (window.game.InputTracker.shift) {
