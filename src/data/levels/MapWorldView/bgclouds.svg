@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" width="2048px" height="2048px" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <filter id="gaussian-blur-filter-0" bx:preset="gaussian-blur 1 32" color-interpolation-filters="sRGB" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="32 32" edgeMode="none"></feGaussianBlur>
+    </filter>
+  </defs>
+  <path style="paint-order: stroke; fill: none; stroke-width: 96px; stroke: rgba(255, 255, 255, 0.267); filter: url(#gaussian-blur-filter-0);" d="M 321.784 620.75 C 221.663 903.531 224.975 1488.751 561.502 1688.168 C 689.224 1763.853 841.095 1834.758 988.302 1815.493 C 1219.27 1785.267 1440.927 1678.413 1633.825 1547.836 C 1718.371 1490.605 1749.63 1376.322 1780.731 1279.079 C 1882.148 961.981 1790.348 759.718 1602.413 466.909 C 1559.965 400.773 1478.071 369.992 1410.149 330.464 C 1341.911 290.753 1094.598 231.508 1056.215 230.741 C 956.202 228.741 445.845 270.35 321.784 620.75 Z"></path>
+</svg>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2048 2048" width="2048px" height="2048px" xmlns:bx="https://boxy-svg.com">
+  <defs>
+    <radialGradient gradientUnits="userSpaceOnUse" cx="1024" cy="1024" r="1024" id="gradient-0" gradientTransform="matrix(1.006343, 1.006343, -1.006343, 1.006343, 1023.999908, -1036.989961)">
+      <stop offset="0" style="stop-color: rgb(130, 116, 204);"></stop>
+      <stop offset="0.595" style="stop-color: rgb(102, 85, 193);"></stop>
+      <stop offset="1" style="stop-color: rgb(49, 37, 115);"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="2048" height="2048" style="stroke: rgb(0, 0, 0); fill: url(#gradient-0);"></rect>
+</svg>

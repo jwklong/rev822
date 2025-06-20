@@ -1,5 +1,7 @@
 <level>
     <resources>
+        <image id="IMAGE_LEVEL_MAPWORLDVIEW_BG" src="levels/MapWorldView/bg.svg" />
+        <image id="IMAGE_LEVEL_MAPWORLDVIEW_BGCLOUDS" src="levels/MapWorldView/bgclouds.svg" />
     </resources>
     <head>
         <camera width="1280" height="720">
@@ -7,7 +9,8 @@
         </camera>
     </head>
     <scene>
-        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="1.5" z="-1" />
+        <layer img="IMAGE_LEVEL_MAPWORLDVIEW_BG" x="0" y="0" z="-1" />
+        <layer img="IMAGE_LEVEL_MAPWORLDVIEW_BGCLOUDS" x="0" y="0" size="0.7" z="-0.5" rotation="0-359" rotspeed="15" />
 
         <levelbutton id="island1" x="0" y="0" />
     </scene>
