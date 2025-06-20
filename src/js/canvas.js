@@ -587,14 +587,15 @@ export class Canvas {
      * @param {number} y - the y position in the level
      * @param {number} width - the width of the object (for centering)
      * @param {number} height - the height of the object (for centering)
+     * @param {number} depth - the depth of the object
      * @param {Level} level - the level
      * @returns {{x: number, y: number}}
      */
-    toLevelCanvasPos(x, y, level, width = 0, height = 0) {
-        let zoom = (this.screenshotMode ? 1 : level.camera.props.zoom)
+    toLevelCanvasPos(x, y, level, width = 0, height = 0, depth = 1) {
+        let zoom = ((this.screenshotMode ? 1 : level.camera.props.zoom) - 1) * depth + 1
         return {
-            x: (x - (this.screenshotMode ? 0 : level.camera.props.x) + this.width / 2 / zoom - width / 2) * zoom,
-            y: (-y + (this.screenshotMode ? 0 : level.camera.props.y) + this.height / 2 / zoom - height / 2) * zoom
+            x: (x - (this.screenshotMode ? 0 : (level.camera.props.x - x) * depth + x) + this.width / 2 / zoom - width / 2) * zoom,
+            y: (-y + (this.screenshotMode ? 0 : (level.camera.props.y - y) * depth + y) + this.height / 2 / zoom - height / 2) * zoom
         }
     }
     

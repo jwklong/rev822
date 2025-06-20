@@ -29,6 +29,9 @@ export class Layer {
     z = 0
 
     /** @type {number} */
+    depth = 1
+
+    /** @type {number} */
     rotation = 0
 
     /**
@@ -71,6 +74,7 @@ export class Layer {
             }
         }
         layer.z = window.game.Utils.parseAttribute(xml.z, 0)
+        layer.depth = window.game.Utils.parseAttribute(xml.depth, 1)
         layer.rotation = window.game.Utils.parseAttribute(xml.rotation, 0)
         layer.staticrot = Boolean(xml.staticrot)
         layer.rotspeed = window.game.Utils.parseAttribute(xml.rotspeed, 0)
@@ -108,12 +112,12 @@ export class Layer {
         let image = window.game.ResourceManager.getResource(this.img).image
         let w = image.width * this.size.x * osx
         let h = image.height * this.size.y * osy
-        let {x, y} = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level, w, h)
+        let {x, y} = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level, w, h, this.depth)
         let rotation = this.rotation * Math.PI / 180
         if (!this.staticrot) rotation += rot * Math.PI / 180
         let zoom = (canvas.screenshotMode ? 1 : level.camera.props.zoom)
-        w *= zoom
-        h *= zoom
+        w *= (zoom - 1) * this.depth + 1
+        h *= (zoom - 1) * this.depth + 1
 
         if (this.color) {
             let tempCanvas = document.createElement('canvas')

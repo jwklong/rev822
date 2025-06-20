@@ -12,9 +12,9 @@
         <goal type="balls" target="4" />
     </head>
     <scene>
-        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="2.5" z="-1" />
-        <layer img="IMAGE_LEVEL_BUSH" x="490" y="-540" rotation="25" />
-        <layer img="IMAGE_LEVEL_CLOUD" x="-400" y="-100" rotation="-20" />
+        <layer img="IMAGE_BLUESKIES" x="0" y="0" size="1.5" z="-1" depth="0.2" />
+        <layer img="IMAGE_LEVEL_BUSH" x="490" y="-540" rotation="25" depth="0.95" />
+        <layer img="IMAGE_LEVEL_CLOUD" x="-400" y="-100" rotation="-15" depth="0.8" />
         <layer img="IMAGE_GOINGUP_HILL" x="0" y="-800" />
         <circle static x="0" y="-1595" radius="1100" material="grass" sticky />
         <rect static x="-820" y="0" width="200" height="65536" detaches />
