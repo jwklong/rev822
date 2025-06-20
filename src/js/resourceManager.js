@@ -73,6 +73,28 @@ export class ResourceManager {
     getResource(id) {
         return this.resources[id]
     }
+
+    /**
+     * @example
+     * let variantId = 'RESOURCE_ID'
+     * let variants = ResourceManager.getResourceVariants(variantId)
+     * // variants = [RESOURCE_ID.1, RESOURCE_ID.2, ...]
+     * @param {string} id
+     * @returns {AnyResource[]}
+     */
+    getResourceVariants(id) {
+        return this.getResource(id) ?? Object.values(this.resources).filter(resource => resource.id.startsWith(`${id}.`))
+    }
+
+    /**
+     * @param {string} id
+     * @returns {AnyResource?}
+     */
+    pickResourceVariant(id) {
+        let variants = this.getResourceVariants(id)
+        if (variants.length == 0) return
+        return variants[Math.floor(Math.random() * variants.length)]
+    }
 }
 
 /**
