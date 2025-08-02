@@ -16,8 +16,8 @@
     <scene>
         <layer img="IMAGE_BLUESKIES" x="0" y="0" size="2" z="-1" />
 
-        <layer img="IMAGE_LEVEL_BUSH" x="700" y="-150" size="1.5" />
-        <layer img="IMAGE_LEVEL_CLOUD" x="400" y="400" rotation="10" size="1" />
+        <layer img="IMAGE_LEVEL_BUSH" x="700" y="-150" size="1.5" depth="0.95" />
+        <layer img="IMAGE_LEVEL_CLOUD" x="400" y="400" rotation="10" size="1" depth="0.8" />
 
         <layer img="IMAGE_JAWBRIDGE_FLOOR" x="0" y="-400" size="1.6" />
         <layer img="IMAGE_JAWBRIDGE_PILLAR" x="-672" y="355" size="1" />

@@ -12,8 +12,14 @@
         <goal type="height" target="20" start="-1240" />
     </head>
     <scene>
-        <layer img="IMAGE_MIDNIGHT" x="0" y="0" size="3" z="-1" />
+        <layer img="IMAGE_MIDNIGHT" x="0" y="0" size="1.5" z="-1" depth="0.2" />
         <layer img="IMAGE_PILLAROFGOO_PILLAR" x="0" y="-1244" />
+
+        <layer img="IMAGE_LEVEL_CLOUD" x="400" y="-800" rotation="10" size="1" depth="0.8" />
+        <layer img="IMAGE_LEVEL_CLOUD" x="-500" y="-300" rotation="-5" size="1" depth="0.85" />
+        <layer img="IMAGE_LEVEL_CLOUD" x="200" y="200" rotation="5" size="1" depth="0.8" />
+        <layer img="IMAGE_LEVEL_CLOUD" x="300" y="700" rotation="-5" size="1" depth="0.9" />
+        <layer img="IMAGE_LEVEL_CLOUD" x="-400" y="1100" rotation="-5" size="1" depth="0.85" />
 
         <rect static x="0" y="-1290" width="960" height="100" material="rock" sticky />
         <rect static x="-390" y="-1440" width="200" height="400" material="rock" /> 
