@@ -110,8 +110,8 @@ export class Layer {
         let ctx = canvas.ctx
         const level = window.game.LevelManager.currentLevel
         let image = window.game.ResourceManager.getResource(this.img).image
-        let w = image.width * this.size.x * osx
-        let h = image.height * this.size.y * osy
+        let w = image.width * this.size.x * osx * (canvas.screenshotMode ? 1 / this.depth : 1)
+        let h = image.height * this.size.y * osy * (canvas.screenshotMode ? 1 / this.depth : 1)
         let {x, y} = canvas.toLevelCanvasPos(this.x - ox, this.y - oy, level, w, h, this.depth)
         let rotation = this.rotation * Math.PI / 180
         if (!this.staticrot) rotation += rot * Math.PI / 180
