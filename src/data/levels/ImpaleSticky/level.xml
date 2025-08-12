@@ -13,7 +13,7 @@
         <goal type="balls" target="24" />
     </head>
     <scene>
-        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="1.5" z="-1" depth="0.2" />
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="1.5" z="-1" depth="0.3" />
         <layer img="IMAGE_IMPALESTICKY_TERRAIN" x="384" y="0" size="1.5" />
         <layer img="IMAGE_LEVEL_BUSH" x="600" y="-300" size="2" z="-0.5" rotation="-15" depth="0.9" />
         <layer img="IMAGE_LEVEL_CLOUD" x="-480" y="480" rotation="10" depth="0.8" />

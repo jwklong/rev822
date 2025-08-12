@@ -13,7 +13,7 @@
         <goal type="balls" target="8" />
     </head>
     <scene>
-        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="1.5" z="-1" depth="0.2" />
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="1.5" z="-1" depth="0.3" />
         <layer img="IMAGE_LEVEL_BUSH" x="-980" y="80" depth="0.95" />
         <layer img="IMAGE_ECONOMICDIVIDE_CLIFF1" x="-615" y="-231" size="0.8" />
         <layer img="IMAGE_ECONOMICDIVIDE_CLIFF2" x="615" y="-231" size="0.8" />

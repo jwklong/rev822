@@ -119,6 +119,15 @@ export class Level {
     moves = 0
 
     /**
+     * check for if this level is the one currently in LevelManager.currentLevel
+     * @type {boolean}
+     * @readonly
+     */
+    get mainLevel() {
+        return this == window.game.LevelManager.currentLevel
+    }
+
+    /**
      * conditions to win level
      * @type {Object?}
      * @property {string} type - "balls" for amount of balls, "height" for height of structure, more soon
@@ -454,6 +463,203 @@ export class Level {
     addGooball(ball) {
         Matter.Composite.add(this.engine.world, ball.body)
         this.balls.push(ball)
+    }
+
+    /**
+     * render level
+     * @param {*} canvas 
+     * @returns 
+     */
+    render(canvas) {
+        let ctx = canvas.ctx
+
+        this.layers.filter(a => a.z < 0).render(canvas)
+                        
+        const renderPipe = (pipe, state, stretch = 0) => {
+            var image = window.game.ResourceManager.getResource(pipe.states[state]).image
+            var w = image.width
+            var h = image.height
+            var {x, y} = canvas.toLevelCanvasPos(pipe.x, pipe.y, this, w, h)
+            w *= (canvas.screenshotMode ? 1 : this.camera.props.zoom)
+            h *= (canvas.screenshotMode ? 1 : this.camera.props.zoom)
+            var rotation = pipe.direction * Math.PI / 180
+            ctx.translate(x + w / 2, y + h / 2)
+
+            ctx.rotate(rotation)
+            ctx.translate(-(x + w / 2), -(y + h / 2))
+            ctx.drawImage(image, x, y - stretch, w, h + stretch)
+            ctx.translate(x + w / 2, y + h / 2)
+            ctx.rotate(-rotation)
+            ctx.translate(-(x + w / 2), -(y + h / 2))
+        }
+        //pipes here
+        for (let pipe of this.pipes) {
+            renderPipe(pipe, "pipe", pipe.length)
+            renderPipe(pipe, pipe.isActive(this) ? "capopen" : "cap")
+        }
+
+        this.layers.filter(a => a.z == 0).render(canvas)
+
+        this.bodies.forEach(b => b.render(canvas))
+
+        //gooballs here
+        const drawStrand = (type, ball1, ball2, ghost = false) => {
+            let ball = window.game.GooballManager.types[type]
+
+            var image = window.game.ResourceManager.getResource(ball.strand.img).image
+
+            let b1 = canvas.toLevelCanvasPos(ball1.x, ball1.y, this)
+            let b2 = canvas.toLevelCanvasPos(ball2.x, ball2.y, this)
+
+            let distance = Math.hypot(b2.x - b1.x, b2.y - b1.y)
+            let angle = Math.atan2(b2.y - b1.y, b2.x - b1.x)
+
+            ctx.save()
+            ctx.translate(b1.x, b1.y)
+            ctx.rotate(angle)
+            if (ghost) ctx.globalAlpha = 0.5
+            if (applicableStrand == this.strands.find(v => v.ball1 == ball1 && v.ball2 == ball2)) ctx.filter = "brightness(1.5)"
+
+            ctx.drawImage(image, 0, -image.height / 2 * (canvas.screenshotMode ? 1 : this.camera.props.zoom), distance, image.height * (canvas.screenshotMode ? 1 : this.camera.props.zoom))
+            
+            ctx.restore()
+            if (ghost) ctx.globalAlpha = 1
+            if (applicableStrand == this.strands.find(v => v.ball1 == ball1 && v.ball2 == ball2)) ctx.filter = ""
+        }
+        let applicableBalls = []
+        let applicableStrand = null
+        let canBuild = false
+        let ballToDrag = null
+        if (window.game.InputTracker.ball && canvas.mode == 0 && this.mainLevel) {
+            for (let strand of this.strands) {
+                if (window.game.Utils.intersectsLine(
+                    window.game.InputTracker.ball.x, window.game.InputTracker.ball.y,
+                    strand.ball1.x, strand.ball1.y,
+                    strand.ball2.x, strand.ball2.y,
+                    window.game.InputTracker.ball.shape.radius / 1.5,
+                ) && !window.game.GooballManager.types[strand.type].noclimb && !window.game.InputTracker.shift) {
+                    applicableStrand = strand
+                    break
+                }
+            }
+
+            (() => {
+                if (applicableStrand) return
+                if (window.game.InputTracker.ball.velocity > 20) return
+
+                this.balls.forEach(x => {
+                    if (x === window.game.InputTracker.ball) return
+                    if (x.nobuild) return
+                    if (x.sleeping) return
+                    if (this.getStrandsOfBall(x).length === 0 && !x.attachment) return
+                    if (!window.game.InputTracker.shift) {
+                        if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
+                    }
+                    if (Math.hypot(x.x - window.game.InputTracker.ball.x, x.y - window.game.InputTracker.ball.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
+                    applicableBalls.push(x)
+                })
+                
+                if (!window.game.InputTracker.ball.strand) return
+                applicableBalls = applicableBalls.sort((a, b) => { 
+                    let distanceA = Math.hypot(a.x - window.game.InputTracker.ball.x, a.y - window.game.InputTracker.ball.y)
+                    let distanceB = Math.hypot(b.x - window.game.InputTracker.ball.x, b.y - window.game.InputTracker.ball.y)
+                    return Math.max(distanceA, Math.hypot(a.x - b.x, a.y - b.y)) - distanceB
+                })
+                if (window.game.InputTracker.shift) {
+                    applicableBalls = applicableBalls.sort((a, b) => {
+                        let distanceA = Math.hypot(a.x - applicableBalls[0].x, a.y - applicableBalls[0].y)
+                        let distanceB = Math.hypot(b.x - applicableBalls[0].x, b.y - applicableBalls[0].y)
+                        return distanceA - distanceB
+                    })
+
+                    let ball1 = applicableBalls[0]
+                    let ball2 = applicableBalls[1]
+
+                    if (ball1 == undefined || ball2 == undefined) return
+                    if (window.game.InputTracker.ball.nobuild) return
+                    if (this.getStrandFromBalls(ball1, ball2) !== undefined) return
+                    if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) < window.game.InputTracker.ball.strand.length - window.game.InputTracker.ball.strand.range) return
+                    if (Math.hypot(ball1.x - ball2.x, ball1.y - ball2.y) > window.game.InputTracker.ball.strand.length + window.game.InputTracker.ball.strand.range) return
+
+                    canBuild = true
+
+                    drawStrand(window.game.InputTracker.ball.type, ball1, ball2, true)
+                } else {
+                    applicableBalls = applicableBalls.slice(0, window.game.InputTracker.ball.strand.amount)
+                    if (applicableBalls.length < (window.game.InputTracker.ball.strand.single ? 1 : 2)) return
+
+                    canBuild = true
+
+                    for (let applicableBall of applicableBalls) {
+                        drawStrand(window.game.InputTracker.ball.type, window.game.InputTracker.ball, applicableBall, true)
+                    }
+                }
+            })()
+        }
+        for (let strand of this.strands) {
+            drawStrand(strand.type, strand.ball1, strand.ball2)
+        }
+        for (
+            let ball of this.balls
+            .sort((a, b) => !b.strandOn - !a.strandOn)
+            .sort((a, b) => (a === window.game.InputTracker.ball) - (b === window.game.InputTracker.ball))
+        ) {
+            ball.render(canvas, 0, 0, (canvas.screenshotMode ? 1 : this.camera.props.zoom))
+
+            if (window.game.InputTracker.withinCircle(
+                canvas.toLevelCanvasPos(ball.x, ball.y, this).x,
+                canvas.toLevelCanvasPos(ball.x, ball.y, this).y,
+                ball.shape.radius * this.camera.props.zoom + 4
+            ) && (
+                this.getStrandsOfBall(ball).length == 0 ||
+                (ball.strand && ball.strand.detachable)
+            ) && !ball.sleeping && !ball.nodrag) {
+                ballToDrag = ball 
+            }
+        }
+
+        this.layers.filter(a => a.z > 0).render(canvas)
+
+        this.levelButtons.forEach(x => {
+            if (this.island && !window.game.IslandManager.levelUnlocked(x.id)) return
+            x.render(this, canvas)
+            if (x.clicked(this, canvas) && !canvas.transition) {
+                canvas.playLevel(x.id)
+            }
+        })
+
+        if (this.debug) {
+            for (var body of this.bodies) {
+                body.renderDebug(canvas)
+            }
+
+            for (var ball of this.balls) {
+                ball.renderDebug(canvas)
+            }
+
+            for (var pipe of this.pipes) {
+                ctx.beginPath()
+                ctx.arc(
+                    canvas.toLevelCanvasPos(pipe.x, pipe.y, this).x,
+                    canvas.toLevelCanvasPos(pipe.x, pipe.y, this).y,
+                    pipe.radius * level.camera.props.zoom, 0, 2 * Math.PI
+                )
+                ctx.closePath()
+                ctx.fillStyle = "#0f08"
+                ctx.strokeStyle = "#0f0"
+                ctx.lineWidth = 4
+                ctx.save()
+                ctx.clip()
+                ctx.lineWidth *= 2
+                ctx.fill()
+                ctx.stroke()
+                ctx.restore()
+            }
+        }
+
+        ctx.resetTransform()
+
+        return [ballToDrag, canBuild, applicableBalls]
     }
 
     /** @param {number} dt */

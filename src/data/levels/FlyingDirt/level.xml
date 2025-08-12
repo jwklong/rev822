@@ -13,7 +13,7 @@
         <goal type="balls" target="2" />
     </head>
     <scene>
-        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="1.5" z="-1" depth="0.2" />
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="1.5" z="-1" depth="0.3" />
         <layer img="IMAGE_LEVEL_CLOUD" x="-400" y="200" rotation="10" depth="0.8" />
         <layer img="IMAGE_LEVEL_CLOUD" x="500" y="700" rotation="-5" depth="0.8" />
 
