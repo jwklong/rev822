@@ -58,6 +58,14 @@ export class Layer {
     /** @type {LayerGroup?} */
     parent
 
+    /**
+     * @returns {Level?}
+     * @readonly
+     */
+    get level() {
+        return this.parent?.level
+    }
+
     /** @param {Object} xml */
     static fromXML(xml) {
         let layer = new Layer
@@ -108,7 +116,7 @@ export class Layer {
      */
     render(canvas, ox = 0, oy = 0, osx = 1, osy = 1, rot = 0) {
         let ctx = canvas.ctx
-        const level = window.game.LevelManager.currentLevel
+        const level = this.level ?? window.game.LevelManager.currentLevel
         let image = window.game.ResourceManager.getResource(this.img).image
         let w = image.width * this.size.x * osx * (canvas.screenshotMode ? 1 / this.depth : 1)
         let h = image.height * this.size.y * osy * (canvas.screenshotMode ? 1 / this.depth : 1)
@@ -159,8 +167,16 @@ export class Layer {
 
 /** @class */
 export class LayerGroup {
-    /** @type {LayerGroup?} */
+    /** @type {(LayerGroup | Level)?} */
     parent
+
+    /**
+     * @returns {Level?}
+     * @readonly
+     */
+    get level() {
+        return this.parent instanceof window.game.Classes.Level ? this.parent : this.parent?.level
+    }
 
     /** @type {Array<(Layer | LayerGroup)>} */
     children = []
@@ -185,6 +201,13 @@ export class LayerGroup {
     size = {
         x: 1,
         y: 1
+    }
+
+    /**
+     * @param {Level?} level 
+     */
+    constructor(level) {
+        this.parent = level
     }
 
     /**

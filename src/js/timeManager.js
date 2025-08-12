@@ -36,6 +36,26 @@ export class TimeManager {
             .filter(timer => !timer.finished)
             .forEach(timer => timer.tick(dt))
     }
+
+    /**
+     * Generates a temporary name of `temp-X`, where X is a number.
+     * X will increment until the name is not already taken by a timer. This only applies to timers that haven't finished.
+     * @example
+     * let name = TimeManager.generateTemporaryName() // temp-0
+     * let timer = TimeManager.createTimer(name, 1)
+     * console.log(TimeManager.generateTemporaryName()) // temp-1
+     * timer.timePassed = 1 // override to finish
+     * console.log(TimeManager.generateTemporaryName()) // temp-0
+     * @returns {string}
+     */
+    generateTemporaryName() {
+        var i = 0
+        while (
+            this.getTimer(`temp-${i}`) !== undefined &&
+            !this.getTimer(`temp-${i}`).finished
+        ) i++
+        return `temp-${i}`
+    }
 }
 
 export class Timer {

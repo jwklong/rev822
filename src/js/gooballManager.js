@@ -286,8 +286,12 @@ export class Gooball {
         }
     }
 
-    clone() {
-        return new Gooball(this.xml, this.type, true)
+    clone(level) {
+        let ball = new Gooball(this.xml, this.type, true)
+        if (level) {
+            ball.layers.parent = level
+        }
+        return ball
     }
 
     /**

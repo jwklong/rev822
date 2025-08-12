@@ -46,6 +46,8 @@ export class LevelManager {
         if (v instanceof Level) this.currentLevel = v.clone()
         else this.currentLevel = this.levels[v].clone()
 
+        this.currentLevel.tank = this.levels["_tank"].clone()
+
         let index = this.levelHistory.indexOf(this.currentLevel.id)
         if (index != -1) this.levelHistory.splice(index, this.levelHistory.length - index)
         this.levelHistory.push(v)
@@ -63,7 +65,7 @@ export class LevelManager {
 
 export class Level {
     /** @type {LayerGroup} */
-    layers = new window.game.Classes.LayerGroup
+    layers = new window.game.Classes.LayerGroup(this)
 
     /** @type {Camera} */
     camera = new Camera
@@ -117,6 +119,12 @@ export class Level {
 
     /** @type {number} */
     moves = 0
+
+    /**
+     * tank on right-side of the screen where collected balls are held
+     * @type {Level?}
+     */
+    tank
 
     /**
      * check for if this level is the one currently in LevelManager.currentLevel
@@ -192,8 +200,8 @@ export class Level {
         this.desc = xml.head[0].desc ? xml.head[0].desc[0].value : ""
         this.debug = xml.attributes ? xml.attributes.debug : false
 
-        this.width = xml.head[0].camera[0].attributes.width
-        this.height = xml.head[0].camera[0].attributes.height
+        this.width = xml.head[0].camera[0].attributes?.width ?? Infinity
+        this.height = xml.head[0].camera[0].attributes?.height ?? Infinity
 
         //parse dem resources
         if (!clone) {
@@ -239,6 +247,7 @@ export class Level {
                 case "rect":
                     for (let v of value) {
                         let body = new RectBody(v.attributes)
+                        body.parent = this
                         for (let w of v.layer || []) {
                             body.layers.push(window.game.Classes.Layer.fromXML(w.attributes))
                         }
@@ -248,6 +257,7 @@ export class Level {
                 case "circle":
                     for (let v of value) {
                         let body = new CircleBody(v.attributes)
+                        body.parent = this
                         for (let w of v.layer || []) {
                             body.layers.push(window.game.Classes.Layer.fromXML(w.attributes))
                         }
@@ -256,7 +266,7 @@ export class Level {
                     break
                 case "ball":
                     for (let v of value) {
-                        let ball = window.game.GooballManager.types[v.attributes.type].clone()
+                        let ball = window.game.GooballManager.types[v.attributes.type].clone(this)
                         ball.x = window.game.Utils.parseAttribute(v.attributes.x)
                         ball.y = window.game.Utils.parseAttribute(v.attributes.y)
                         ball.ref = String(v.attributes.ref)
@@ -659,6 +669,8 @@ export class Level {
 
         ctx.resetTransform()
 
+        if (this.tank) this.tank.render(canvas)
+
         return [ballToDrag, canBuild, applicableBalls]
     }
 
@@ -667,7 +679,7 @@ export class Level {
         let loops = 2
         dt /= loops
         for (let loop = 0; loop < loops; loop++) {
-            if (this.camera.fixed == false && window.game.InputTracker.inWindow) {
+            if (this.camera.fixed == false && window.game.InputTracker.inWindow && this.mainLevel) {
                 var {x, y} = window.game.InputTracker
                 if (window.game.InputTracker.ball) var {x, y} = window.game.Canvas.toLevelCanvasPos(window.game.InputTracker.ball.x, window.game.InputTracker.ball.y, this)
 
@@ -899,6 +911,7 @@ export class Level {
      */
     startCamera() {
         this.camera.playKeyframes()
+        if (this.tank) this.tank.startCamera()
     }
 
     /**
@@ -962,7 +975,7 @@ export class Camera {
      * @returns {Timer}
      */
     playKeyframe(keyframe) {
-        let timer = window.game.TimeManager.createTimer('CAMERA_KEYFRAME', Math.max(keyframe.duration + keyframe.pause, 0.001))
+        let timer = window.game.TimeManager.createTimer(window.game.TimeManager.generateTemporaryName(), Math.max((keyframe.duration ?? 0) + (keyframe.pause ?? 0), 0.001))
         const originalProps = this.props
 
         this.fixed = true
@@ -977,7 +990,9 @@ export class Camera {
                 }
             }
         })
-        timer.finish.on(() => { this.fixed = false })
+        timer.finish.on(() => {
+            this.fixed = false
+        })
 
         return timer
     }
@@ -1118,7 +1133,12 @@ export class GenericBody {
     /** @type {LayerGroup} */
     layers = new window.game.Classes.LayerGroup
 
-    /** @param {Object} attributes */
+    /** @type {Level?} */
+    parent
+
+    /**
+     * @param {Object} attributes
+     */
     constructor(attributes, body) {
         this.body = body || Matter.Body.Create()
         this.body.collisionFilter.category = 0b10
@@ -1178,9 +1198,9 @@ export class GenericBody {
     renderDebug(canvas) {
         let ctx = canvas.ctx
         ctx.beginPath()
-        ctx.moveTo(...Object.values(canvas.toLevelCanvasPos(this.vertices[0].x, this.vertices[0].y, window.game.LevelManager.currentLevel)))
+        ctx.moveTo(...Object.values(canvas.toLevelCanvasPos(this.vertices[0].x, this.vertices[0].y, this.parent ?? window.game.LevelManager.currentLevel)))
         for (let i = 1; i < this.vertices.length; i++) {
-            ctx.lineTo(...Object.values(canvas.toLevelCanvasPos(this.vertices[i].x, this.vertices[i].y, window.game.LevelManager.currentLevel)))
+            ctx.lineTo(...Object.values(canvas.toLevelCanvasPos(this.vertices[i].x, this.vertices[i].y, this.parent ?? window.game.LevelManager.currentLevel)))
         }
         ctx.closePath()
         ctx.fillStyle = this.force ? "#80f8" : "#00f8"
