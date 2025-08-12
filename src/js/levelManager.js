@@ -468,7 +468,7 @@ export class Level {
     /**
      * render level
      * @param {*} canvas 
-     * @returns 
+     * @returns {Array} stuff that gets passed back to canvas, not important
      */
     render(canvas) {
         let ctx = canvas.ctx
