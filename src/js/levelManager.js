@@ -404,7 +404,7 @@ export class Level {
                     let x = (a.x + b.x) / 2
                     let y = (a.y + b.y) / 2
 
-                    let newBall = window.game.GooballManager.types[strand.type].clone()
+                    let newBall = window.game.GooballManager.types[strand.type].clone(this)
                     newBall.x = x
                     newBall.y = y
                     this.addGooball(newBall)
@@ -419,6 +419,12 @@ export class Level {
                                 if (pipe.ballsInRange([ball], 16).length > 0) {
                                     this.killGooball(ball)
                                     pipe.ballsSucked += 1
+                                    if (this.tank) {
+                                        let newBall = window.game.GooballManager.types[ball.type].clone(this.tank)
+                                        newBall.x = Math.random() * 60 - 30 - 1200
+                                        newBall.y = 100
+                                        this.tank.addGooball(newBall)
+                                    }
                                     break
                                 }
                             }
@@ -472,6 +478,7 @@ export class Level {
      */
     addGooball(ball) {
         Matter.Composite.add(this.engine.world, ball.body)
+        ball.layers.parent = this
         this.balls.push(ball)
     }
 
@@ -676,6 +683,8 @@ export class Level {
 
     /** @param {number} dt */
     tick(dt) {
+        if (this.tank) this.tank.tick(dt)
+
         let loops = 2
         dt /= loops
         for (let loop = 0; loop < loops; loop++) {
@@ -881,6 +890,12 @@ export class Level {
                     if (pipe.ballsInRange([ball], pipe.radius - 16).length > 0 && this.getStrandsOfBall(ball).length == 0 && ball !== window.game.InputTracker.ball) {
                         this.killGooball(ball)
                         pipe.ballsSucked += 1
+                        if (this.tank) {
+                            let newBall = window.game.GooballManager.types[ball.type].clone(this.tank)
+                            newBall.x = Math.random() * 60 - 30 + 1200
+                            newBall.y = 100
+                            this.tank.addGooball(newBall)
+                        }
                         continue
                     }
 

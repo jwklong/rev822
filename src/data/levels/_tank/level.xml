@@ -6,6 +6,6 @@
         </camera>
     </head>
     <scene>
-        <rect static x="0" y="0" width="100" height="100" />
+        <rect static x="1200" y="-100" width="100" height="50" />
     </scene>
 </level>
