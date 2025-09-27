@@ -377,9 +377,24 @@ export class Gooball {
                 ctx.stroke()
 
                 ctx.fillStyle = "#000"
-                
+                let [px, py] = Object.values(window.game.Utils.rotate(
+                    canvas.screenshotMode ? 0 : Math.min(window.game.Utils.distanceTo(
+                        bx,
+                        by,
+                        window.game.InputTracker.x,
+                        window.game.InputTracker.y
+                    ) / eye.radius / 2 * zoom, eye.radius * 3 / 4), 
+                    0,
+                    -this.rotation - (this.stuckTo ? this.stuckTo.rotation : 0) + window.game.Utils.angleTo(
+                        bx,
+                        by,
+                        window.game.InputTracker.x,
+                        window.game.InputTracker.y
+                    )
+                ))
+
                 ctx.beginPath()
-                ctx.arc(ex, ey, eye.radius / 4 * zoom, 0, 2 * Math.PI)
+                ctx.arc(ex+px, ey+py, eye.radius / 4 * zoom, 0, 2 * Math.PI)
                 ctx.closePath()
                 ctx.fill()
                 ctx.stroke()

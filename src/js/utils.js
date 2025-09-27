@@ -31,6 +31,18 @@ export let Utils = {
     distanceTo(x1, y1, x2, y2) {
         return Math.hypot(x2 - x1, y2 - y1)
     },
+
+    /**
+     * Gets the degrees between two points
+     * @param {number} x1 
+     * @param {number} y1 
+     * @param {number} x2 
+     * @param {number} y2 
+     * @returns {number}
+     */
+    angleTo(x1, y1, x2, y2) {
+        return Math.atan2(y2 - y1, x2 - x1) * 180 / Math.PI
+    },
     
     /**
      * checks if a point is inside a circle
@@ -141,5 +153,19 @@ export let Utils = {
             if (intersect) inside = !inside
         }
         return inside
+    },
+
+    /**
+     * Rotates coordinates by degrees
+     * @param {number} x 
+     * @param {number} y 
+     * @param {number} angle - in degrees
+     * @returns {number[]}
+     */
+    rotate(x, y, angle) {
+        return {
+            x: x * Math.cos(angle * Math.PI / 180) - y * Math.sin(angle * Math.PI / 180),
+            y: x * Math.sin(angle * Math.PI / 180) + y * Math.cos(angle * Math.PI / 180)
+        }
     }
 }
