@@ -270,8 +270,8 @@ export class Level {
                         ball.x = window.game.Utils.parseAttribute(v.attributes.x)
                         ball.y = window.game.Utils.parseAttribute(v.attributes.y)
                         ball.ref = String(v.attributes.ref)
-                        ball.sleeping = v.attributes.sleeping ?? false
-                        ball.nodrag = v.attributes.nodrag ?? ball.nodrag
+                        ball.sleeping = Boolean(v.attributes.sleeping ?? false)
+                        ball.nodrag = ball.nodrag || Boolean(v.attributes.nodrag)
                         this.addGooball(ball)
                     }
                     break

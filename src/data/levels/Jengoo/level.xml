@@ -1,0 +1,84 @@
+<level>
+    <resources>
+        <image id="IMAGE_JENGOO_HILL" src="levels/Jengoo/hill.svg" />
+    </resources>
+    <head>
+        <camera width="1440" height="2160">
+            <keyframe x="0" y="300" zoom="2" />
+            <keyframe x="0" y="-300" zoom="1" pause="2" duration="3" />
+        </camera>
+        <title>Jengoo</title>
+        <desc></desc>
+        <goal type="balls" target="6" />
+    </head>
+    <scene>
+        <layer img="IMAGE_SUNSETTER" x="0" y="0" size="1.5" z="-1" depth="0.3" />
+        <layer img="IMAGE_JENGOO_HILL" x="0" y="-800" />
+        <circle static x="0" y="-1595" radius="1100" material="grass" sticky />
+        <rect static x="-820" y="0" width="200" height="65536" detaches />
+        <rect static x="820" y="0" width="200" height="65536" detaches />
+
+        <ball type="common" x="77" y="-486" ref="0" />
+        <ball type="common" x="-76" y="-485" ref="1" />
+        <ball type="ivy" x="74" y="-345" ref="2" />
+        <ball type="common" x="-73" y="-342" ref="3" />
+        <ball type="ivy" x="-229" y="-382" ref="4" />
+        <ball type="ivy" x="-220" y="-508" ref="5" />
+        <ball type="common" x="239" y="-396" ref="6" />
+        <ball type="ivy" x="258" y="-514" ref="7" />
+        <ball type="common" x="366" y="-551" ref="8" />
+        <ball type="ivy" x="-341" y="-543" ref="9" />
+        <ball type="common" x="-165" y="-218" ref="10" />
+        <ball type="ivy" x="8" y="-201" ref="11" />
+        <ball type="common" x="190" y="-235" ref="12" />
+        <ball type="common" x="135" y="-74" ref="13" />
+        <ball type="ivy" x="-130" y="-80" ref="15" />
+        <ball type="ivy" x="6" y="-40" ref="16" />
+        <ball type="common" x="91" y="79" ref="17" />
+        <ball type="ivy" x="-89" y="77" ref="18" />
+        <ball type="common" x="0" y="233" ref="19" />
+
+        <strand type="common" from="0" to="1" />
+        <strand type="ivy" from="1" to="2" />
+        <strand type="ivy" from="2" to="3" />
+        <strand type="common" from="3" to="0" />
+        <strand type="ivy" from="0" to="2" />
+        <strand type="common" from="1" to="3" />
+        <strand type="ivy" from="4" to="3" />
+        <strand type="ivy" from="4" to="1" />
+        <strand type="ivy" from="5" to="1" />
+        <strand type="ivy" from="5" to="4" />
+        <strand type="common" from="6" to="2" />
+        <strand type="common" from="6" to="0" />
+        <strand type="ivy" from="7" to="0" />
+        <strand type="ivy" from="7" to="6" />
+        <strand type="common" from="8" to="7" />
+        <strand type="common" from="8" to="6" />
+        <strand type="ivy" from="9" to="5" />
+        <strand type="ivy" from="9" to="4" />
+        <strand type="common" from="10" to="3" />
+        <strand type="common" from="10" to="4" />
+        <strand type="ivy" from="11" to="2" />
+        <strand type="common" from="11" to="3" />
+        <strand type="common" from="12" to="2" />
+        <strand type="common" from="12" to="6" />
+        <strand type="common" from="11" to="12" />
+        <strand type="common" from="10" to="11" />
+        <strand type="common" from="13" to="11" />
+        <strand type="common" from="13" to="12" />
+        <strand type="ivy" from="15" to="10" />
+        <strand type="ivy" from="15" to="11" />
+        <strand type="ivy" from="16" to="11" />
+        <strand type="ivy" from="16" to="13" />
+        <strand type="ivy" from="16" to="15" />
+        <strand type="common" from="17" to="16" />
+        <strand type="common" from="17" to="13" />
+        <strand type="ivy" from="18" to="16" />
+        <strand type="ivy" from="18" to="15" />
+        <strand type="common" from="17" to="18" />
+        <strand type="common" from="19" to="17" />
+        <strand type="common" from="19" to="18" />
+
+        <pipe type="default" x="0" y="250" />
+    </scene>
+</level>
