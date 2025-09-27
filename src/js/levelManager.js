@@ -421,7 +421,7 @@ export class Level {
                                     pipe.ballsSucked += 1
                                     if (this.tank) {
                                         let newBall = window.game.GooballManager.types[ball.type].clone(this.tank)
-                                        newBall.x = Math.random() * 60 - 30 - 1200
+                                        newBall.x = Math.random() * 60 - 30 + 1200
                                         newBall.y = 100
                                         this.tank.addGooball(newBall)
                                     }
