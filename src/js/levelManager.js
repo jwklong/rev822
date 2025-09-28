@@ -431,7 +431,7 @@ export class Level {
                         }
 
                         Matter.Composite.allConstraints(this.engine.world).forEach(constraint => {
-                            if (constraint.bodyA === ball.body || constraint.bodyB === ball.body) Matter.Composite.remove(this.engine.world, constraint)
+                            if (constraint.bodyA === ball.body || constraint.bodyB === ball.body && constraint !== window.game.InputTracker.ballConstraint) Matter.Composite.remove(this.engine.world, constraint)
                         })
 
                         ball.stuckTo = null
@@ -722,7 +722,19 @@ export class Level {
             this.layers.tick(dt)
 
             if (window.game.InputTracker.ball != undefined) {
+                let ball = window.game.InputTracker.ball
                 let constraint = window.game.InputTracker.ballConstraint
+                let hasStrands = this.getStrandsOfBall(ball).length > 0
+
+                if (ball.strand && ball.strand.detachable && window.game.Utils.distanceTo(
+                    ball.x, ball.y,
+                    window.game.InputTracker.levelX, window.game.InputTracker.levelY
+                ) > (ball.strand.detachDistance + 4 * this.camera.props.zoom) && hasStrands) {
+                    this.deleteStrands(ball)
+                    ball.body.collisionFilter.mask = 0b10
+                    window.game.InputTracker.ball.body.mass = window.game.GooballManager.types[window.game.InputTracker.ball.type].mass / 1000
+                }
+
                 let distanceTo = window.game.Utils.distanceTo(
                     window.game.InputTracker.levelX,
                     window.game.InputTracker.levelY,
@@ -731,6 +743,7 @@ export class Level {
                 )
                 let mul = Math.min(1, 24 / distanceTo)
                 if (Matter.Query.collides(window.game.InputTracker.ball.body, this.bodies.map(v => v.body)).length == 0) mul = Math.min(1, 128 / distanceTo)
+                if (hasStrands) mul /= 20
                 constraint.pointA = {
                     x: window.game.InputTracker.levelX * mul + window.game.InputTracker.ball.x * (1 - mul),
                     y: window.game.InputTracker.levelY * mul + window.game.InputTracker.ball.y * (1 - mul)

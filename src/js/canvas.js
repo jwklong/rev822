@@ -192,16 +192,26 @@ export class Canvas {
 
                 if (ballToDrag !== null && window.game.InputTracker.ball == undefined && window.game.InputTracker.leftOnce) {
                     window.game.InputTracker.ball = ballToDrag
-
+                    let ball = window.game.InputTracker.ball
+                    
                     if (level.getStrandsOfBall(ballToDrag).length > 0) {
                         level.moves += 1
+                    } else {
+                        window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
+                        window.game.InputTracker.ball.body.mass = window.game.GooballManager.types[window.game.InputTracker.ball.type].mass / 1000
                     }
 
-                    level.deleteStrands(ballToDrag)
+                    if (ball.stuckTo) {
+                        Matter.Composite.allConstraints(level.engine.world).forEach(constraint => {
+                            if (
+                                (constraint.bodyA === ball.body || constraint.bodyB === ball.body) &&
+                                (constraint.bodyA = ball.stuckTo.body || constraint.bodyB === ball.stuckTo.body)
+                            ) Matter.Composite.remove(level.engine.world, constraint)
+                        })
+                    }
+
                     ballToDrag.getOffStrand(true)
 
-                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b10
-                    Matter.Body.setMass(window.game.InputTracker.ball.body, window.game.InputTracker.ball.body.mass / 1000)
                     window.game.InputTracker.ballConstraint = Matter.Constraint.create({
                         pointA: {
                             x: window.game.InputTracker.levelX,
@@ -214,10 +224,12 @@ export class Canvas {
                     })
                     Matter.Composite.add(window.game.LevelManager.currentLevel.engine.world, window.game.InputTracker.ballConstraint)
                 } else if (window.game.InputTracker.ball !== undefined && (!window.game.InputTracker.left || this.mode == 1)) {
-                    window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
                     Matter.Composite.remove(window.game.LevelManager.currentLevel.engine.world, window.game.InputTracker.ballConstraint)
                     window.game.InputTracker.ballConstraint = undefined
-                    Matter.Body.setMass(window.game.InputTracker.ball.body, window.game.InputTracker.ball.body.mass * 1000)
+                    if (level.getStrandsOfBall(window.game.InputTracker.ball).length == 0) {
+                        window.game.InputTracker.ball.body.collisionFilter.mask = 0b11
+                        window.game.InputTracker.ball.body.mass = window.game.GooballManager.types[window.game.InputTracker.ball.type].mass
+                    }
 
                     if (canBuild) {
                         if (window.game.InputTracker.shift) {

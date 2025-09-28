@@ -75,6 +75,7 @@ export class Gooball {
      * @property {number} range - Distance of acceptable strand length from natural
      * @property {number} amount - Max strands creatable from placing gooball
      * @property {boolean} detachable - Can be detached from structure
+     * @property {boolean} detachDistance - Distance from cursor where it detaches
      * @property {boolean} single - Allows 1 strand
      */
     strand
@@ -223,17 +224,6 @@ export class Gooball {
             }
         }
 
-        if (xml.head.strand) {
-            this.strand = {
-                img: xml.head.strand.attributes.img,
-                length: xml.head.strand.attributes.length,
-                range: xml.head.strand.attributes.range || 0,
-                amount: xml.head.strand.attributes.amount || 0,
-                detachable: Boolean(xml.head.strand.attributes.detachable),
-                single: xml.head.strand.attributes.single || xml.head.strand.attributes.amount == 1
-            }
-        }
-
         switch (xml.head.shape.attributes.type) {
             case "circle":
                 this.shape.type = "circle"
@@ -264,6 +254,18 @@ export class Gooball {
             this.intelligence = xml.attributes.intelligence ?? 0.9
             this.climbspeed = xml.attributes.climbspeed ?? 45
             this.splatColor = xml.attributes.splatcolor ?? "#fff"
+        }
+
+        if (xml.head.strand) {
+            this.strand = {
+                img: xml.head.strand.attributes.img,
+                length: xml.head.strand.attributes.length,
+                range: xml.head.strand.attributes.range || 0,
+                amount: xml.head.strand.attributes.amount || 0,
+                detachable: Boolean(xml.head.strand.attributes.detachable),
+                detachDistance: xml.head.strand.attributes.detachDistance ?? this.shape.radius,
+                single: xml.head.strand.attributes.single || xml.head.strand.attributes.amount == 1
+            }
         }
 
         this.blinkCycle = [Math.random() * 1 + 1, Math.random() * 0.2 + 0.1]
@@ -455,7 +457,7 @@ export class Gooball {
         particle.size = {x: 0.5, y: 0.5}
         particle.transparency = 1
         particle.rotation = Math.random() * 40 - 20
-	particle.staticrot = true
+	    particle.staticrot = true
 
         const xMovement = 5 + Math.random() * 5
         const yMovement = 5 + Math.random() * 5
